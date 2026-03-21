@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 
 export default function Page() {
   return (
-    <div className="flex h-dvh w-dvw">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
+    <div className="flex justify-center">
+      <div className="flex flex-col h-dvh w-1/2 bg-foreground/2 text-sm leading-loose">
         <div>
           <h1 className="font-blog-title text-4xl text-primary/80">Project ready!</h1>
           <p>You may now add components and start building.</p>
