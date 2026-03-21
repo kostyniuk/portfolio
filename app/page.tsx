@@ -13,8 +13,8 @@ export default function Page() {
         <div className="font-mono text-xs text-muted-foreground">
           (Press <kbd>d</kbd> to toggle dark mode)
         </div>
-        <div className="flex justify-center w-200 h-800 border-2 border-red-500">
-          <Button>Hello</Button>
+        <div className="flex justify-center w-200 h-800 border-2 border-secondary-accent">
+          <Button className="bg-secondary-accent">Hello</Button>
         </div>
       </div>
     </div>
