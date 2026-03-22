@@ -17,7 +17,9 @@ export default function Page() {
           (Press <kbd>d</kbd> to toggle dark mode)
         </div>
         <div className="flex justify-center w-200 h-800 border-2 border-secondary-accent">
-          <Button className="bg-secondary-accent">Hello</Button>
+          <Button className="bg-inherit text-blue-300 border-blue-500 my-4 dark:text-red-900 hover:bg-secondary-accent">
+            Hello
+          </Button>
         </div>
       </div>
     </div>
