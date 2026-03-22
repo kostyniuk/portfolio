@@ -22,7 +22,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-sans", geist.variable, arvo.variable)}
+      className={cn("antialiased", fontMono.variable, "font-mono", geist.variable, arvo.variable)} // Rewrite default css font for the block/whole page
     >
       <body>
         <ThemeProvider>{children}</ThemeProvider>
