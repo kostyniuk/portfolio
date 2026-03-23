@@ -18,8 +18,8 @@ function Bio() {
       />
       <p className="text-xl">Alex Kostyniuk, 26</p>
       <div className="text-lg [&_*]:text-lg [&_*]:font-mono">
-        {BIO_ROWS.map(({ emojiCode, title }) => (
-          <BioRow emojiCode={emojiCode} title={title} />
+        {BIO_ROWS.map(({ emojiCode, title }, index) => (
+          <BioRow key={index} emojiCode={emojiCode} title={title} />
         ))}
       </div>
     </div>
