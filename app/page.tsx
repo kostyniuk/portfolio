@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Bio } from "@/components/custom/bio";
 
 export default function Page() {
   return (
@@ -16,11 +17,7 @@ export default function Page() {
         <div className="font-mono text-xs text-muted-foreground">
           (Press <kbd>d</kbd> to toggle dark mode)
         </div>
-        <div className="flex justify-center w-200 h-800 border-2 border-secondary-accent">
-          <Button className="bg-inherit text-blue-300 border-blue-500 my-4 dark:text-red-900 hover:bg-secondary-accent">
-            Hello
-          </Button>
-        </div>
+        <Bio />
       </div>
     </div>
   );
