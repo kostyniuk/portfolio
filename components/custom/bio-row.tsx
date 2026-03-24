@@ -13,10 +13,10 @@ function BioRow({ emojiCode, title, canBeCopied }: BioItem) {
   return (
     <Item>
       <ItemMedia variant="icon">{emojiCode}</ItemMedia>
-      <ItemContent>
+      <ItemContent className="flex flex-row gap-2">
         <ItemTitle>{title}</ItemTitle>
+        {canBeCopied && <CopyButton text={title} />}
       </ItemContent>
-      {canBeCopied && <CopyButton text={title} />}
     </Item>
   );
 }
