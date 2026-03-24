@@ -3,7 +3,8 @@ import { BioRow, type BioItem } from "./bio-row";
 
 const BIO_ROWS = [
   { emojiCode: "📍", title: "Stockholm 🇸🇪" },
-  { emojiCode: "⌨️", title: "Team Lead @ AMFG" },
+  { emojiCode: "⌨️", title: "Team Lead @AMFG" },
+  { emojiCode: "📮", title: "alexandru.costiniuc00@gmail.com", canBeCopied: true },
 ] satisfies BioItem[];
 
 function Bio() {
@@ -17,9 +18,9 @@ function Bio() {
         className="rounded-full object-cover"
       />
       <p className="text-xl">Alex Kostyniuk, 26</p>
-      <div className="text-lg [&_*]:text-lg [&_*]:font-mono">
-        {BIO_ROWS.map(({ emojiCode, title }, index) => (
-          <BioRow key={index} emojiCode={emojiCode} title={title} />
+      <div className="text-lg [&_*]:text-base [&_*]:font-mono">
+        {BIO_ROWS.map(({ emojiCode, title, canBeCopied }, index) => (
+          <BioRow key={index} emojiCode={emojiCode} title={title} canBeCopied={canBeCopied} />
         ))}
       </div>
     </div>
