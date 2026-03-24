@@ -20,7 +20,7 @@ export const motionIconProps: HTMLMotionProps<"span"> = {
   initial: "initial",
   animate: "animate",
   exit: "exit",
-  transition: { duration: 0.15, ease: "easeOut" },
+  transition: { duration: 0.25, ease: "easeOut" },
 };
 
 export type CopyStateIconProps = {
@@ -34,12 +34,12 @@ export function CopyStateIcon({ state, idleIcon, doneIcon, errorIcon }: CopyStat
   return (
     <AnimatePresence mode="popLayout" initial={false}>
       {state === "idle" ? (
-        <motion.span key="idle" {...motionIconProps}>
+        <motion.span key="idle" {...motionIconProps} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }}>
           {idleIcon ?? <CopyIcon />}
         </motion.span>
       ) : state === "done" ? (
         <motion.span key="done" {...motionIconProps}>
-          {doneIcon ?? <CheckIcon strokeWidth={3} />}
+          {doneIcon ?? <CheckIcon strokeWidth={3} color="green" />}
         </motion.span>
       ) : state === "error" ? (
         <motion.span key="error" {...motionIconProps}>
@@ -78,6 +78,7 @@ export function CopyButton({
         onClick?.(e);
       }}
       aria-label="Copy"
+      variant={"ghost"}
       {...props}
     >
       <CopyStateIcon state={state} idleIcon={idleIcon} doneIcon={doneIcon} errorIcon={errorIcon} />
