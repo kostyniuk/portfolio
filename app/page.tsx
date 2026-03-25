@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Bio } from "@/components/custom/bio";
+import { Socials } from "@/components/custom/socials";
 
 export default function Page() {
   return (
@@ -18,6 +19,7 @@ export default function Page() {
           (Press <kbd>d</kbd> to toggle dark mode)
         </div>
         <Bio />
+        <Socials />
       </div>
     </div>
   );
