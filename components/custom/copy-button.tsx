@@ -34,7 +34,7 @@ export function CopyStateIcon({ state, idleIcon, doneIcon, errorIcon }: CopyStat
   return (
     <AnimatePresence mode="popLayout" initial={false}>
       {state === "idle" ? (
-        <motion.span key="idle" {...motionIconProps} whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }}>
+        <motion.span key="idle" {...motionIconProps}>
           {idleIcon ?? <CopyIcon />}
         </motion.span>
       ) : state === "done" ? (
@@ -71,18 +71,20 @@ export function CopyButton({
   const { state, copy } = useCopyToClipboard({ onCopySuccess, onCopyError });
 
   return (
-    <Button
-      size={size}
-      onClick={(e) => {
-        void copy(text);
-        onClick?.(e);
-      }}
-      aria-label="Copy"
-      variant={"ghost"}
-      {...props}
-    >
-      <CopyStateIcon state={state} idleIcon={idleIcon} doneIcon={doneIcon} errorIcon={errorIcon} />
-      {children}
-    </Button>
+    <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }}>
+      <Button
+        size={size}
+        onClick={(e) => {
+          void copy(text);
+          onClick?.(e);
+        }}
+        aria-label="Copy"
+        variant={"ghost"}
+        {...props}
+      >
+        <CopyStateIcon state={state} idleIcon={idleIcon} doneIcon={doneIcon} errorIcon={errorIcon} />
+        {children}
+      </Button>
+    </motion.div>
   );
 }
