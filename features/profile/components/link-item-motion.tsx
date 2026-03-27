@@ -3,11 +3,11 @@
 import type { ReactNode } from "react";
 import { motion } from "motion/react";
 
-type SocialItemMotionProps = {
+type LinkItemMotionProps = {
   children: ReactNode;
 };
 
-function SocialItemMotion({ children }: SocialItemMotionProps) {
+function LinkItemMotion({ children }: LinkItemMotionProps) {
   return (
     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
       {children}
@@ -15,4 +15,4 @@ function SocialItemMotion({ children }: SocialItemMotionProps) {
   );
 }
 
-export { SocialItemMotion };
+export { LinkItemMotion };

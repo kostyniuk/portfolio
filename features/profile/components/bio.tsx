@@ -10,7 +10,7 @@ const BIO_ROWS = [
 
 function Bio() {
   return (
-    <div className="mt-8 font-mono">
+    <div className="font-mono">
       <Image
         src="/profile.jpg"
         width={200}

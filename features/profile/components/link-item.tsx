@@ -1,18 +1,18 @@
 import type { SocialIcon } from "@/components/icons/social-icons";
 import { GlowBorder } from "@/components/custom/glow-border";
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
-import { SocialItemMotion } from "@/features/profile/components/social-item-motion";
-import React from "react";
+import { LinkItemMotion } from "@/features/profile/components/link-item-motion";
 
-type Social = {
+interface LinkItemProps {
   link: string;
   label: string;
+  description?: string;
   Icon: SocialIcon;
-};
+}
 
-function SocialItem({ label, link, Icon }: Social) {
+function LinkItem({ label, link, description, Icon }: LinkItemProps) {
   return (
-    <SocialItemMotion>
+    <LinkItemMotion>
       <a href={link} target="_blank" rel="noopener noreferrer">
         <Item variant="outline" className="relative">
           <GlowBorder />
@@ -21,13 +21,13 @@ function SocialItem({ label, link, Icon }: Social) {
           </ItemMedia>
           <ItemContent className="relative z-10">
             <ItemTitle>{label}</ItemTitle>
-            <ItemDescription>{label}</ItemDescription>
+            {description && <ItemDescription>{description}</ItemDescription>}
           </ItemContent>
         </Item>
       </a>
-    </SocialItemMotion>
+    </LinkItemMotion>
   );
 }
 
-export { SocialItem };
-export type { Social };
+export { LinkItem };
+export type { LinkItemProps };

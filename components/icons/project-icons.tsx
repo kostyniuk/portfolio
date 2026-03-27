@@ -1,0 +1,35 @@
+import type { ComponentType } from "react";
+
+type ProjectIconProps = {
+  className?: string;
+};
+
+type ProjectIcon = ComponentType<ProjectIconProps>;
+
+function MellowIcon({ className }: ProjectIconProps) {
+  return (
+    <svg
+      viewBox="0 0 64 64"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <rect width="64" height="64" rx="12" fill="none" />
+      <rect x="10" y="20" width="30" height="10" rx="5" fill="#8b5cf6" />
+      <rect x="24" y="36" width="30" height="10" rx="5" fill="#f59e0b" />
+      <rect
+        x="20"
+        y="24"
+        width="24"
+        height="18"
+        rx="4"
+        fill="#fff"
+        opacity=".1"
+        transform="rotate(-15 32 32)"
+      />
+    </svg>
+  );
+}
+
+export { MellowIcon };
+export type { ProjectIcon, ProjectIconProps };
