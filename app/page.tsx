@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Bio } from "@/components/custom/bio";
-import { Socials } from "@/components/custom/socials";
+import { Bio } from "@/features/profile/components/bio";
+import { Socials } from "@/features/profile/components/socials";
 
 export default function Page() {
   return (

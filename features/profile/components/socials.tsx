@@ -1,5 +1,5 @@
 import { GitHubIcon, InstagramIcon, LinkedInIcon, XIcon } from "@/components/icons/social-icons";
-import { SocialItem, type Social } from "./social-item";
+import { SocialItem, type Social } from "@/features/profile/components/social-item";
 
 const SOCIAL_NETWORKS = {
   x: { link: "", label: "@costiniuc00", Icon: XIcon },
@@ -10,9 +10,9 @@ const SOCIAL_NETWORKS = {
 
 function Socials() {
   return (
-    <div className="">
+    <div>
       <h1>Socials</h1>
-      <div className="flex gap-2 mt-2">
+      <div className="mt-2 flex gap-2">
         {Object.entries(SOCIAL_NETWORKS).map(([id, social]) => {
           return <SocialItem key={id} {...social} />;
         })}

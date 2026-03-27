@@ -1,6 +1,6 @@
 import type { SocialIcon } from "@/components/icons/social-icons";
-import { Item, ItemContent, ItemMedia, ItemTitle } from "../ui/item";
-import { GlowBorder } from "./glow-border";
+import { GlowBorder } from "@/components/custom/glow-border";
+import { Item, ItemContent, ItemMedia, ItemTitle } from "@/components/ui/item";
 
 type Social = {
   link?: string;
