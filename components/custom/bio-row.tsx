@@ -1,5 +1,3 @@
-"use client";
-
 import { Item, ItemContent, ItemMedia, ItemTitle } from "../ui/item";
 import { CopyButton } from "./copy-button";
 
@@ -12,7 +10,9 @@ type BioItem = {
 function BioRow({ emojiCode, title, canBeCopied }: BioItem) {
   return (
     <Item>
-      <ItemMedia variant="icon">{emojiCode}</ItemMedia>
+      <ItemMedia variant="icon">
+        {emojiCode}
+      </ItemMedia>
       <ItemContent className="flex flex-row gap-2">
         <ItemTitle>{title}</ItemTitle>
         {canBeCopied && <CopyButton text={title} />}

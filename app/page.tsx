@@ -5,7 +5,7 @@ import { Socials } from "@/components/custom/socials";
 export default function Page() {
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col h-dvh w-1/2 bg-foreground/2 text-sm leading-loose">
+      <div className="flex flex-col h-dvh w-1/2 bg-foreground/2 text-sm leading-loose p-8">
         <div className="font-sans">
           <h1 className="font-blog-title text-4xl text-primary/80">Project ready!</h1>
           <p>You may now add components and start building.</p>
