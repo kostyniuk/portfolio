@@ -1,5 +1,4 @@
 import { MellowIcon } from "@/components/icons/project-icons";
-import { GitHubIcon, XIcon } from "@/components/icons/social-icons";
 import { LinkItem, type LinkItemProps } from "@/features/profile/components/link-item";
 
 interface Project extends LinkItemProps {
@@ -17,9 +16,14 @@ const PROJECTS = {
   mellow_fmt: {
     link: "https://mellowfmt.vercel.app",
     label: "Mellow fmt",
-    Icon: MellowIcon,
     description:
       "An interactive playground for exploring and comparing code formatting options between Prettier and Oxfmt.",
+  },
+  alex_posts: {
+    link: "https://alex-posts.netlify.app/",
+    label: "Alex Posts",
+    description:
+      "Insights and thoughts on technology and development, with a focus on React, its ecosystem, PostgreSQL, and all things JavaScript and TypeScript.",
   },
 } satisfies Record<string, Project>;
 

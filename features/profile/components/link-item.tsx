@@ -1,4 +1,4 @@
-import type { SocialIcon } from "@/components/icons/social-icons";
+import { DocumentIcon, type ProjectIcon } from "@/components/icons/project-icons";
 import { GlowBorder } from "@/components/custom/glow-border";
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
 import { LinkItemMotion } from "@/features/profile/components/link-item-motion";
@@ -7,7 +7,7 @@ interface LinkItemProps {
   link: string;
   label: string;
   description?: string;
-  Icon: SocialIcon;
+  Icon?: ProjectIcon;
 }
 
 function LinkItem({ label, link, description, Icon }: LinkItemProps) {
@@ -17,7 +17,11 @@ function LinkItem({ label, link, description, Icon }: LinkItemProps) {
         <Item variant="outline" className="relative">
           <GlowBorder />
           <ItemMedia className="relative z-10">
-            <Icon className="size-10 text-black dark:text-white" />
+            {Icon ? (
+              <Icon className="size-10 text-black dark:text-white" />
+            ) : (
+              <DocumentIcon className="size-10 text-black dark:text-white" />
+            )}
           </ItemMedia>
           <ItemContent className="relative z-10">
             <ItemTitle>{label}</ItemTitle>
