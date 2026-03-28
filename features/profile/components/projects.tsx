@@ -11,7 +11,7 @@ const PROJECTS = {
     label: "Mellow Lines",
     Icon: MellowIcon,
     description:
-      "Code animation studio that transforms your code snippets into beautiful, smooth transition animations.",
+      "A web app for creating animated videos of code morphing between steps. Paste code snippets, configure syntax highlighting and export smooth token-level transitions as WebM/MP4/gif videos.",
   },
   mellow_fmt: {
     link: "https://mellowfmt.vercel.app",
