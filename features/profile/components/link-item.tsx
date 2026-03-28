@@ -1,6 +1,6 @@
 import { DocumentIcon, type ProjectIcon } from "@/components/icons/project-icons";
-import { GlowBorder } from "@/components/custom/glow-border";
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
+import { ShineBorder } from "@/components/ui/shine-border";
 import { LinkItemMotion } from "@/features/profile/components/link-item-motion";
 
 interface LinkItemProps {
@@ -10,12 +10,15 @@ interface LinkItemProps {
   Icon?: ProjectIcon;
 }
 
+const BORDER_DURATION = 3.4;
+const BORDER_COLOR = "color-mix(in oklab, var(--foreground) 90%, transparent)";
+
 function LinkItem({ label, link, description, Icon }: LinkItemProps) {
   return (
     <LinkItemMotion>
       <a href={link} target="_blank" rel="noopener noreferrer">
         <Item variant="outline" className="relative">
-          <GlowBorder />
+          <ShineBorder duration={BORDER_DURATION} shineColor={BORDER_COLOR} />
           <ItemMedia className="relative z-10">
             {Icon ? (
               <Icon className="size-10 text-black dark:text-white" />
