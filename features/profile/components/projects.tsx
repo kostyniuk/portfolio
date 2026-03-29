@@ -28,7 +28,7 @@ const PROJECTS = {
     label: "Alex Posts",
     description:
       "Insights and thoughts on technology and development, with a focus on React, its ecosystem, PostgreSQL, and all things JavaScript and TypeScript.",
-    videoHref: "/mellow_lines.mp4",
+    videoHref: "/alex-posts.mp4",
   },
 } satisfies Record<string, Project>;
 
