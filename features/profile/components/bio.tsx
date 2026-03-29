@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { BioRow, type BioItem } from "@/features/profile/components/bio-row";
+import { ProfileHeader } from "./profile-header";
 
 const BIO_ROWS = [
   { emojiCode: "📍", title: "Stockholm 🇸🇪" },
@@ -18,7 +19,7 @@ function Bio() {
         alt="Picture of the author"
         className="rounded-full object-cover"
       />
-      <p className="text-xl">Alex Kostyniuk, 26</p>
+      <ProfileHeader />
       <div className="text-lg [&_*]:font-mono [&_*]:text-base">
         {BIO_ROWS.map(({ emojiCode, title, canBeCopied }, index) => (
           <BioRow key={index} emojiCode={emojiCode} title={title} canBeCopied={canBeCopied} />
