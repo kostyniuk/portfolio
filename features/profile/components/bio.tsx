@@ -10,7 +10,7 @@ const BIO_ROWS = [
 
 function Bio() {
   return (
-    <div className="font-mono">
+    <div className="font-mono flex flex-col gap-2">
       <Image
         src="/profile.jpg"
         width={200}
