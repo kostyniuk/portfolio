@@ -1,5 +1,4 @@
 import { Bio } from "@/features/profile/components/bio";
-import { PreviewProject } from "@/features/projects/components/project-preview";
 import { Projects } from "@/features/profile/components/projects";
 import { Socials } from "@/features/profile/components/socials";
 
@@ -13,7 +12,6 @@ export default function Page() {
         <Bio />
         <Socials />
         <Projects />
-        <PreviewProject />
       </div>
     </div>
   );

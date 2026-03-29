@@ -21,7 +21,7 @@ const PROJECTS = {
     label: "Mellow fmt",
     description:
       "An interactive playground for exploring and comparing code formatting options between Prettier and Oxfmt.",
-    videoHref: "/mellow_lines.mp4",
+    videoHref: "/mellow_fmt.mp4",
   },
   alex_posts: {
     link: "https://alex-posts.netlify.app/",
