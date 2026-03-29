@@ -19,14 +19,7 @@ function PreviewProject() {
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <video
-          src="https://cdn.llm.report/openai-demo.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-192 h-108 object-cover"
-        ></video>
+        <video src="/mellow_lines.mp4" loop controls muted className="w-192 h-108 object-cover"></video>
         <p>
           A web app for creating animated videos of code morphing between steps. Paste code snippets, configure syntax
           highlighting and export smooth token-level transitions as WebM/MP4 videos.{" "}
