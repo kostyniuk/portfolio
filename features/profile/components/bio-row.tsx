@@ -9,7 +9,7 @@ type BioItem = {
 
 function BioRow({ emojiCode, title, canBeCopied }: BioItem) {
   return (
-    <Item>
+    <Item className="p-1">
       <ItemMedia variant="icon">{emojiCode}</ItemMedia>
       <ItemContent className="flex flex-row gap-2">
         <ItemTitle>{title}</ItemTitle>
