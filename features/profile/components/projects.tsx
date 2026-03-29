@@ -5,6 +5,7 @@ import { PreviewProject } from "@/features/projects/components/project-preview";
 interface Project extends LinkItemProps {
   description: string;
   videoHref: string;
+  source: string;
 }
 
 const PROJECTS = {
@@ -15,6 +16,7 @@ const PROJECTS = {
     description:
       "A web app for creating animated videos of code morphing between steps. Paste code snippets, configure syntax highlighting and export smooth token-level transitions as WebM/MP4/gif videos.",
     videoHref: "/mellow_lines.mp4",
+    source: "https://github.com/kostyniuk/mellow-lines",
   },
   mellow_fmt: {
     link: "https://mellowfmt.vercel.app",
@@ -22,6 +24,7 @@ const PROJECTS = {
     description:
       "An interactive playground for exploring and comparing code formatting options between Prettier and Oxfmt.",
     videoHref: "/mellow_fmt.mp4",
+    source: "https://github.com/kostyniuk/mellow-fmt",
   },
   alex_posts: {
     link: "https://alex-posts.netlify.app/",
@@ -29,6 +32,7 @@ const PROJECTS = {
     description:
       "Insights and thoughts on technology and development, with a focus on React, its ecosystem, PostgreSQL, and all things JavaScript and TypeScript.",
     videoHref: "/alex-posts.mp4",
+    source: "https://github.com/kostyniuk/alex-posts",
   },
 } satisfies Record<string, Project>;
 

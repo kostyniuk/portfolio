@@ -1,10 +1,11 @@
-import { MellowIcon } from "@/components/icons/project-icons";
 import { AccordionContent } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Project } from "@/features/profile/components/projects";
+import { BadgeAsLink } from "@/components/ui/badge";
+import { ArrowUpRightIcon } from "lucide-react";
 
-function PreviewProject({ label, link, Icon, description, videoHref }: Project) {
+function PreviewProject({ label, link, Icon, description, source, videoHref }: Project) {
   const items = [
     {
       value: "preview",
@@ -19,6 +20,12 @@ function PreviewProject({ label, link, Icon, description, videoHref }: Project) 
         <CardTitle className="flex items-center gap-2">
           {Icon && <Icon className="size-10" />}
           <p>{label}</p>
+          <BadgeAsLink href={link} variant={"secondary"}>
+            Website <ArrowUpRightIcon data-icon="inline-end" />
+          </BadgeAsLink>
+          <BadgeAsLink href={source} variant={"outline"}>
+            Source <ArrowUpRightIcon data-icon="inline-end" />
+          </BadgeAsLink>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
