@@ -16,7 +16,7 @@ type Interest = {
   variant?: VariantProps<typeof avatarImageVariants>["variant"];
 };
 
-const INTERESTS: Interest[] = [
+const INTERESTS = [
   {
     name: "shadcn",
     src: "https://github.com/shadcn.png",
@@ -66,7 +66,7 @@ const INTERESTS: Interest[] = [
     Icon: <MySQL />,
     variant: "square",
   },
-];
+] satisfies Interest[];
 
 function Interests() {
   return (
