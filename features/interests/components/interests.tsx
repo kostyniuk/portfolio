@@ -1,8 +1,9 @@
 "use client";
 
 import { ReactDark } from "@/components/icons/interests-icons";
-import { Avatar, AvatarGroup, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarGroup, AvatarImage, avatarImageVariants } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { VariantProps } from "class-variance-authority";
 import { ReactElement } from "react";
 
 type Interest = {
@@ -11,6 +12,7 @@ type Interest = {
   fallback?: string;
   className?: string;
   Icon?: ReactElement;
+  variant?: VariantProps<typeof avatarImageVariants>["variant"];
 };
 
 const INTERESTS: Interest[] = [
@@ -35,6 +37,7 @@ const INTERESTS: Interest[] = [
   {
     name: "PostgreSQL",
     src: "https://www.postgresql.org/media/img/about/press/elephant.png",
+    variant: "square",
   },
   {
     name: "Next.js",
@@ -59,6 +62,7 @@ const INTERESTS: Interest[] = [
   {
     name: "MySQL",
     src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png",
+    variant: "square",
   },
 ];
 
@@ -67,12 +71,12 @@ function Interests() {
     <div>
       <h1>Interests</h1>
       <AvatarGroup className="gap-4">
-        {INTERESTS.map(({ name, className, src, Icon }) => (
+        {INTERESTS.map(({ name, className, src, Icon, variant }) => (
           <Tooltip key={name}>
             <TooltipTrigger>
               <Avatar size="lg" variant="ghost" className={className}>
                 {!Icon ? (
-                  <AvatarImage src={src} alt={name} />
+                  <AvatarImage src={src} alt={name} variant={variant} />
                 ) : (
                   <div className="size-full overflow-hidden rounded-full [&>svg]:size-full [&>svg]:block">{Icon}</div>
                 )}

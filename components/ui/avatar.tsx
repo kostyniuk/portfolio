@@ -40,11 +40,27 @@ function Avatar({
   );
 }
 
-function AvatarImage({ className, ...props }: AvatarPrimitive.Image.Props) {
+export const avatarImageVariants = cva("", {
+  variants: {
+    variant: {
+      default: "aspect-square size-full rounded-full object-cover",
+      square: "aspect-square",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
+function AvatarImage({
+  className,
+  variant,
+  ...props
+}: AvatarPrimitive.Image.Props & VariantProps<typeof avatarImageVariants>) {
   return (
     <AvatarPrimitive.Image
       data-slot="avatar-image"
-      className={cn("aspect-square size-full rounded-full object-cover", className)}
+      className={cn(avatarImageVariants({ variant }), className)}
       {...props}
     />
   );
