@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { BioRow, type BioItem } from "@/features/profile/components/bio-row";
 import { ProfileHeader } from "./profile-header";
 

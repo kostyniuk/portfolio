@@ -1,7 +1,7 @@
 import { AccordionContent } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Project } from "@/features/profile/components/projects";
+import { Project } from "@/features/projects/components/projects";
 import { BadgeAsLink } from "@/components/ui/badge";
 import { ArrowUpRightIcon } from "lucide-react";
 
