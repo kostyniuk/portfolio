@@ -2,6 +2,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { Bio } from "@/features/profile/components/bio";
 import { Projects } from "@/features/projects/components/projects";
 import { Socials } from "@/features/profile/components/socials";
+import { Interests } from "@/features/interests/components/interests";
 
 export default function Page() {
   return (
@@ -13,6 +14,7 @@ export default function Page() {
         <Bio />
         <Socials />
         <Projects />
+        <Interests />
       </div>
     </div>
   );
