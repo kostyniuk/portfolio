@@ -12,13 +12,6 @@ const BIO_ROWS = [
 function Bio() {
   return (
     <div className="font-mono flex flex-col gap-2">
-      <Image
-        src="/profile.jpg"
-        width={200}
-        height={200}
-        alt="Picture of the author"
-        className="rounded-full object-cover"
-      />
       <ProfileHeader />
       <div className="text-lg [&_*]:font-mono [&_*]:text-base">
         {BIO_ROWS.map(({ emojiCode, title, canBeCopied }, index) => (
