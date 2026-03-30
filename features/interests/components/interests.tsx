@@ -1,10 +1,11 @@
 "use client";
 
-import { ReactDark } from "@/components/icons/interests-icons";
+import { MySQL, ReactDark } from "@/components/icons/interests-icons";
 import { Avatar, AvatarGroup, AvatarImage, avatarImageVariants } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { VariantProps } from "class-variance-authority";
 import { ReactElement } from "react";
+import { cn } from "@/lib/utils";
 
 type Interest = {
   name: string;
@@ -62,6 +63,7 @@ const INTERESTS: Interest[] = [
   {
     name: "MySQL",
     src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png",
+    Icon: <MySQL />,
     variant: "square",
   },
 ];
@@ -70,7 +72,7 @@ function Interests() {
   return (
     <div>
       <h1>Interests</h1>
-      <AvatarGroup className="gap-4">
+      <AvatarGroup className="gap-6">
         {INTERESTS.map(({ name, className, src, Icon, variant }) => (
           <Tooltip key={name}>
             <TooltipTrigger>
@@ -78,7 +80,11 @@ function Interests() {
                 {!Icon ? (
                   <AvatarImage src={src} alt={name} variant={variant} />
                 ) : (
-                  <div className="size-full overflow-hidden rounded-full [&>svg]:size-full [&>svg]:block">{Icon}</div>
+                  <div
+                    className={cn("size-full", "[&>svg]:block", "[&>svg]:size-full", variant === "square" && "p-1 ")}
+                  >
+                    {Icon}
+                  </div>
                 )}
                 {/* <AvatarFallback>{interest.fallbac ?? interest.name.slice(0, 2).toUpperCase()}</AvatarFallback> */}
               </Avatar>
