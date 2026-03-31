@@ -4,6 +4,7 @@ import { Projects } from "@/features/projects/components/projects";
 import { Socials } from "@/features/profile/components/socials";
 import { Interests } from "@/features/interests/components/interests";
 import { Education } from "@/features/education/components/education";
+import { Experience } from "@/features/experience/components/experience";
 
 export default function Page() {
   return (
@@ -16,6 +17,7 @@ export default function Page() {
         <Socials />
         <Projects />
         <Interests />
+        <Experience />
         <Education />
       </div>
     </div>
