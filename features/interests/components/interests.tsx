@@ -36,11 +36,11 @@ const INTERESTS = [
   {
     name: "JavaScript",
     Icon: <JavaScript />,
-    variant: "square",
   },
   {
     name: "TypeScript",
     src: "https://www.typescriptlang.org/icons/icon-512x512.png",
+    variant: "square",
   },
   {
     name: "PostgreSQL",
