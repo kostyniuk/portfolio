@@ -1,20 +1,22 @@
 "use client";
 
-import { MySQL, ReactDark } from "@/components/icons/interests-icons";
+import { JavaScript, MySQL, ReactDark } from "@/components/icons/interests-icons";
 import { Avatar, AvatarGroup, AvatarImage, avatarImageVariants } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { VariantProps } from "class-variance-authority";
 import { ReactElement } from "react";
-import { cn } from "@/lib/utils";
+import { RequireAtLeastOne, cn } from "@/lib/utils";
 
-type Interest = {
+type BaseInterest = {
   name: string;
-  src: string;
+  src?: string;
   fallback?: string;
   className?: string;
   Icon?: ReactElement;
   variant?: VariantProps<typeof avatarImageVariants>["variant"];
 };
+
+type Interest = RequireAtLeastOne<BaseInterest, "src" | "Icon">;
 
 const INTERESTS = [
   {
@@ -30,6 +32,11 @@ const INTERESTS = [
   {
     name: "Node.js",
     src: "https://github.com/nodejs.png",
+  },
+  {
+    name: "JavaScript",
+    Icon: <JavaScript />,
+    variant: "square",
   },
   {
     name: "TypeScript",
