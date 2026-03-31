@@ -4,7 +4,7 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/comp
 
 function Education() {
   return (
-    <>
+    <div>
       <h1>Education</h1>
       <Item className="gap-8">
         <ItemMedia variant="icon">
@@ -16,7 +16,7 @@ function Education() {
           <ItemDescription>Bachelor Degree, Computer Engineering, 2017 - 2021.</ItemDescription>
         </ItemContent>
       </Item>
-    </>
+    </div>
   );
 }
 
