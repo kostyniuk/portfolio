@@ -11,7 +11,7 @@ function KPILogoWhite({ className }: EducationIconProps) {
     <img
       src="/kpi-logo-white.png"
       alt="National Technical University of Ukraine 'Igor Sikorsky Kyiv Polytechnic Institute'"
-      width={200}
+      width={50}
       className={className}
     />
   );
@@ -22,7 +22,7 @@ function KPILogoBlack({ className }: EducationIconProps) {
     <img
       src="/kpi-logo-black.png"
       alt="National Technical University of Ukraine 'Igor Sikorsky Kyiv Polytechnic Institute'"
-      width={200}
+      width={50}
       className={className}
     />
   );
