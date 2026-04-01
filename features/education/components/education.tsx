@@ -13,6 +13,7 @@ function Education() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>National Technical University of Ukraine “Igor Sikorsky Kyiv Polytechnic Institute”</ItemTitle>
+          <ItemDescription>Faculty of Informatics and Computer Engineering</ItemDescription>
           <ItemDescription>Bachelor Degree, Computer Engineering, 2017 - 2021.</ItemDescription>
         </ItemContent>
       </Item>
