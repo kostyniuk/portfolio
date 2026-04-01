@@ -62,35 +62,37 @@ const EXPERIENCES = [
 
 function Experience() {
   return (
-    <div className="p-8 shrink-0 flex flex-col border bg-fo">
+    <div>
       <h1>Experience</h1>
-      <div className="flex flex-row shrink-0 gap-6 py-4 mt-8">
-        <div className="flex flex-col relative">
-          <div className="top-0 left-0 left-3 -translate-x-1/2 absolute h-full w-[2px] bg-foreground rounded-full"></div>
-          {EXPERIENCES.map((experience, index) => (
-            <div key={index} className="flex gap-12">
-              <div className="h-full">
-                <div className="w-6 h-6 bg-foreground rounded-full sticky top-10 relative z-10"></div>
+      <div className="mt-2 px-8 shrink-0 flex flex-col ring-1 ring-foreground/10 bg-card">
+        <div className="flex flex-row shrink-0 gap-6 py-4">
+          <div className="flex flex-col relative">
+            <div className="top-0 left-0 left-3 -translate-x-1/2 absolute h-full w-[2px] bg-foreground rounded-full"></div>
+            {EXPERIENCES.map((experience, index) => (
+              <div key={index} className="flex gap-12">
+                <div className="h-full">
+                  <div className="w-6 h-6 bg-foreground rounded-full sticky top-10 relative z-10"></div>
+                </div>
+                <Item className="mb-12">
+                  <ItemContent>
+                    <span className="text-[0.625rem] font-mono text-muted-foreground tracking-wide">
+                      {experience.period}
+                    </span>
+                    <ItemTitle>{experience.title}</ItemTitle>
+                    <ItemDescription className="font-medium text-foreground">{experience.company}</ItemDescription>
+                    <ItemDescription className="line-clamp-3">{experience.description}</ItemDescription>
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {experience.stack.map((tech) => (
+                        <Badge key={tech} variant="outline">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </ItemContent>
+                </Item>
               </div>
-              <Item className="mb-12">
-                <ItemContent>
-                  <span className="text-[0.625rem] font-mono text-muted-foreground tracking-wide">
-                    {experience.period}
-                  </span>
-                  <ItemTitle>{experience.title}</ItemTitle>
-                  <ItemDescription className="font-medium text-foreground">{experience.company}</ItemDescription>
-                  <ItemDescription className="line-clamp-3">{experience.description}</ItemDescription>
-                  <div className="flex flex-wrap gap-1.5 mt-1">
-                    {experience.stack.map((tech) => (
-                      <Badge key={tech} variant="outline">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </ItemContent>
-              </Item>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
