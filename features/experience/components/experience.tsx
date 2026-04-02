@@ -12,6 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Item, ItemContent, ItemDescription, ItemTitle } from "@/components/ui/item";
 import type { ComponentType } from "react";
+import { StickyIcon } from "./sticky-icon";
 
 const EXPERIENCES: {
   period: string;
@@ -105,11 +106,9 @@ function Experience() {
             <div className="top-0 left-0 left-3 -translate-x-1/2 absolute h-full w-[2px] bg-foreground rounded-full"></div>
             {EXPERIENCES.map((experience, index) => (
               <div key={index} className="flex gap-12">
-                <div className="h-full">
-                  <div className="w-6 h-6 bg-foreground text-background rounded-full sticky top-10 relative z-10 flex items-center justify-center">
-                    <experience.Icon className="size-3.5" />
-                  </div>
-                </div>
+                <StickyIcon>
+                  <experience.Icon className="size-3.5" />
+                </StickyIcon>
                 <Item className="mb-12 last:mb-0">
                   <ItemContent>
                     <span className="text-[0.625rem] font-mono text-muted-foreground tracking-wide">
