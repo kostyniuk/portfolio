@@ -16,8 +16,8 @@ export default function Page() {
         <Bio />
         <Socials />
         <Projects />
-        <Interests />
         <Experience />
+        <Interests />
         <Education />
       </div>
     </div>
