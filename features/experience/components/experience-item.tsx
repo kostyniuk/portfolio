@@ -1,27 +1,50 @@
+"use client";
+
+import React from "react";
 import { Item, ItemContent, ItemTitle, ItemDescription } from "@/components/ui/item";
 import { StickyIcon } from "./sticky-icon";
-import { ExperienceProps } from "./experience";
+import type { ExperienceProps } from "./experience";
 import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronsUpDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-function ExperienceItem({ experience }: { experience: ExperienceProps }) {
+function ExperienceItem({ Icon, title, stack, description, company, period, keyPoints }: ExperienceProps) {
+  const [openDetailedInformation, setOpenDetailedInformation] = React.useState(false);
+
   return (
     <div className="flex gap-12">
       <StickyIcon>
-        <experience.Icon className="size-3.5" />
+        <Icon className="size-3.5" />
       </StickyIcon>
       <Item className="mb-12 last:mb-0">
         <ItemContent>
-          <span className="text-[0.625rem] font-mono text-muted-foreground tracking-wide">{experience.period}</span>
-          <ItemTitle>{experience.title}</ItemTitle>
-          <ItemDescription className="font-medium text-foreground">{experience.company}</ItemDescription>
-          <ItemDescription className="line-clamp-3">{experience.description}</ItemDescription>
-          <div className="flex flex-wrap gap-1.5 mt-1">
-            {experience.stack.map((tech) => (
-              <Badge key={tech} variant="outline">
-                {tech}
-              </Badge>
-            ))}
-          </div>
+          <span className="text-[0.625rem] font-mono tracking-wide text-muted-foreground">{period}</span>
+          <Collapsible open={openDetailedInformation} onOpenChange={setOpenDetailedInformation}>
+            <ItemTitle>
+              {title}
+              <CollapsibleTrigger>
+                <Button variant="ghost" size="icon" className="size-8">
+                  <ChevronsUpDown />
+                  <span className="sr-only">Toggle details</span>
+                </Button>
+              </CollapsibleTrigger>
+            </ItemTitle>
+            <ItemDescription className="font-medium text-foreground">{company}</ItemDescription>
+            <ItemDescription className="line-clamp-3">{description}</ItemDescription>
+            <CollapsibleContent className="flex flex-col gap-2 py-4">
+              {keyPoints?.map((keyPoint) => (
+                <ItemDescription>{keyPoint}</ItemDescription>
+              ))}
+            </CollapsibleContent>
+            <div className="mt-1 flex flex-wrap gap-1.5">
+              {stack.map((tech) => (
+                <Badge key={tech} variant="outline">
+                  {tech}
+                </Badge>
+              ))}
+            </div>
+          </Collapsible>
         </ItemContent>
       </Item>
     </div>

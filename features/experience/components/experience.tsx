@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AnthropicIcon,
   CloudflareIcon,
@@ -28,7 +30,13 @@ const EXPERIENCES: ExperienceProps[] = [
     description:
       "Spending a lot of time on enhancing both DX and product, introducing a lot of new technologies and moving the product forward. Managing the team of 2-3 people. More detailed:",
     stack: ["Node.js", "React", "Node.js", "TypeScript", "Javascript", "Postgres"],
-    keyPoints: [],
+    keyPoints: [
+      "Led a small cross-functional team of 2-3 engineers and coordinated delivery priorities.",
+      "Improved developer experience by simplifying local workflows, tooling, and build/deploy feedback loops.",
+      "Introduced and evaluated new technologies to modernize the product stack and reduce maintenance overhead.",
+      "Worked across product and engineering to ship features that improved both customer workflows and internal velocity.",
+      "Helped shape technical direction, with a focus on maintainable architecture and pragmatic execution.",
+    ],
   },
   {
     period: "January 2023 — February 2024",
@@ -78,7 +86,7 @@ function Experience() {
           <div className="flex flex-col relative">
             <div className="top-0 left-0 left-3 -translate-x-1/2 absolute h-full w-[2px] bg-foreground rounded-full"></div>
             {EXPERIENCES.map((experience, index) => (
-              <ExperienceItem key={index} experience={experience} />
+              <ExperienceItem key={index} {...experience} />
             ))}
           </div>
         </div>
