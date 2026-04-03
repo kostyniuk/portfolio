@@ -2,24 +2,26 @@ import {
   AnthropicIcon,
   CloudflareIcon,
   GoogleIcon,
+  MicrosoftIcon,
   OpenAIIcon,
   VercelIcon,
+  XCorpIcon,
+  YouTubeIcon,
   type CompanyIconProps,
 } from "@/components/icons/company-icons";
+import { Badge } from "@/components/ui/badge";
+import { Item, ItemContent, ItemDescription, ItemTitle } from "@/components/ui/item";
 import type { ComponentType } from "react";
-import { ExperienceItem } from "./experience-item";
+import { StickyIcon } from "./sticky-icon";
 
-type ExperienceProps = {
+const EXPERIENCES: {
   period: string;
   title: string;
   company: string;
   description: string;
   stack: string[];
-  keyPoints?: string[];
   Icon: ComponentType<CompanyIconProps>;
-};
-
-const EXPERIENCES: ExperienceProps[] = [
+}[] = [
   {
     period: "May 2025 — Present",
     title: "Team Lead",
@@ -28,7 +30,6 @@ const EXPERIENCES: ExperienceProps[] = [
     description:
       "Spending a lot of time on enhancing both DX and product, introducing a lot of new technologies and moving the product forward. Managing the team of 2-3 people. More detailed:",
     stack: ["Node.js", "React", "Node.js", "TypeScript", "Javascript", "Postgres"],
-    keyPoints: [],
   },
   {
     period: "January 2023 — February 2024",
@@ -47,7 +48,6 @@ const EXPERIENCES: ExperienceProps[] = [
     description:
       "Developed and maintained the Cloudflare Dashboard used by millions of developers. Led performance initiatives for the Workers and Pages product surfaces.",
     stack: ["React", "TypeScript", "Go", "Workers"],
-    keyPoints: [],
   },
   {
     period: "August 2019 — May 2021",
@@ -67,6 +67,33 @@ const EXPERIENCES: ExperienceProps[] = [
       "Worked on Google Search frontend infrastructure. Improved Core Web Vitals across key surfaces and contributed to the internal component library.",
     stack: ["TypeScript", "Angular", "Go", "Protobuf"],
   },
+  {
+    period: "September 2016 — February 2018",
+    title: "Software Engineer",
+    company: "YouTube",
+    Icon: YouTubeIcon,
+    description:
+      "Built player UI features and A/B tested engagement improvements across web and mobile web. Contributed to the Studio creator dashboard.",
+    stack: ["JavaScript", "Polymer", "Python", "Spanner"],
+  },
+  {
+    period: "January 2015 — August 2016",
+    title: "Software Engineer",
+    company: "Microsoft",
+    Icon: MicrosoftIcon,
+    description:
+      "Developed features for the Azure Portal and internal DevOps tooling. Worked on CI/CD pipelines and contributed to the Fluent UI design system.",
+    stack: ["React", "TypeScript", "C#", ".NET"],
+  },
+  {
+    period: "June 2014 — December 2014",
+    title: "Software Engineering Intern",
+    company: "X (formerly Twitter)",
+    Icon: XCorpIcon,
+    description:
+      "Contributed to the timeline rendering pipeline and built internal analytics dashboards for content moderation teams.",
+    stack: ["React", "Scala", "GraphQL", "Redis"],
+  },
 ];
 
 function Experience() {
@@ -78,7 +105,28 @@ function Experience() {
           <div className="flex flex-col relative">
             <div className="top-0 left-0 left-3 -translate-x-1/2 absolute h-full w-[2px] bg-foreground rounded-full"></div>
             {EXPERIENCES.map((experience, index) => (
-              <ExperienceItem key={index} experience={experience} />
+              <div key={index} className="flex gap-12">
+                <StickyIcon>
+                  <experience.Icon className="size-3.5" />
+                </StickyIcon>
+                <Item className="mb-12 last:mb-0">
+                  <ItemContent>
+                    <span className="text-[0.625rem] font-mono text-muted-foreground tracking-wide">
+                      {experience.period}
+                    </span>
+                    <ItemTitle>{experience.title}</ItemTitle>
+                    <ItemDescription className="font-medium text-foreground">{experience.company}</ItemDescription>
+                    <ItemDescription className="line-clamp-3">{experience.description}</ItemDescription>
+                    <div className="flex flex-wrap gap-1.5 mt-1">
+                      {experience.stack.map((tech) => (
+                        <Badge key={tech} variant="outline">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </ItemContent>
+                </Item>
+              </div>
             ))}
           </div>
         </div>
@@ -87,5 +135,4 @@ function Experience() {
   );
 }
 
-export type { ExperienceProps };
 export { Experience };
