@@ -6,7 +6,7 @@ import { StickyIcon } from "./sticky-icon";
 import type { ExperienceProps } from "./experience";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsDownUp, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExperienceSections } from "./experience-section";
 
@@ -39,7 +39,7 @@ function ExperienceItem({
               {title}
               <CollapsibleTrigger>
                 <Button variant="ghost" size="icon" className="size-8">
-                  <ChevronsUpDown />
+                  {openDetailedInformation ? <ChevronsDownUp /> : <ChevronsUpDown />}
                   <span className="sr-only">Toggle details</span>
                 </Button>
               </CollapsibleTrigger>
