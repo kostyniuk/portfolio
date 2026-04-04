@@ -8,9 +8,22 @@ import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ExperienceSections } from "./experience-section";
 
-function ExperienceItem({ Icon, title, stack, description, company, period, keyPoints }: ExperienceProps) {
+function ExperienceItem({
+  Icon,
+  title,
+  stack,
+  description,
+  company,
+  period,
+  keyPoints,
+  content,
+  additionalContent,
+}: ExperienceProps) {
   const [openDetailedInformation, setOpenDetailedInformation] = React.useState(false);
+  const detailsContent = additionalContent ?? keyPoints?.map((keyPoint) => ({ summary: keyPoint }));
+  const hasAdditionalContent = Boolean(detailsContent?.length);
 
   return (
     <div className="flex gap-12">
@@ -31,15 +44,16 @@ function ExperienceItem({ Icon, title, stack, description, company, period, keyP
               </CollapsibleTrigger>
             </ItemTitle>
             <ItemDescription className="font-medium text-foreground">{company}</ItemDescription>
-            <ItemDescription className="line-clamp-3">{description}</ItemDescription>
-            <CollapsibleContent className="flex flex-col gap-2 py-4">
-              {keyPoints?.map((keyPoint) => (
-                <ItemDescription>{keyPoint}</ItemDescription>
-              ))}
-            </CollapsibleContent>
+            {description ? <ItemDescription className="line-clamp-3">{description}</ItemDescription> : null}
+            {content?.length ? <ExperienceSections sections={content} className="py-4" /> : null}
+            {hasAdditionalContent && detailsContent ? (
+              <CollapsibleContent>
+                <ExperienceSections sections={detailsContent} className="py-4" />
+              </CollapsibleContent>
+            ) : null}
             <div className="mt-1 flex flex-wrap gap-1.5">
-              {stack.map((tech) => (
-                <Badge key={tech} variant="outline">
+              {stack.map((tech, index) => (
+                <Badge key={`${index}-${tech}`} variant="outline">
                   {tech}
                 </Badge>
               ))}

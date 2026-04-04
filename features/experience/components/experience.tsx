@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  AnthropicIcon,
   CloudflareIcon,
   GoogleIcon,
   OpenAIIcon,
@@ -9,6 +8,7 @@ import {
   type CompanyIconProps,
 } from "@/components/icons/company-icons";
 import type { ComponentType } from "react";
+import type { ExperienceSectionData } from "./experience-section";
 import { ExperienceItem } from "./experience-item";
 
 type ExperienceProps = {
@@ -18,6 +18,8 @@ type ExperienceProps = {
   description: string;
   stack: string[];
   keyPoints?: string[];
+  content?: ExperienceSectionData[];
+  additionalContent?: ExperienceSectionData[];
   Icon: ComponentType<CompanyIconProps>;
 };
 
@@ -39,18 +41,9 @@ const EXPERIENCES: ExperienceProps[] = [
     ],
   },
   {
-    period: "January 2023 — February 2024",
-    title: "Software Engineer",
-    company: "Anthropic",
-    Icon: AnthropicIcon,
-    description:
-      "Worked on Claude's frontend interfaces and developer-facing tools. Built interactive components for the API playground and contributed to the prompt engineering toolkit.",
-    stack: ["React", "TypeScript", "Python", "GraphQL"],
-  },
-  {
-    period: "June 2021 — December 2022",
-    title: "Frontend Engineer",
-    company: "Cloudflare",
+    period: "May 2023 — April 2025",
+    title: "Senior Fullstack Software Engineer",
+    company: "AMFG",
     Icon: CloudflareIcon,
     description:
       "Developed and maintained the Cloudflare Dashboard used by millions of developers. Led performance initiatives for the Workers and Pages product surfaces.",
@@ -58,22 +51,63 @@ const EXPERIENCES: ExperienceProps[] = [
     keyPoints: [],
   },
   {
-    period: "August 2019 — May 2021",
-    title: "Software Engineer",
-    company: "OpenAI",
+    period: "December 2021 — May 2023",
+    title: "Middle Fullstack Software Engineer",
+    company: "AMFG",
     Icon: OpenAIIcon,
     description:
-      "Built internal tooling and developer-facing interfaces for the API platform. Contributed to the Playground and documentation infrastructure.",
-    stack: ["React", "Node.js", "Python", "PostgreSQL"],
+      "Customer CSV Upload, Google OAuth Integration, Custom Gantt Timeline with Drag-and-Drop, Workflow Automation Engine",
+    additionalContent: [
+      {
+        title: "Customer CSV Upload",
+        summary:
+          "Architected bulk migration system enabling seamless customer data imports, reducing onboarding friction for new platform adopters.",
+      },
+      {
+        title: "Google OAuth Integration",
+        summary:
+          "Implemented secure, streamlined authentication flow for admin console—eliminating password management overhead while strengthening access controls.",
+      },
+      {
+        title: "Custom Gantt Timeline with Drag-and-Drop",
+        summary: "Built interactive project visualization featuring:",
+        content: [
+          "Dynamic zoom zones for multi-scale planning",
+          "Intuitive drag-and-drop task management with real-time Gantt synchronization",
+          "Intelligent conflict detection with automated error notifications",
+        ],
+      },
+      {
+        title: "Workflow Automation Engine",
+        summary: "Designed and developed extensible automation framework supporting:",
+        content: [
+          "Event-driven triggers (e.g., order status changes)",
+          "Multi-channel actions: templated emails, targeted push notifications, cascading status updates",
+          "Composable rule system enabling complex, user-defined workflows",
+        ],
+      },
+    ],
+    stack: ["React", "Node.js", "TypeScript", "PostgreSQL"],
   },
   {
-    period: "March 2018 — July 2019",
-    title: "Frontend Engineer",
-    company: "Google",
+    period: "October 2020 — November 2021",
+    title: "Junior Fullstack Software Engineer",
+    company: "AMFG",
     Icon: GoogleIcon,
     description:
-      "Worked on Google Search frontend infrastructure. Improved Core Web Vitals across key surfaces and contributed to the internal component library.",
-    stack: ["TypeScript", "Angular", "Go", "Protobuf"],
+      "First real working experience ✨. It was a period of adjusting my life to new agenda, combining with university, improving soft skills and meeting a lot of cool people",
+    additionalContent: [
+      {
+        title: "More detailed:",
+        content: [
+          "Learning new technologies like AWS, Sequilize, styled-components, Kendo, etc.",
+          "Improved APIs response time by creating a job that migrates data from old complicated legacy DB to newer, our modern services worked with",
+          "Implemented Instant registartion flow for non logged in customer, that automatically links just created order to the account they create in in instant mode",
+          "Worked on Admin Console, implementing set of small features that reduced requests to dev team to change something manually.",
+        ],
+      },
+    ],
+    stack: ["Node.js", "React", "Postgres"],
   },
 ];
 
