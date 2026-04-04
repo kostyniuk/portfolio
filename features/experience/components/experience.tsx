@@ -46,9 +46,35 @@ const EXPERIENCES: ExperienceProps[] = [
     company: "AMFG",
     Icon: CloudflareIcon,
     description:
-      "Developed and maintained the Cloudflare Dashboard used by millions of developers. Led performance initiatives for the Workers and Pages product surfaces.",
+      "Led frontend modernization and internal platform initiatives at AMFG, spanning legacy Angular-to-React migration, advanced state management, customer automation tooling, and team-wide adoption of AI-assisted engineering workflows.",
     stack: ["React", "TypeScript", "Go", "Workers"],
-    keyPoints: [],
+    additionalContent: [
+      {
+        title: "Legacy Migration: Angular -> React Sidebar",
+        summary:
+          "Led complex decoupling and migration of core sidebar component from legacy Angular to React, navigating tight coupling and intricate legacy dependencies.",
+      },
+      {
+        title: "AI Engineering & Team Enablement",
+        summary:
+          "Pioneered agentic coding workflows using Cursor and Claude. Organized and led company's first internal AI workshop, upskilling team on LLM-assisted development practices.",
+      },
+      {
+        title: "Advanced Table State Management",
+        summary:
+          "Implemented nuqs for URL-persisted table state, solving collaboration friction across 40+ filter combinations and enabling seamless state sharing between colleagues.",
+      },
+      {
+        title: "Engine Service: Customer Automation Platform",
+        summary:
+          "Architected a sandboxed scripting environment allowing customers to write Python and JavaScript against our API. Delivered powerful automation capabilities that significantly reduced manual customer workflows.",
+      },
+      {
+        title: "Technical Interviewing",
+        summary:
+          "Conducted 50+ engineering interviews, shaping team growth and hiring standards.",
+      },
+    ],
   },
   {
     period: "December 2021 — May 2023",
