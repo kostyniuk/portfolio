@@ -11,9 +11,7 @@ type BioItem = {
 function BioRow({ icon, title, canBeCopied }: BioItem) {
   return (
     <Item className="p-1">
-      <ItemMedia variant="icon">
-        {icon}
-      </ItemMedia>
+      <ItemMedia variant="icon">{icon}</ItemMedia>
       <ItemContent className="flex flex-row gap-2">
         <ItemTitle>{title}</ItemTitle>
         {canBeCopied && <CopyButton text={title} />}

@@ -72,10 +72,7 @@ function ExperienceSections({ sections, className }: ExperienceSectionsProps) {
   return (
     <div className={cn("flex flex-col gap-4", className)}>
       {sections.map((section, index) => (
-        <ExperienceSection
-          key={`${index}-${section.title ?? section.summary ?? "section"}`}
-          section={section}
-        />
+        <ExperienceSection key={`${index}-${section.title ?? section.summary ?? "section"}`} section={section} />
       ))}
     </div>
   );

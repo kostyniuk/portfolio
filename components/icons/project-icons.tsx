@@ -19,13 +19,7 @@ function MellowIcon({ className }: ProjectIconProps) {
 
 function DocumentIcon({ className }: ProjectIconProps) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
+    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path
         d="M9 3.75H7.75A2.75 2.75 0 0 0 5 6.5v11A2.75 2.75 0 0 0 7.75 20.25h8.5A2.75 2.75 0 0 0 19 17.5V9.75L14.25 3H9Z"
         stroke="currentColor"

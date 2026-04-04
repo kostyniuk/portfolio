@@ -17,7 +17,10 @@ function LinkItem({ label, link, description, Icon }: LinkItemProps) {
   return (
     <LinkItemMotion>
       <a href={link} target="_blank" rel="noopener noreferrer">
-        <Item variant="outline" className="relative">
+        <Item
+          variant="outline"
+          className="relative overflow-hidden bg-card/95 shadow-md ring-1 ring-foreground/5 dark:ring-foreground/10"
+        >
           <ShineBorder duration={BORDER_DURATION} shineColor={BORDER_COLOR} />
           <ItemMedia className="relative z-10">
             {Icon ? (

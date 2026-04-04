@@ -26,15 +26,36 @@ function InboxGlass() {
           fill="url(#1752500502792-9868707_inbox_existing_2_7tyerg6nk)"
         />
         <defs>
-          <linearGradient id="1752500502792-9868707_inbox_existing_0_haxqvq9tn" x1="12" y1="3" x2="12" y2="18" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="1752500502792-9868707_inbox_existing_0_haxqvq9tn"
+            x1="12"
+            y1="3"
+            x2="12"
+            y2="18"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop stopColor="#575757" />
             <stop offset="1" stopColor="#151515" />
           </linearGradient>
-          <linearGradient id="1752500502792-9868707_inbox_existing_1_c1gyhmf1y" x1="23" y1="17" x2="1" y2="17" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="1752500502792-9868707_inbox_existing_1_c1gyhmf1y"
+            x1="23"
+            y1="17"
+            x2="1"
+            y2="17"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop stopColor="#E3E3E5" stopOpacity=".6" />
             <stop offset="1" stopColor="#BBBBC0" stopOpacity=".6" />
           </linearGradient>
-          <linearGradient id="1752500502792-9868707_inbox_existing_2_7tyerg6nk" x1="12" y1="13" x2="12" y2="17.633" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="1752500502792-9868707_inbox_existing_2_7tyerg6nk"
+            x1="12"
+            y1="13"
+            x2="12"
+            y2="17.633"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop stopColor="#fff" />
             <stop offset="1" stopColor="#fff" stopOpacity="0" />
           </linearGradient>
@@ -47,7 +68,16 @@ function InboxGlass() {
             filterUnits="objectBoundingBox"
             primitiveUnits="userSpaceOnUse"
           >
-            <feGaussianBlur stdDeviation="2" x="0%" y="0%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur" />
+            <feGaussianBlur
+              stdDeviation="2"
+              x="0%"
+              y="0%"
+              width="100%"
+              height="100%"
+              in="SourceGraphic"
+              edgeMode="none"
+              result="blur"
+            />
           </filter>
           <clipPath id="1752500502792-9868707_inbox_clipPath_15x7hsemd">
             <path
@@ -96,15 +126,36 @@ function SuitcaseGlass() {
           fill="url(#1752500502806-5892266_suitcase_existing_2_jc11z5glc)"
         />
         <defs>
-          <linearGradient id="1752500502806-5892266_suitcase_existing_0_3b5zzms3i" x1="12" y1="-1.5" x2="12" y2="22" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="1752500502806-5892266_suitcase_existing_0_3b5zzms3i"
+            x1="12"
+            y1="-1.5"
+            x2="12"
+            y2="22"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop stopColor="#575757" />
             <stop offset="1" stopColor="#151515" />
           </linearGradient>
-          <linearGradient id="1752500502806-5892266_suitcase_existing_1_9ndgfommo" x1="23" y1="11.5" x2="1" y2="11.5" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="1752500502806-5892266_suitcase_existing_1_9ndgfommo"
+            x1="23"
+            y1="11.5"
+            x2="1"
+            y2="11.5"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop stopColor="#E3E3E5" stopOpacity=".6" />
             <stop offset="1" stopColor="#BBBBC0" stopOpacity=".6" />
           </linearGradient>
-          <linearGradient id="1752500502806-5892266_suitcase_existing_2_jc11z5glc" x1="12" y1="6" x2="12" y2="11.5" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="1752500502806-5892266_suitcase_existing_2_jc11z5glc"
+            x1="12"
+            y1="6"
+            x2="12"
+            y2="11.5"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop stopColor="#fff" stopOpacity="1" />
             <stop offset="1" stopColor="#fff" stopOpacity="0" />
           </linearGradient>
@@ -117,7 +168,16 @@ function SuitcaseGlass() {
             filterUnits="objectBoundingBox"
             primitiveUnits="userSpaceOnUse"
           >
-            <feGaussianBlur stdDeviation="2" x="0%" y="0%" width="100%" height="100%" in="SourceGraphic" edgeMode="none" result="blur" />
+            <feGaussianBlur
+              stdDeviation="2"
+              x="0%"
+              y="0%"
+              width="100%"
+              height="100%"
+              in="SourceGraphic"
+              edgeMode="none"
+              result="blur"
+            />
           </filter>
           <clipPath id="1752500502806-5892266_suitcase_clipPath_p6yx8hppg">
             <path

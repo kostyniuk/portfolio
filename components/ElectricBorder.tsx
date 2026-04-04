@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useCallback, CSSProperties, ReactNode } from 'react';
+import React, { useEffect, useRef, useCallback, CSSProperties, ReactNode } from "react";
 
 function hexToRgba(hex: string, alpha: number = 1): string {
   if (!hex) return `rgba(0,0,0,${alpha})`;
-  let h = hex.replace('#', '');
+  let h = hex.replace("#", "");
   if (h.length === 3) {
     h = h
-      .split('')
-      .map(c => c + c)
-      .join('');
+      .split("")
+      .map((c) => c + c)
+      .join("");
   }
   const int = parseInt(h, 16);
   const r = (int >> 16) & 255;
@@ -28,12 +28,12 @@ interface ElectricBorderProps {
 
 const ElectricBorder: React.FC<ElectricBorderProps> = ({
   children,
-  color = '#5227FF',
+  color = "#5227FF",
   speed = 1,
   chaos = 0.12,
   borderRadius = 24,
   className,
-  style
+  style,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -62,7 +62,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
 
       return a * (1 - ux) * (1 - uy) + b * ux * (1 - uy) + c * (1 - ux) * uy + d * ux * uy;
     },
-    [random]
+    [random],
   );
 
   const octavedNoise = useCallback(
@@ -75,7 +75,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       baseFrequency: number,
       time: number,
       seed: number,
-      baseFlatness: number
+      baseFlatness: number,
     ): number => {
       let y = 0;
       let amplitude = baseAmplitude;
@@ -93,7 +93,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
 
       return y;
     },
-    [noise2D]
+    [noise2D],
   );
 
   const getCornerPoint = useCallback(
@@ -103,15 +103,15 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       radius: number,
       startAngle: number,
       arcLength: number,
-      progress: number
+      progress: number,
     ): { x: number; y: number } => {
       const angle = startAngle + progress * arcLength;
       return {
         x: centerX + radius * Math.cos(angle),
-        y: centerY + radius * Math.sin(angle)
+        y: centerY + radius * Math.sin(angle),
       };
     },
-    []
+    [],
   );
 
   const getRoundedRectPoint = useCallback(
@@ -169,7 +169,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       const progress = (distance - accumulated) / cornerArc;
       return getCornerPoint(left + radius, top + radius, radius, Math.PI, Math.PI / 2, progress);
     },
-    [getCornerPoint]
+    [getCornerPoint],
   );
 
   useEffect(() => {
@@ -177,7 +177,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const octaves = 10;
@@ -220,8 +220,8 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
 
       ctx.strokeStyle = color;
       ctx.lineWidth = 1;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
 
       const scale = displacement;
       const left = borderOffset;
@@ -250,7 +250,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
           frequency,
           timeRef.current,
           0,
-          baseFlatness
+          baseFlatness,
         );
         const yNoise = octavedNoise(
           progress * 8,
@@ -261,7 +261,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
           frequency,
           timeRef.current,
           1,
-          baseFlatness
+          baseFlatness,
         );
 
         const displacedX = point.x + xNoise * scale;
@@ -300,8 +300,8 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-visible isolate ${className ?? ''}`}
-      style={{ '--electric-border-color': color, borderRadius, ...style } as CSSProperties}
+      className={`relative overflow-visible isolate ${className ?? ""}`}
+      style={{ "--electric-border-color": color, borderRadius, ...style } as CSSProperties}
     >
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[2]">
         <canvas ref={canvasRef} className="block" />
@@ -309,17 +309,17 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       <div className="absolute inset-0 rounded-[inherit] pointer-events-none z-0">
         <div
           className="absolute inset-0 rounded-[inherit] pointer-events-none"
-          style={{ border: `2px solid ${hexToRgba(color, 0.6)}`, filter: 'blur(1px)' }}
+          style={{ border: `2px solid ${hexToRgba(color, 0.6)}`, filter: "blur(1px)" }}
         />
         <div
           className="absolute inset-0 rounded-[inherit] pointer-events-none"
-          style={{ border: `2px solid ${color}`, filter: 'blur(4px)' }}
+          style={{ border: `2px solid ${color}`, filter: "blur(4px)" }}
         />
         <div
           className="absolute inset-0 rounded-[inherit] pointer-events-none -z-[1] scale-110 opacity-30"
           style={{
-            filter: 'blur(32px)',
-            background: `linear-gradient(-30deg, ${color}, transparent, ${color})`
+            filter: "blur(32px)",
+            background: `linear-gradient(-30deg, ${color}, transparent, ${color})`,
           }}
         />
       </div>

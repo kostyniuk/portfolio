@@ -100,10 +100,10 @@ function Experience() {
   return (
     <div>
       <h1>Experience</h1>
-      <div className="mt-2 px-8 shrink-0 flex flex-col ring-1 ring-foreground/10 bg-card">
-        <div className="flex flex-row shrink-0 gap-6 py-4">
-          <div className="flex flex-col relative">
-            <div className="top-0 left-0 left-3 -translate-x-1/2 absolute h-full w-[2px] bg-foreground rounded-full"></div>
+      <div className="mt-3 flex shrink-0 flex-col rounded-[2rem] border border-border/40 bg-card/95 px-6 shadow-lg ring-1 ring-foreground/5 sm:px-8 dark:ring-foreground/10">
+        <div className="flex shrink-0 flex-row gap-6 py-6">
+          <div className="relative flex flex-col">
+            <div className="absolute top-0 left-0 left-3 h-full w-[2px] -translate-x-1/2 rounded-full bg-foreground"></div>
             {EXPERIENCES.map((experience, index) => (
               <div key={index} className="flex gap-12">
                 <StickyIcon>
@@ -111,13 +111,13 @@ function Experience() {
                 </StickyIcon>
                 <Item className="mb-12 last:mb-0">
                   <ItemContent>
-                    <span className="text-[0.625rem] font-mono text-muted-foreground tracking-wide">
+                    <span className="font-mono text-[0.625rem] tracking-wide text-muted-foreground">
                       {experience.period}
                     </span>
                     <ItemTitle>{experience.title}</ItemTitle>
                     <ItemDescription className="font-medium text-foreground">{experience.company}</ItemDescription>
                     <ItemDescription className="line-clamp-3">{experience.description}</ItemDescription>
-                    <div className="flex flex-wrap gap-1.5 mt-1">
+                    <div className="mt-1 flex flex-wrap gap-1.5">
                       {experience.stack.map((tech) => (
                         <Badge key={tech} variant="outline">
                           {tech}
