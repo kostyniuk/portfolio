@@ -30,14 +30,37 @@ const EXPERIENCES: ExperienceProps[] = [
     company: "AMFG",
     Icon: VercelIcon,
     description:
-      "Spending a lot of time on enhancing both DX and product, introducing a lot of new technologies and moving the product forward. Managing the team of 2-3 people. More detailed:",
-    stack: ["Node.js", "React", "Node.js", "TypeScript", "Javascript", "Postgres"],
-    keyPoints: [
-      "Led a small cross-functional team of 2-3 engineers and coordinated delivery priorities.",
-      "Improved developer experience by simplifying local workflows, tooling, and build/deploy feedback loops.",
-      "Introduced and evaluated new technologies to modernize the product stack and reduce maintenance overhead.",
-      "Worked across product and engineering to ship features that improved both customer workflows and internal velocity.",
-      "Helped shape technical direction, with a focus on maintainable architecture and pragmatic execution.",
+      "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives while managing a team of 2-3 engineers.",
+    stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Python"],
+    additionalContent: [
+      {
+        title: "Frontend Architecture & Developer Experience",
+        content: [
+          "Led migration from Kendo to shadcn/ui and Tailwind CSS, drove investigation, presented ROI analysis, and persuaded stakeholders to invest in a full rewrite that improved iteration speed, developer experience, and UI consistency.",
+          "Championed and implemented Oxlint and oxfmt, achieving 34x faster pre-commit hooks and significantly reducing CI pipeline times.",
+          "Proactively migrated the team across major tooling upgrades: npm to pnpm, styled-components to Tailwind, ESLint to Oxlint, and Prettier to oxfmt.",
+        ],
+      },
+      {
+        title: "Backend Systems & AI/ML",
+        content: [
+          "Built a 3D model similarity engine using cosine similarity and vector embeddings, leveraging pgvector for vector operations in PostgreSQL.",
+          "Pioneered the team's first TypeScript backend service, proving developer experience benefits while delivering a low-defect production system.",
+        ],
+      },
+      {
+        title: "Performance & Scalability",
+        content: [
+          "Architected migration from legacy services and a monolithic database to a streamlined five-field configuration flow, reducing app creation time from 10 minutes to 1 second and eliminating more than 150 redundant admin console configurations.",
+        ],
+      },
+      {
+        title: "Leadership & Collaboration",
+        content: [
+          "Collaborated closely with the design team to deliver stronger UX outcomes.",
+          "Achieved 2x personal productivity through AI tooling adoption while maintaining output alongside team leadership and meeting load.",
+        ],
+      },
     ],
   },
   {
@@ -71,8 +94,7 @@ const EXPERIENCES: ExperienceProps[] = [
       },
       {
         title: "Technical Interviewing",
-        summary:
-          "Conducted 50+ engineering interviews, shaping team growth and hiring standards.",
+        summary: "Conducted 50+ engineering interviews, shaping team growth and hiring standards.",
       },
     ],
   },
@@ -146,7 +168,7 @@ function Experience() {
           <div className="flex flex-col relative">
             <div className="top-0 left-0 left-3 -translate-x-1/2 absolute h-full w-[2px] bg-foreground rounded-full"></div>
             {EXPERIENCES.map((experience, index) => (
-              <ExperienceItem key={index} {...experience} />
+              <ExperienceItem key={index} {...experience} isExpanded={index === 0} />
             ))}
           </div>
         </div>

@@ -20,8 +20,9 @@ function ExperienceItem({
   keyPoints,
   content,
   additionalContent,
-}: ExperienceProps) {
-  const [openDetailedInformation, setOpenDetailedInformation] = React.useState(false);
+  isExpanded,
+}: ExperienceProps & { isExpanded: boolean }) {
+  const [openDetailedInformation, setOpenDetailedInformation] = React.useState(isExpanded);
   const detailsContent = additionalContent ?? keyPoints?.map((keyPoint) => ({ summary: keyPoint }));
   const hasAdditionalContent = Boolean(detailsContent?.length);
 
