@@ -34,7 +34,7 @@ function ExperienceItem({
         <ItemContent>
           <span className="text-[0.625rem] font-mono tracking-wide text-muted-foreground">{period}</span>
           <Collapsible open={openDetailedInformation} onOpenChange={setOpenDetailedInformation}>
-            <ItemTitle>
+            <ItemTitle className="text-sm">
               {title}
               <CollapsibleTrigger>
                 <Button variant="ghost" size="icon" className="size-8">
@@ -48,10 +48,10 @@ function ExperienceItem({
             {content?.length ? <ExperienceSections sections={content} className="py-4" /> : null}
             {hasAdditionalContent && detailsContent ? (
               <CollapsibleContent>
-                <ExperienceSections sections={detailsContent} className="py-4" />
+                <ExperienceSections sections={detailsContent} className="pt-4" />
               </CollapsibleContent>
             ) : null}
-            <div className="mt-1 flex flex-wrap gap-1.5">
+            <div className="mt-4 flex flex-wrap gap-1.5">
               {stack.map((tech, index) => (
                 <Badge key={`${index}-${tech}`} variant="outline">
                   {tech}
