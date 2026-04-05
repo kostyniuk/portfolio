@@ -1,10 +1,7 @@
 "use client";
 
 import {
-  CloudflareIcon,
-  GoogleIcon,
-  OpenAIIcon,
-  VercelIcon,
+  AMFGIcon,
   type CompanyIconProps,
 } from "@/components/icons/company-icons";
 import { Card, CardContent } from "@/components/ui/card";
@@ -27,7 +24,7 @@ const EXPERIENCES: ExperienceProps[] = [
     period: "May 2025 — Present",
     title: "Team Lead",
     company: "AMFG",
-    Icon: VercelIcon,
+    Icon: AMFGIcon,
     description:
       "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives while managing a team of 2-3 engineers.",
     stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Python"],
@@ -66,7 +63,7 @@ const EXPERIENCES: ExperienceProps[] = [
     period: "May 2023 — April 2025",
     title: "Senior Fullstack Software Engineer",
     company: "AMFG",
-    Icon: CloudflareIcon,
+    Icon: AMFGIcon,
     description:
       "Led team-wide adoption of AI-assisted engineering workflows, frontend modernization and internal platform initiatives at AMFG, spanning legacy Angular-to-React migration, advanced state management, customer automation tooling",
     stack: ["React", "TypeScript", "Go", "Workers"],
@@ -101,7 +98,7 @@ const EXPERIENCES: ExperienceProps[] = [
     period: "December 2021 — May 2023",
     title: "Middle Fullstack Software Engineer",
     company: "AMFG",
-    Icon: OpenAIIcon,
+    Icon: AMFGIcon,
     description:
       "Delivered core platform features across customer onboarding, authentication, planning UX, and workflow automation, with a focus on reducing friction for both customers and internal teams.",
     additionalContent: [
@@ -135,7 +132,7 @@ const EXPERIENCES: ExperienceProps[] = [
     period: "October 2020 — November 2021",
     title: "Junior Fullstack Software Engineer",
     company: "AMFG",
-    Icon: GoogleIcon,
+    Icon: AMFGIcon,
     description:
       "Started my full-time engineering career at AMFG, building foundational fullstack experience while contributing to backend performance improvements and customer-facing admin features.",
     additionalContent: [
@@ -168,7 +165,7 @@ function Experience() {
   return (
     <div>
       <h1>Experience</h1>
-      <Card className="mt-3">
+      <Card className="mt-3 overflow-visible">
         <CardContent className="flex shrink-0 flex-row gap-6">
           <div className="relative flex flex-col">
             <div className="absolute top-0 left-0 left-3 h-full w-[2px] -translate-x-1/2 rounded-full bg-foreground"></div>
