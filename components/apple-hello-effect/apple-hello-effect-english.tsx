@@ -2,7 +2,7 @@
 
 import type { TargetAndTransition } from "motion/react"
 import { motion } from "motion/react"
-import type { ComponentProps } from "react"
+import { type ComponentProps, useCallback, useState } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -25,20 +25,41 @@ export type AppleHelloEffectEnglishProps = Omit<
    * @defaultValue 1
    * */
   speed?: number
-  /** Called when the full handwriting animation completes. */
+  /**
+   * Whether the animation should loop indefinitely.
+   * @defaultValue false
+   */
+  loop?: boolean
+  /**
+   * Delay in ms before the animation restarts when looping.
+   * @defaultValue 1000
+   */
+  loopDelay?: number
+  /** Called when the full handwriting animation completes (fires every loop). */
   onAnimationComplete?: () => void
 }
 
 export function AppleHelloEffectEnglish({
   className,
   speed = 1,
+  loop = false,
+  loopDelay = 1000,
   onAnimationComplete,
   ...props
 }: AppleHelloEffectEnglishProps) {
+  const [key, setKey] = useState(0)
   const calc = (x: number) => x * speed
+
+  const handleAnimationComplete = useCallback(() => {
+    onAnimationComplete?.()
+    if (loop) {
+      setTimeout(() => setKey((k) => k + 1), loopDelay)
+    }
+  }, [loop, loopDelay, onAnimationComplete])
 
   return (
     <motion.svg
+      key={key}
       className={cn("h-20", className)}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 638 200"
@@ -76,7 +97,7 @@ export function AppleHelloEffectEnglish({
           delay: calc(0.7),
           opacity: { duration: 0.7, delay: calc(0.7) },
         }}
-        onAnimationComplete={onAnimationComplete}
+        onAnimationComplete={handleAnimationComplete}
       />
     </motion.svg>
   )
