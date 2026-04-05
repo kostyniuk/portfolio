@@ -117,5 +117,15 @@ function XCorpIcon({ className }: CompanyIconProps) {
   );
 }
 
-export { AMFGIcon, AnthropicIcon, CloudflareIcon, GoogleIcon, MicrosoftIcon, OpenAIIcon, VercelIcon, XCorpIcon, YouTubeIcon };
+export {
+  AMFGIcon,
+  AnthropicIcon,
+  CloudflareIcon,
+  GoogleIcon,
+  MicrosoftIcon,
+  OpenAIIcon,
+  VercelIcon,
+  XCorpIcon,
+  YouTubeIcon,
+};
 export type { CompanyIcon, CompanyIconProps };
