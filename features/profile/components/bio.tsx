@@ -11,7 +11,7 @@ const BIO_ROWS = [
 
 function Bio() {
   return (
-    <Card variant="frosted">
+    <Card variant="frosted-light">
       <CardContent className="font-mono flex flex-col gap-2">
         <ProfileHeader />
         <div className="text-lg [&_*]:font-mono [&_*]:text-base">

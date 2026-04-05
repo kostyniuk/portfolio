@@ -165,7 +165,7 @@ function Experience() {
   return (
     <div>
       <h1>Experience</h1>
-      <Card variant="frosted" className="mt-3 overflow-visible">
+      <Card variant="frosted-light" className="mt-3 overflow-visible">
         <CardContent className="flex shrink-0 flex-row gap-6">
           <div className="relative flex flex-col">
             <div className="absolute top-0 left-0 left-3 h-full w-[2px] -translate-x-1/2 rounded-full bg-foreground"></div>

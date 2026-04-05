@@ -9,17 +9,22 @@ function Card({
   ...props
 }: React.ComponentProps<"div"> & {
   size?: "default" | "sm";
-  variant?: "default" | "frosted";
+  variant?: "default" | "frosted" | "frosted-light";
 }) {
+  const variantStyles = {
+    default: "bg-card ring-1 ring-foreground/5 dark:ring-foreground/10",
+    frosted: "border border-white/20 bg-white/10 backdrop-blur-xl shadow-lg hover:bg-white/15 transition-all duration-300",
+    "frosted-light":
+      "backdrop-blur-sm transition-all duration-300 border border-black/[0.08] bg-black/[0.02] shadow-[0_-2px_8px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.06)] hover:bg-black/[0.04] dark:border-white/10 dark:bg-white/[0.03] dark:shadow-sm dark:hover:bg-white/[0.06]",
+  };
+
   return (
     <div
       data-slot="card"
       data-size={size}
       className={cn(
         "group/card flex flex-col gap-6 overflow-hidden rounded-4xl py-6 text-sm text-card-foreground shadow-md has-[>img:first-child]:pt-0 data-[size=sm]:gap-4 data-[size=sm]:py-4 *:[img:first-child]:rounded-t-4xl *:[img:last-child]:rounded-b-4xl",
-        variant === "frosted"
-          ? "border border-white/20 bg-white/10 backdrop-blur-xl shadow-lg hover:bg-white/15 transition-all duration-300"
-          : "bg-card ring-1 ring-foreground/5 dark:ring-foreground/10",
+        variantStyles[variant],
         className,
       )}
       {...props}
