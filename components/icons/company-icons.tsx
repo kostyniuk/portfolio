@@ -51,6 +51,7 @@ function CloudflareIcon({ className }: CompanyIconProps) {
       xmlns="http://www.w3.org/2000/svg"
       role="img"
       viewBox="0 0 460 271.2"
+      className={className}
       width="80px"
       height="47px"
       aria-hidden="true"

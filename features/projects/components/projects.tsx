@@ -1,4 +1,3 @@
-import { MellowIcon } from "@/components/icons/project-icons";
 import { type LinkItemProps } from "@/features/profile/components/link-item";
 import { PreviewProject } from "@/features/projects/components/project-preview";
 
@@ -12,7 +11,6 @@ const PROJECTS = {
   mellow_lines: {
     link: "https://mellowlines.dev",
     label: "Mellow Lines",
-    Icon: MellowIcon,
     description:
       "A web app for creating animated videos of code morphing between steps. Paste code snippets, configure syntax highlighting and export smooth token-level transitions as WebM/MP4/gif videos.",
     videoHref: "/mellow_lines.mp4",

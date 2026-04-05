@@ -2,11 +2,11 @@
 
 import { JavaScript, MySQL, ReactDark } from "@/components/icons/interests-icons";
 import { Avatar, AvatarGroup, AvatarImage, avatarImageVariants } from "@/components/ui/avatar";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { VariantProps } from "class-variance-authority";
 import { ReactElement } from "react";
 import { RequireAtLeastOne, cn } from "@/lib/utils";
-import { Item } from "@/components/ui/item";
 
 type BaseInterest = {
   name: string;
@@ -80,29 +80,36 @@ function Interests() {
   return (
     <div>
       <h1>Interests</h1>
-      <Item>
-        <AvatarGroup className="gap-4">
-          {INTERESTS.map(({ name, className, src, Icon, variant }) => (
-            <Tooltip key={name}>
-              <TooltipTrigger>
-                <Avatar size="lg" variant="ghost" className={className}>
-                  {!Icon ? (
-                    <AvatarImage src={src} alt={name} variant={variant} />
-                  ) : (
-                    <div
-                      className={cn("size-full", "[&>svg]:block", "[&>svg]:size-full", variant === "square" && "p-1 ")}
-                    >
-                      {Icon}
-                    </div>
-                  )}
-                  {/* <AvatarFallback>{interest.fallbac ?? interest.name.slice(0, 2).toUpperCase()}</AvatarFallback> */}
-                </Avatar>
-              </TooltipTrigger>
-              <TooltipContent>{name}</TooltipContent>
-            </Tooltip>
-          ))}
-        </AvatarGroup>
-      </Item>
+      <Card className="mt-3">
+        <CardContent>
+          <AvatarGroup className="gap-6">
+            {INTERESTS.map(({ name, className, src, Icon, variant }) => (
+              <Tooltip key={name}>
+                <TooltipTrigger>
+                  <Avatar size="lg" variant="ghost" className={className}>
+                    {!Icon ? (
+                      <AvatarImage src={src} alt={name} variant={variant} />
+                    ) : (
+                      <div
+                        className={cn(
+                          "size-full",
+                          "[&>svg]:block",
+                          "[&>svg]:size-full",
+                          variant === "square" && "p-1 ",
+                        )}
+                      >
+                        {Icon}
+                      </div>
+                    )}
+                    {/* <AvatarFallback>{interest.fallbac ?? interest.name.slice(0, 2).toUpperCase()}</AvatarFallback> */}
+                  </Avatar>
+                </TooltipTrigger>
+                <TooltipContent>{name}</TooltipContent>
+              </Tooltip>
+            ))}
+          </AvatarGroup>
+        </CardContent>
+      </Card>
     </div>
   );
 }
