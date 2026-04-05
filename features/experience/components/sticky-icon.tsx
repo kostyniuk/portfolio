@@ -35,7 +35,7 @@ function StickyIcon({ children }: { children: ReactNode }) {
   return (
     <div className="h-full">
       <div ref={sentinelRef} />
-      <div className="w-6 h-6 bg-foreground text-background rounded-full sticky top-10 relative z-10 flex items-center justify-center">
+      <div className="w-6 h-6 bg-foreground text-background rounded-full sticky top-20 relative z-10 flex items-center justify-center">
         {children}
       </div>
     </div>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Header } from "./header";
 import { Analytics } from "@vercel/analytics/next";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -29,7 +30,10 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           {" "}
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider>
+            <Header />
+            {children}
+          </TooltipProvider>
         </ThemeProvider>
         <Analytics />
       </body>
