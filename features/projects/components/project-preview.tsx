@@ -15,7 +15,7 @@ function PreviewProject({ label, link, Icon, description, source, videoHref }: P
   ];
 
   return (
-    <Card>
+    <Card variant="frosted">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           {Icon && <Icon className="size-10" />}

@@ -80,7 +80,7 @@ function Interests() {
   return (
     <div>
       <h1>Interests</h1>
-      <Card className="mt-3">
+      <Card variant="frosted" className="mt-3">
         <CardContent>
           <AvatarGroup className="gap-6">
             {INTERESTS.map(({ name, className, src, Icon, variant }) => (

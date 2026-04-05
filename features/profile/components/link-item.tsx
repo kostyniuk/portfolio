@@ -19,7 +19,7 @@ function LinkItem({ label, link, description, Icon }: LinkItemProps) {
       <a href={link} target="_blank" rel="noopener noreferrer">
         <Item
           variant="outline"
-          className="relative overflow-hidden bg-card/95 shadow-md ring-1 ring-foreground/5 dark:ring-foreground/10"
+          className="relative overflow-hidden border border-white/20 bg-white/10 backdrop-blur-xl shadow-lg hover:bg-white/15 transition-all duration-300"
         >
           <ShineBorder duration={BORDER_DURATION} shineColor={BORDER_COLOR} />
           <ItemMedia className="relative z-10">
