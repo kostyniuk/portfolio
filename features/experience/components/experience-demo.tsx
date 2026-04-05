@@ -100,12 +100,12 @@ function Experience() {
   return (
     <div>
       <h1>Experience</h1>
-      <div className="mt-3 flex shrink-0 flex-col rounded-[2rem] border border-border/40 bg-card/95 px-6 shadow-lg ring-1 ring-foreground/5 sm:px-8 dark:ring-foreground/10">
+      <div className="mt-3 flex w-full shrink-0 flex-col rounded-2xl border border-border/40 bg-card/95 px-3 shadow-lg ring-1 ring-foreground/5 sm:rounded-[2rem] sm:px-8 dark:ring-foreground/10">
         <div className="flex shrink-0 flex-row gap-6 py-6">
           <div className="relative flex flex-col">
             <div className="absolute top-0 left-0 left-3 h-full w-[2px] -translate-x-1/2 rounded-full bg-foreground"></div>
             {EXPERIENCES.map((experience, index) => (
-              <div key={index} className="flex gap-12">
+              <div key={index} className="flex gap-4 sm:gap-12">
                 <StickyIcon>
                   <experience.Icon className="size-3.5" />
                 </StickyIcon>

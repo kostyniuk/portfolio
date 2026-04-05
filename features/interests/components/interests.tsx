@@ -82,7 +82,7 @@ function Interests() {
       <h1>Interests</h1>
       <Card variant="frosted-light" className="mt-3">
         <CardContent>
-          <AvatarGroup className="gap-6">
+          <AvatarGroup className="flex-wrap gap-4 sm:gap-6">
             {INTERESTS.map(({ name, className, src, Icon, variant }) => (
               <Tooltip key={name}>
                 <TooltipTrigger>

@@ -12,7 +12,7 @@ function Socials() {
   return (
     <div>
       <h1>Socials</h1>
-      <div className="mt-2 flex gap-2">
+      <div className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
         {Object.entries(SOCIAL_NETWORKS).map(([id, social]) => {
           return <LinkItem key={id} {...social} />;
         })}

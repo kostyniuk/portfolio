@@ -10,14 +10,14 @@ function PreviewProject({ label, link, Icon, description, features, source, vide
     {
       value: "preview",
       trigger: "Preview",
-      content: <video src={videoHref} loop autoPlay muted className="w-192 h-108 object-cover"></video>,
+      content: <video src={videoHref} loop autoPlay muted className="w-full max-w-192 h-auto object-cover"></video>,
     },
   ];
 
   return (
     <Card variant="frosted-light">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex flex-wrap items-center gap-2">
           {Icon && <Icon className="size-10" />}
           <p>{label}</p>
           <BadgeAsLink href={link} variant={"secondary"}>

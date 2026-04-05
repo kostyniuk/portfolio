@@ -12,7 +12,7 @@ const BIO_ROWS = [
 function Bio() {
   return (
     <Card variant="frosted-light">
-      <CardContent className="font-mono flex flex-col gap-2">
+      <CardContent className="font-mono flex min-w-0 flex-col gap-2">
         <ProfileHeader />
         <div className="text-lg [&_*]:font-mono [&_*]:text-base">
           {BIO_ROWS.map(({ icon, title, canBeCopied }, index) => (
