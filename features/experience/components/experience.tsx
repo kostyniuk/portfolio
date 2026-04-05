@@ -17,8 +17,6 @@ type ExperienceProps = {
   company: string;
   description: string;
   stack: string[];
-  keyPoints?: string[];
-  content?: ExperienceSectionData[];
   additionalContent?: ExperienceSectionData[];
   Icon: ComponentType<CompanyIconProps>;
 };

@@ -17,14 +17,11 @@ function ExperienceItem({
   description,
   company,
   period,
-  keyPoints,
-  content,
   additionalContent,
   isExpanded,
 }: ExperienceProps & { isExpanded: boolean }) {
   const [openDetailedInformation, setOpenDetailedInformation] = React.useState(isExpanded);
-  const detailsContent = additionalContent ?? keyPoints?.map((keyPoint) => ({ summary: keyPoint }));
-  const hasAdditionalContent = Boolean(detailsContent?.length);
+  const hasAdditionalContent = Boolean(additionalContent?.length);
 
   return (
     <div className="flex gap-12">
@@ -46,10 +43,9 @@ function ExperienceItem({
             </ItemTitle>
             <ItemDescription className="font-medium text-foreground">{company}</ItemDescription>
             {description ? <ItemDescription className="">{description}</ItemDescription> : null}
-            {content?.length ? <ExperienceSections sections={content} className="py-4" /> : null}
-            {hasAdditionalContent && detailsContent ? (
+            {hasAdditionalContent && additionalContent ? (
               <CollapsibleContent>
-                <ExperienceSections sections={detailsContent} className="pt-4" />
+                <ExperienceSections sections={additionalContent} className="pt-4" />
               </CollapsibleContent>
             ) : null}
             <div className="mt-4 flex flex-wrap gap-1.5">
