@@ -5,7 +5,7 @@ import { Project } from "@/features/projects/components/projects";
 import { BadgeAsLink } from "@/components/ui/badge";
 import { ArrowUpRightIcon } from "lucide-react";
 
-function PreviewProject({ label, link, Icon, description, source, videoHref }: Project) {
+function PreviewProject({ label, link, Icon, description, features, source, videoHref }: Project) {
   const items = [
     {
       value: "preview",
@@ -39,6 +39,11 @@ function PreviewProject({ label, link, Icon, description, source, videoHref }: P
           ))}
         </Accordion>
         <p>{description}</p>
+        <ul className="mt-1 list-disc space-y-1 pl-4 text-muted-foreground">
+          {features.map((feature, i) => (
+            <li key={i}>{feature}</li>
+          ))}
+        </ul>
       </CardContent>
     </Card>
   );
