@@ -15,7 +15,7 @@ export default function Page() {
           <div className="flex text-center items-baseline text-muted-foreground">
             (Press <Kbd className="mx-1">d</Kbd> to toggle dark mode)
           </div>
-          <AppleHelloEffectEnglish className={"text-foreground/75"} loop loopDelay={2000} />
+          <AppleHelloEffectEnglish className={"text-foreground"} loop loopDelay={2000} />
         </div>
         <Bio />
         <Socials />
