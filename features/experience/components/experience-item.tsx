@@ -6,9 +6,10 @@ import { StickyIcon } from "./sticky-icon";
 import type { ExperienceProps } from "./experience";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronsDownUp, ChevronsUpDown } from "lucide-react";
+import { ChevronsDownUp, ChevronsUpDown, Heart, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExperienceSections } from "./experience-section";
+import { PulseIcon } from "@/components/pulse";
 
 function ExperienceItem({
   Icon,
@@ -19,7 +20,8 @@ function ExperienceItem({
   period,
   additionalContent,
   isExpanded,
-}: ExperienceProps & { isExpanded: boolean }) {
+  isCurrent,
+}: ExperienceProps & { isExpanded: boolean; isCurrent: boolean }) {
   const [openDetailedInformation, setOpenDetailedInformation] = React.useState(isExpanded);
   const hasAdditionalContent = Boolean(additionalContent?.length);
 
@@ -34,6 +36,11 @@ function ExperienceItem({
           <Collapsible open={openDetailedInformation} onOpenChange={setOpenDetailedInformation}>
             <ItemTitle className="text-sm">
               {title}
+              {isCurrent && (
+                <PulseIcon trigger="always" duration={0.8}>
+                  <Radio className="w-6 h-6 text-secondary-accent" />
+                </PulseIcon>
+              )}
               <CollapsibleTrigger>
                 <Button variant="ghost" size="icon" className="size-8">
                   {openDetailedInformation ? <ChevronsDownUp /> : <ChevronsUpDown />}

@@ -170,7 +170,7 @@ function Experience() {
           <div className="relative flex flex-col">
             <div className="absolute top-0 left-0 left-3 h-full w-[2px] -translate-x-1/2 rounded-full bg-foreground"></div>
             {EXPERIENCES.map((experience, index) => (
-              <ExperienceItem key={index} {...experience} isExpanded={index === 0} />
+              <ExperienceItem key={index} {...experience} isExpanded={index === 0} isCurrent={index === 0} />
             ))}
           </div>
         </CardContent>
