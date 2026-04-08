@@ -76,7 +76,7 @@ function FrostGlass({ variant = "clear", noise = true, className, children, ...p
     <div
       data-slot="frost-glass"
       data-variant={variant}
-      className={cn("relative overflow-hidden transition-all duration-300", variantStyles[variant], className)}
+      className={cn("relative overflow-hidden rounded-[inherit] transition-all duration-300", variantStyles[variant], className)}
       {...props}
     >
       {/* Noise texture overlay — simulates micro-grain of real frosted glass */}
