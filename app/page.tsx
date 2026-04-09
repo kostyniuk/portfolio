@@ -6,6 +6,7 @@ import { Interests } from "@/features/interests/components/interests";
 import { Education } from "@/features/education/components/education";
 import { Experience } from "@/features/experience/components/experience";
 import { AppleHelloEffectEnglish } from "@/components/apple-hello-effect/apple-hello-effect-english";
+import { Contributions } from "@/features/contributions/contributions";
 
 export default function Page() {
   return (
@@ -23,6 +24,7 @@ export default function Page() {
         <Experience />
         <Interests />
         <Education />
+        <Contributions />
       </div>
     </div>
   );
