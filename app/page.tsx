@@ -22,9 +22,9 @@ export default function Page() {
         <Socials />
         <Projects />
         <Experience />
+        <Contributions />
         <Interests />
         <Education />
-        <Contributions />
       </div>
     </div>
   );
