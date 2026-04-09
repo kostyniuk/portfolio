@@ -1,3 +1,5 @@
+"use cache";
+
 import { GitHubIcon } from "@/components/icons/social-icons";
 import { FrostGlass } from "@/components/ui/frost-glass";
 import { ThemeToggle } from "@/components/theme-toggle";
