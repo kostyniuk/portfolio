@@ -23,7 +23,7 @@ const graphLevelClassNames = [
   'data-[level="2"]:fill-[#40c463] dark:data-[level="2"]:fill-[#006d32]',
   'data-[level="3"]:fill-[#30a14e] dark:data-[level="3"]:fill-[#26a641]',
   'data-[level="4"]:fill-[#216e39] dark:data-[level="4"]:fill-[#39d353]',
-];
+].join(" ");
 
 const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) => (
   <TooltipProvider>
@@ -48,7 +48,7 @@ const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) =
       </ContributionGraphCalendar>
       <ContributionGraphFooter>
         <ContributionGraphTotalCount />
-        <ContributionGraphLegend />
+        <ContributionGraphLegend blockClassName={graphLevelClassNames} />
       </ContributionGraphFooter>
     </ContributionGraph>
   </TooltipProvider>
