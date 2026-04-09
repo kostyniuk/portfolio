@@ -1,15 +1,57 @@
 "use client";
 
 import * as React from "react";
+import { useServerInsertedHTML } from "next/navigation";
 import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
+
+const themeInitScript = `
+(() => {
+  const storageKey = "theme";
+  const defaultTheme = "system";
+  const resolveSystemTheme = () =>
+    window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+
+  try {
+    const storedTheme = localStorage.getItem(storageKey);
+    const theme = storedTheme || defaultTheme;
+    const resolvedTheme = theme === "system" ? resolveSystemTheme() : theme;
+    const root = document.documentElement;
+
+    root.classList.remove("light", "dark");
+    root.classList.add(resolvedTheme);
+    root.style.colorScheme = resolvedTheme;
+  } catch {}
+})();
+`;
 
 function ThemeProvider({ children, ...props }: React.ComponentProps<typeof NextThemesProvider>) {
   return (
-    <NextThemesProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange {...props}>
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+      enableScript={false}
+      {...props}
+    >
+      <ThemeScript />
       <ThemeHotkey />
       {children}
     </NextThemesProvider>
   );
+}
+
+function ThemeScript() {
+  useServerInsertedHTML(() => (
+    <script
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{
+        __html: themeInitScript,
+      }}
+    />
+  ));
+
+  return null;
 }
 
 function isTypingTarget(target: EventTarget | null) {

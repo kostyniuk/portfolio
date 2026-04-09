@@ -214,7 +214,7 @@ function PinGlass() {
           fill="url(#1752500502799-2404609_pin_existing_0_cuccdgfq1)"
           data-glass="clone"
           filter="url(#1752500502799-2404609_pin_filter_brsv65qzk)"
-          clip-path="url(#1752500502799-2404609_pin_clipPath_y72uhwyq1)"
+          clipPath="url(#1752500502799-2404609_pin_clipPath_y72uhwyq1)"
         ></path>
         <path
           d="M7.79174 7.59182C6.23063 6.72454 4.98527 6.287 3.72243 7.5497L2.84752 8.42461C2.26173 9.01039 2.26173 9.96014 2.84752 10.5459L8.15082 15.8492L13.4541 21.1525C14.0399 21.7383 14.9897 21.7383 15.5754 21.1525L16.4503 20.2776C17.713 19.0148 17.2748 17.7687 16.4075 16.2076L21.2991 10.1704C22.2659 8.97715 22.1754 7.24644 21.0895 6.16048L17.8394 2.91038C16.7535 1.8245 15.0229 1.73396 13.8297 2.7006L7.79174 7.59182Z"
@@ -234,8 +234,8 @@ function PinGlass() {
             y2="21.248"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#575757"></stop>
-            <stop offset="1" stop-color="#151515"></stop>
+            <stop stopColor="#575757"></stop>
+            <stop offset="1" stopColor="#151515"></stop>
           </linearGradient>
           <linearGradient
             id="1752500502799-2404609_pin_existing_1_hd1jrh39k"
@@ -245,8 +245,8 @@ function PinGlass() {
             y2="15.849"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#E3E3E5" stop-opacity=".6"></stop>
-            <stop offset="1" stop-color="#BBBBC0" stop-opacity=".6"></stop>
+            <stop stopColor="#E3E3E5" stopOpacity=".6"></stop>
+            <stop offset="1" stopColor="#BBBBC0" stopOpacity=".6"></stop>
           </linearGradient>
           <linearGradient
             id="1752500502799-2404609_pin_existing_2_cf2fdv9dn"
@@ -256,8 +256,8 @@ function PinGlass() {
             y2="11"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#fff"></stop>
-            <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+            <stop stopColor="#fff"></stop>
+            <stop offset="1" stopColor="#fff" stopOpacity="0"></stop>
           </linearGradient>
           <filter
             id="1752500502799-2404609_pin_filter_brsv65qzk"

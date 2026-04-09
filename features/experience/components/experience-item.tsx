@@ -6,7 +6,7 @@ import { StickyIcon } from "./sticky-icon";
 import type { ExperienceProps } from "./experience";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronsDownUp, ChevronsUpDown, Heart, Radio } from "lucide-react";
+import { ChevronsDownUp, ChevronsUpDown, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExperienceSections } from "./experience-section";
 import { PulseIcon } from "@/components/pulse";
@@ -41,11 +41,11 @@ function ExperienceItem({
                   <Radio className="w-6 h-6 text-secondary-accent" />
                 </PulseIcon>
               )}
-              <CollapsibleTrigger>
-                <Button variant="ghost" size="icon" className="size-8">
-                  {openDetailedInformation ? <ChevronsDownUp /> : <ChevronsUpDown />}
-                  <span className="sr-only">Toggle details</span>
-                </Button>
+              <CollapsibleTrigger
+                render={<Button variant="ghost" size="icon" className="size-8" />}
+              >
+                {openDetailedInformation ? <ChevronsDownUp /> : <ChevronsUpDown />}
+                <span className="sr-only">Toggle details</span>
               </CollapsibleTrigger>
             </ItemTitle>
             <ItemDescription className="font-medium text-foreground">{company}</ItemDescription>

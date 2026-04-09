@@ -22,7 +22,10 @@ export function useSticky({ topOffset = 40, onPin }: UseStickyOptions = {}) {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const suppressRef = useRef(true);
   const onPinRef = useRef(onPin);
-  onPinRef.current = onPin;
+
+  useEffect(() => {
+    onPinRef.current = onPin;
+  }, [onPin]);
 
   // Allow callbacks only after the initial observer fire has passed
   useEffect(() => {
