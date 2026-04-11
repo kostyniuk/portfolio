@@ -389,7 +389,6 @@ export const ContributionGraphLegend = ({
   return (
     <div className={cn("ml-auto flex items-center gap-[3px]", className)} {...props}>
       <span className="mr-1 text-muted-foreground">{labels.legend?.less || "Less"}</span>
-      // oxlint-disable-next-line unicorn/no-new-array
       {new Array(maxLevel + 1).fill(undefined).map((_, level) =>
         children ? (
           <Fragment key={level}>{children({ level })}</Fragment>
