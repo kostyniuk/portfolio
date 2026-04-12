@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  AMFGIcon,
-  type CompanyIconProps,
-} from "@/components/icons/company-icons";
+import { AMFGIcon, type CompanyIconProps } from "@/components/icons/company-icons";
 import { Card, CardContent } from "@/components/ui/card";
 import type { ComponentType } from "react";
 import type { ExperienceSectionData } from "./experience-section";
@@ -27,7 +24,7 @@ const EXPERIENCES: ExperienceProps[] = [
     Icon: AMFGIcon,
     description:
       "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives while managing a team of 2-3 engineers.",
-    stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Python"],
+    stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Embeddings"],
     additionalContent: [
       {
         title: "Frontend Architecture & Developer Experience",
@@ -66,7 +63,7 @@ const EXPERIENCES: ExperienceProps[] = [
     Icon: AMFGIcon,
     description:
       "Led team-wide adoption of AI-assisted engineering workflows, frontend modernization and internal platform initiatives at AMFG, spanning legacy Angular-to-React migration, advanced state management, customer automation tooling",
-    stack: ["React", "TypeScript", "Go", "Workers"],
+    stack: ["React", "Node.js", "Next.js", "PostgreSQL"],
     additionalContent: [
       {
         title: "Frontend Architecture & Modernization",
