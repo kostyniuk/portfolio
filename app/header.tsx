@@ -30,7 +30,7 @@ async function Header() {
               <SocialItemMotion>
                 <Button variant={"ghost"} className="flex flex-row gap-2 items-center cursor-pointer">
                   <GitHubIcon className="size-6 text-black dark:text-white" />
-                  <ItemDescription>{repo.stargazers_count}</ItemDescription>
+                  {repo.stargazers_count ? <ItemDescription>{repo.stargazers_count}</ItemDescription> : null}
                 </Button>
               </SocialItemMotion>
             </Link>
