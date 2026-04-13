@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Header } from "./header";
 import { Analytics } from "@vercel/analytics/next";
+import { Metadata } from "next/types";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -15,6 +16,11 @@ const fontMono = Geist_Mono({
 });
 
 const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-title" });
+
+export const metadata: Metadata = {
+  title: "Alex Kostyniuk",
+  description: "My portfolio. Built with Next.js, shadcn/ui, React Bits, and Motion.",
+};
 
 export default function RootLayout({
   children,
