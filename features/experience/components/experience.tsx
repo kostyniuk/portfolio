@@ -2,7 +2,8 @@
 
 import { AMFGIcon, type CompanyIconProps } from "@/components/icons/company-icons";
 import { Card, CardContent } from "@/components/ui/card";
-import type { ComponentType } from "react";
+import { motion, useScroll } from "motion/react";
+import { useRef, type ComponentType } from "react";
 import type { ExperienceSectionData } from "./experience-section";
 import { ExperienceItem } from "./experience-item";
 
@@ -159,13 +160,25 @@ const EXPERIENCES: ExperienceProps[] = [
 ];
 
 function Experience() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 80px", "end 80px"], // aligns with sticky top-20 (80px)
+  });
+
   return (
     <div>
       <h1>Experience</h1>
       <Card variant="frosted-light" className="mt-3 overflow-visible">
         <CardContent className="flex shrink-0 flex-row gap-6">
-          <div className="relative flex flex-col">
-            <div className="absolute top-0 left-0 left-3 h-full w-[2px] -translate-x-1/2 rounded-full bg-foreground"></div>
+          <div ref={containerRef} className="relative flex flex-col">
+            {/* Base line — muted, represents path yet to cover */}
+            <div className="absolute top-0 left-3 h-full w-[2px] -translate-x-1/2 rounded-full bg-foreground/20" />
+            {/* Overlay line — solid, grows downward as you scroll */}
+            <motion.div
+              className="absolute top-0 left-3 h-full w-[2px] -translate-x-1/2 rounded-full bg-foreground origin-top"
+              style={{ scaleY: scrollYProgress }}
+            />
             {EXPERIENCES.map((experience, index) => (
               <ExperienceItem key={index} {...experience} isExpanded={index === 0} isCurrent={index === 0} />
             ))}
