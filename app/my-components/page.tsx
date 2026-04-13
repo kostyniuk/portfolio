@@ -1,5 +1,5 @@
 function MyComponents() {
-  return <div>My components</div>;
+  return <div>Soon...</div>;
 }
 
 export default MyComponents;
