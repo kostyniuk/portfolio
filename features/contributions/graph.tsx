@@ -18,11 +18,11 @@ type ContributionsGraphProps = {
 };
 
 const graphLevelClassNames = [
-  'data-[level="0"]:fill-[#ebedf0] dark:data-[level="0"]:fill-[#161b22]',
-  'data-[level="1"]:fill-[#9be9a8] dark:data-[level="1"]:fill-[#0e4429]',
-  'data-[level="2"]:fill-[#40c463] dark:data-[level="2"]:fill-[#006d32]',
-  'data-[level="3"]:fill-[#30a14e] dark:data-[level="3"]:fill-[#26a641]',
-  'data-[level="4"]:fill-[#216e39] dark:data-[level="4"]:fill-[#39d353]',
+  "data-[level=0]:fill-zinc-200 dark:data-[level=0]:fill-zinc-800",
+  "data-[level=1]:fill-green-200 dark:data-[level=1]:fill-green-950",
+  "data-[level=2]:fill-green-400 dark:data-[level=2]:fill-green-800",
+  "data-[level=3]:fill-green-600 dark:data-[level=3]:fill-green-700",
+  "data-[level=4]:fill-green-800 dark:data-[level=4]:fill-green-500",
 ].join(" ");
 
 const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) => (
