@@ -4,6 +4,7 @@ import ShinyText from "@/components/ShinyText";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import ElectricBorder from "@/components/ElectricBorder";
+import colors from "tailwindcss/colors";
 
 function ProfileHeader() {
   const { resolvedTheme } = useTheme();
@@ -11,9 +12,9 @@ function ProfileHeader() {
   return (
     <>
       <ElectricBorder
-        color={resolvedTheme === "dark" ? "#ffffff" : "#000000"}
-        speed={1}
-        chaos={0.01}
+        color={colors.orange[500]}
+        speed={0.75}
+        chaos={0.08}
         className="w-50 h-50 rounded-full object-cover"
         borderRadius={100}
       >
