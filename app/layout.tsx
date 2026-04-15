@@ -8,6 +8,7 @@ import { Header } from "./header";
 import { Analytics } from "@vercel/analytics/next";
 import { Metadata } from "next/types";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { Footer } from "./footer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -40,10 +41,13 @@ export default function RootLayout({
           <TooltipProvider>
             <Header />
             <ScrollProgress />
-            <div className="min-h-dvh px-0 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
-              <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-3 py-6 text-sm leading-loose sm:px-6 sm:py-8 lg:p-8">
-                {children}
+            <div className="flex min-h-dvh flex-col">
+              <div className="flex-1 px-0 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
+                <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-3 py-6 text-sm leading-loose sm:px-6 sm:py-8 lg:p-8">
+                  {children}
+                </div>
               </div>
+              <Footer />
             </div>
           </TooltipProvider>
         </ThemeProvider>
