@@ -74,6 +74,10 @@ const INTERESTS = [
     Icon: <MySQL />,
     variant: "square",
   },
+  {
+    name: "Tailwind CSS",
+    src: "https://github.com/tailwindlabs.png",
+  },
 ] satisfies Interest[];
 
 function Interests() {
