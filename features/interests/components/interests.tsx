@@ -1,6 +1,6 @@
 "use client";
 
-import { JavaScript, MySQL, ReactDark } from "@/components/icons/interests-icons";
+import { JavaScript, MySQL, ReactDark, TypeScript } from "@/components/icons/interests-icons";
 import { Avatar, AvatarGroup, AvatarImage, avatarImageVariants } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -20,53 +20,54 @@ type BaseInterest = {
 type Interest = RequireAtLeastOne<BaseInterest, "src" | "Icon">;
 
 const INTERESTS = [
+  // Languages
   {
-    name: "shadcn",
-    src: "https://github.com/shadcn.png",
-    className: "after:hidden bg-transparent",
+    name: "TypeScript",
+    Icon: <TypeScript />,
+    className: "rounded-md overflow-hidden after:rounded-md",
   },
+  {
+    name: "JavaScript",
+    Icon: <JavaScript />,
+    className: "rounded-md overflow-hidden after:rounded-md",
+  },
+  // Frontend
   {
     name: "React",
     src: "https://react.dev/apple-touch-icon.png",
     Icon: <ReactDark />,
   },
   {
-    name: "Node.js",
-    src: "https://github.com/nodejs.png",
-  },
-  {
-    name: "JavaScript",
-    Icon: <JavaScript />,
-  },
-  {
-    name: "TypeScript",
-    src: "https://www.typescriptlang.org/icons/icon-512x512.png",
-    variant: "square",
-  },
-  {
-    name: "PostgreSQL",
-    src: "https://www.postgresql.org/media/img/about/press/elephant.png",
-    variant: "square",
-  },
-  {
     name: "Next.js",
     src: "https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png",
-  },
-  {
-    name: "Bun",
-    src: "https://bun.sh/logo-square.png",
-  },
-  {
-    name: "Vercel",
-    src: "https://github.com/vercel.png",
   },
   {
     name: "TanStack",
     src: "https://github.com/TanStack.png",
   },
   {
-    name: "Drizzle",
-    src: "https://github.com/drizzle-team.png",
+    name: "shadcn",
+    src: "https://github.com/shadcn.png",
+    className: "after:hidden bg-transparent",
+  },
+  {
+    name: "Tailwind CSS",
+    src: "https://github.com/tailwindlabs.png",
+  },
+  // Runtimes
+  {
+    name: "Node.js",
+    src: "https://github.com/nodejs.png",
+  },
+  {
+    name: "Bun",
+    src: "https://bun.sh/logo-square.png",
+  },
+  // Databases & ORM
+  {
+    name: "PostgreSQL",
+    src: "https://github.com/postgres.png",
+    variant: "square",
   },
   {
     name: "MySQL",
@@ -75,8 +76,13 @@ const INTERESTS = [
     variant: "square",
   },
   {
-    name: "Tailwind CSS",
-    src: "https://github.com/tailwindlabs.png",
+    name: "Drizzle",
+    src: "https://github.com/drizzle-team.png",
+  },
+  // Platform
+  {
+    name: "Vercel",
+    src: "https://github.com/vercel.png",
   },
 ] satisfies Interest[];
 
