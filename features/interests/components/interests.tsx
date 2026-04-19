@@ -96,7 +96,7 @@ function Interests() {
             {INTERESTS.map(({ name, className, src, Icon, variant }) => (
               <Tooltip key={name}>
                 <TooltipTrigger>
-                  <Avatar size="lg" variant="ghost" className={className}>
+                  <Avatar size="lg" variant={variant === "square" ? "square" : "ghost"} className={className}>
                     {!Icon ? (
                       <AvatarImage src={src} alt={name} variant={variant} />
                     ) : (

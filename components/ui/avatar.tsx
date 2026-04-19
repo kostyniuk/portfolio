@@ -11,6 +11,7 @@ const avatarVariants = cva("", {
     variant: {
       default: "",
       ghost: "bg-transparent after:hidden",
+      square: "rounded-none bg-transparent after:hidden",
     },
   },
   defaultVariants: {
@@ -31,8 +32,8 @@ function Avatar({
       data-slot="avatar"
       data-size={size}
       className={cn(
-        avatarVariants({ variant }),
         "group/avatar relative flex size-8 shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten",
+        avatarVariants({ variant }),
         className,
       )}
       {...props}
@@ -44,7 +45,7 @@ export const avatarImageVariants = cva("", {
   variants: {
     variant: {
       default: "aspect-square size-full rounded-full object-cover",
-      square: "aspect-square size-full rounded-xl object-cover",
+      square: "aspect-square size-full rounded-none object-cover",
     },
   },
   defaultVariants: {
