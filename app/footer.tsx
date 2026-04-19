@@ -1,3 +1,5 @@
+"use cache";
+
 import { Heart } from "lucide-react";
 import Link from "next/link";
 
@@ -13,8 +15,8 @@ function Footer() {
           className="text-muted-foreground hover:text-foreground transition-colors"
         >
           Alex Kostyniuk
-        </Link>
-        {" "}&middot; All rights reserved &middot; &copy; {new Date().getFullYear()}
+        </Link>{" "}
+        &middot; All rights reserved &middot; &copy; {new Date().getFullYear()}
       </p>
     </footer>
   );
