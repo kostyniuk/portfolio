@@ -3,7 +3,7 @@
 import { Heart } from "lucide-react";
 import Link from "next/link";
 
-function Footer() {
+async function Footer() {
   return (
     <footer className="w-full flex justify-center pb-4 pt-8">
       <p className="text-xs text-muted-foreground/60">
