@@ -25,7 +25,6 @@ export default function Page() {
       <Contributions />
       <Interests />
       <Education />
-      <LiquidMetalCardDefault />
     </>
   );
 }

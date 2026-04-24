@@ -57,7 +57,7 @@ function LiquidMetalCard({
         offsetX={offsetX}
         offsetY={offsetY}
       />
-      <div className="pointer-events-none absolute inset-0.75 rounded-[calc(var(--radius-4xl)-3px)] bg-card inset-shadow-lg" />
+      <div className="pointer-events-none absolute inset-0.75 rounded-[calc(var(--radius-4xl)-3px)] bg-background inset-shadow-lg" />
       {children}
     </Card>
   );
