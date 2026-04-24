@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Card,
@@ -8,15 +8,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { LiquidMetal, LiquidMetalProps } from '@paper-design/shaders-react';
+} from "@/components/ui/card";
+import { LiquidMetal, LiquidMetalProps } from "@paper-design/shaders-react";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
-type ShaderProps = Omit<LiquidMetalProps, 'className' | 'style' | 'shape'>;
+type ShaderProps = Omit<LiquidMetalProps, "className" | "style" | "shape">;
 
-type LiquidMetalCardProps = React.ComponentProps<typeof Card> &
-  Partial<ShaderProps>;
+type LiquidMetalCardProps = React.ComponentProps<typeof Card> & Partial<ShaderProps>;
 
 function LiquidMetalCard({
   className,
@@ -36,16 +35,16 @@ function LiquidMetalCard({
 }: LiquidMetalCardProps) {
   return (
     <Card
-      data-slot='liquid-metal-card'
+      data-slot="liquid-metal-card"
       className={cn(
-        'relative overflow-hidden bg-transparent ring-0',
-        className
+        "relative overflow-hidden ring-0 rounded-4xl *:data-[slot=card-action]:z-10 *:data-[slot=card-content]:z-10 *:data-[slot=card-description]:z-10 *:data-[slot=card-footer]:z-10 *:data-[slot=card-header]:z-10 *:data-[slot=card-title]:z-10",
+        className,
       )}
       {...props}
     >
       <LiquidMetal
-        className='absolute inset-0 rounded-2xl'
-        shape='none'
+        className="pointer-events-none absolute inset-0 rounded-4xl"
+        shape="none"
         speed={speed}
         repetition={repetition}
         softness={softness}
@@ -58,20 +57,10 @@ function LiquidMetalCard({
         offsetX={offsetX}
         offsetY={offsetY}
       />
-      <div className='absolute inset-0.75 rounded-[calc(1rem-1px)] bg-card inset-shadow-lg' />
-      <div className='relative flex flex-col gap-6 group-data-[size=sm]/card:gap-4'>
-        {children}
-      </div>
+      <div className="pointer-events-none absolute inset-0.75 rounded-[calc(var(--radius-4xl)-3px)] bg-card inset-shadow-lg" />
+      {children}
     </Card>
   );
 }
 
-export {
-  LiquidMetalCard,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardAction,
-  CardDescription,
-  CardContent,
-};
+export { LiquidMetalCard, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };
