@@ -1,7 +1,8 @@
 import { DocumentIcon, type ProjectIcon } from "@/components/icons/project-icons";
-import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
-import { ShineBorder } from "@/components/ui/shine-border";
+import { LiquidMetalCard } from "@/components/ui/liquid-metal-card";
+import { ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
 import { LinkItemMotion } from "@/features/profile/components/link-item-motion";
+import { cn } from "@/lib/utils";
 
 interface LinkItemProps {
   link: string;
@@ -10,30 +11,35 @@ interface LinkItemProps {
   Icon?: ProjectIcon;
 }
 
-const BORDER_DURATION = 3.4;
-const BORDER_COLOR = "color-mix(in oklab, var(--foreground) 90%, transparent)";
-
 function LinkItem({ label, link, description, Icon }: LinkItemProps) {
   return (
     <LinkItemMotion>
-      <a href={link} target="_blank" rel="noopener noreferrer">
-        <Item
-          variant="outline"
-          className="relative overflow-hidden backdrop-blur-sm transition-all duration-300 border border-black/[0.08] bg-black/[0.02] shadow-[0_-2px_8px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.06)] hover:bg-black/[0.04] dark:border-white/10 dark:bg-white/[0.03] dark:shadow-sm dark:hover:bg-white/[0.06]"
+      <a href={link} target="_blank" rel="noopener noreferrer" className="block">
+        <LiquidMetalCard
+          className="rounded-2xl p-0 shadow-[0_-2px_8px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.06)] transition-transform duration-300 dark:shadow-sm"
+          scale={6}
+          repetition={3.2}
+          softness={0.45}
         >
-          <ShineBorder duration={BORDER_DURATION} shineColor={BORDER_COLOR} />
-          <ItemMedia className="relative z-10">
-            {Icon ? (
-              <Icon className="size-10 text-black dark:text-white" />
-            ) : (
-              <DocumentIcon className="size-10 text-black dark:text-white" />
+          <div
+            className={cn(
+              "relative z-10 flex items-center gap-3.5 rounded-[calc(var(--radius-2xl)-3px)] px-4 py-3.5",
+              "text-sm",
             )}
-          </ItemMedia>
-          <ItemContent className="relative z-10">
-            <ItemTitle>{label}</ItemTitle>
-            {description && <ItemDescription>{description}</ItemDescription>}
-          </ItemContent>
-        </Item>
+          >
+            <ItemMedia>
+              {Icon ? (
+                <Icon className="size-10 text-black dark:text-white" />
+              ) : (
+                <DocumentIcon className="size-10 text-black dark:text-white" />
+              )}
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>{label}</ItemTitle>
+              {description && <ItemDescription>{description}</ItemDescription>}
+            </ItemContent>
+          </div>
+        </LiquidMetalCard>
       </a>
     </LinkItemMotion>
   );
