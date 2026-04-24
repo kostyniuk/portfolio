@@ -3,11 +3,17 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "motion/react";
+import { useSound } from "@/hooks/use-sound";
+import { unlockAudioContext } from "@/lib/sound-engine";
+import { switchOnSound } from "@/lib/switch-on";
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
+  const [play] = useSound(switchOnSound);
 
   function toggleTheme(theme: string) {
+    unlockAudioContext();
+    play();
     if (!document.startViewTransition) {
       setTheme(theme);
       return;
