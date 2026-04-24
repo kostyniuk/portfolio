@@ -26,6 +26,7 @@
     "@soundcn": "https://soundcn.xyz/r/{name}.json",
     "@ncdai": "https://chanhdai.com/r/{name}.json",
     "@animbits": "https://animbits.dev/r/{name}.json",
-    "@kibo-ui": "https://www.kibo-ui.com/r/{name}.json"
+    "@kibo-ui": "https://www.kibo-ui.com/r/{name}.json",
+    "@fab-ui": "https://fab-ui.com/r/{name}.json"
   }
 }

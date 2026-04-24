@@ -7,6 +7,7 @@ import { Education } from "@/features/education/components/education";
 import { Experience } from "@/features/experience/components/experience";
 import { AppleHelloEffectEnglish } from "@/components/apple-hello-effect/apple-hello-effect-english";
 import { Contributions } from "@/features/contributions/contributions";
+import { LiquidMetalCardDefault } from "@/features/profile/components/liquid-card";
 
 export default function Page() {
   return (
@@ -24,6 +25,7 @@ export default function Page() {
       <Contributions />
       <Interests />
       <Education />
+      <LiquidMetalCardDefault />
     </>
   );
 }
