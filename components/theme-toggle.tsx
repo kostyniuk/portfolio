@@ -9,7 +9,7 @@ import { switchOnSound } from "@/lib/switch-on";
 
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [play] = useSound(switchOnSound);
+  const [play] = useSound(switchOnSound, { volume: 0.5 });
 
   function toggleTheme(theme: string) {
     unlockAudioContext();

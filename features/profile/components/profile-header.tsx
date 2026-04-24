@@ -6,8 +6,12 @@ import { useTheme } from "next-themes";
 import ElectricBorder from "@/components/ElectricBorder";
 import colors from "tailwindcss/colors";
 
+import { useSound } from "@/hooks/use-sound";
+import { thrusterFire004Sound } from "@/lib/thruster-fire-004";
+
 function ProfileHeader() {
   const { resolvedTheme } = useTheme();
+  const [play, { stop }] = useSound(thrusterFire004Sound, { volume: 0.5 });
 
   return (
     <>
@@ -24,6 +28,8 @@ function ProfileHeader() {
           height={200}
           alt="Picture of the author"
           className="rounded-full object-cover"
+          onMouseOver={() => play()}
+          onMouseOut={() => stop()}
         />
       </ElectricBorder>
 
