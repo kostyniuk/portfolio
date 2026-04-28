@@ -27,6 +27,7 @@
     "@ncdai": "https://chanhdai.com/r/{name}.json",
     "@animbits": "https://animbits.dev/r/{name}.json",
     "@kibo-ui": "https://www.kibo-ui.com/r/{name}.json",
-    "@fab-ui": "https://fab-ui.com/r/{name}.json"
+    "@fab-ui": "https://fab-ui.com/r/{name}.json",
+    "@glasscn": "https://glasscn-components.vercel.app/r/{name}.json"
   }
 }

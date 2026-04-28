@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/liquid-metal-card";
-import { Switch } from "@/components/ui/switch";
+import { LiquidSwitch } from "@/components/ui/glasscn/liquid-switch";
 import { Card } from "@/components/ui/card";
 // import { PackageManagerProvider, CodeBlockCommand } from "@/components/ui/code-block-command";
 // import { GlassCodeBlockCommand } from "@/components/ui/glasscn/glass-code-block-command";
@@ -31,19 +31,23 @@ function MyComponents() {
     <main className="min-h-screen bg-background px-4 py-12 sm:px-6">
       <CardTitle className="text-4xl mb-4">Liquid Glass</CardTitle>
       <div className="mx-auto flex max-w-3xl flex-col gap-6">
-        {/* <CardHeader>
-          <CardTitle>Liquid Glass Switch</CardTitle>
-          <CardDescription>A simple toggle built from the same shader language as the card surface.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex items-center justify-between rounded-3xl border border-black/8 bg-black/[0.02] px-4 py-3 dark:border-white/8 dark:bg-white/[0.03]">
-            <div className="space-y-1">
-              <p className="text-sm font-medium">Push notifications</p>
-              <p className="text-sm text-muted-foreground">Plain inner fill with the liquid-glass border treatment.</p>
+        <Card>
+          <CardHeader>
+            <CardTitle>Liquid Switch</CardTitle>
+            <CardDescription>A simple toggle built with liquid border.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center justify-between rounded-3xl border border-black/8 bg-black/[0.02] px-4 py-3 dark:border-white/8 dark:bg-white/[0.03]">
+              <div className="space-y-1">
+                <p className="text-sm font-medium">Push notifications</p>
+                <p className="text-sm text-muted-foreground">
+                  Plain inner fill with the liquid-glass border treatment.
+                </p>
+              </div>
+              <LiquidSwitch checked={notifications} onCheckedChange={setNotifications} />
             </div>
-            <Switch checked={notifications} onCheckedChange={setNotifications} />
-          </div>
-        </CardContent> */}
+          </CardContent>
+        </Card>
         {/* <Card
           id="code-block-command"
           className="relative"
