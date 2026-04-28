@@ -23,6 +23,9 @@ async function Header() {
         <FrostGlass variant="clear">
           <div className="h-12 flex items-center justify-between px-5">
             <ThemeToggle />
+            <Link href="/">
+              <Button variant="ghost">Home</Button>
+            </Link>
             <Link href="/my-components">
               <Button variant="ghost">Components</Button>
             </Link>
