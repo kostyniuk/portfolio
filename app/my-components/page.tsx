@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/liquid-metal-card";
+import { LiquidBadge } from "@/components/ui/glasscn/liquid-badge";
 import { LiquidSwitch } from "@/components/ui/glasscn/liquid-switch";
 import { Card } from "@/components/ui/card";
+import { Item, ItemContent, ItemDescription, ItemHeader, ItemTitle } from "@/components/ui/item";
 // import { PackageManagerProvider, CodeBlockCommand } from "@/components/ui/code-block-command";
 // import { GlassCodeBlockCommand } from "@/components/ui/glasscn/glass-code-block-command";
 // import { AlertTitle, AlertDescription } from "@/components/ui/alert";
@@ -46,6 +49,43 @@ function MyComponents() {
               </div>
               <LiquidSwitch checked={notifications} onCheckedChange={setNotifications} />
             </div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Liquid Badge</CardTitle>
+            <CardDescription>A compact badge with liquid-glass tone.</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Item
+              variant="outline"
+              className="rounded-3xl border-black/8 bg-black/[0.02] dark:border-white/8 dark:bg-white/[0.03]"
+            >
+              <Avatar size="lg">
+                <AvatarFallback>VC</AvatarFallback>
+              </Avatar>
+              <ItemContent>
+                <ItemHeader className="items-start">
+                  <div className="space-y-1">
+                    <ItemTitle>Vercel Design System</ItemTitle>
+                    <ItemDescription>
+                      shadcn UI primitives with glassy status markers for product surfaces.
+                    </ItemDescription>
+                  </div>
+                </ItemHeader>
+                <div className="flex flex-wrap items-center gap-2 pt-2">
+                  <LiquidBadge variant="secondary">
+                    shadcn/ui
+                  </LiquidBadge>
+                  <LiquidBadge className="bg-emerald-500 text-white hover:bg-emerald-500">
+                    Vercel Ready
+                  </LiquidBadge>
+                  <LiquidBadge className="bg-red-500 text-white hover:bg-red-500">
+                    Preview Failed
+                  </LiquidBadge>
+                </div>
+              </ItemContent>
+            </Item>
           </CardContent>
         </Card>
         {/* <Card
@@ -126,10 +166,15 @@ function MyComponents() {
               Shader-masked typography powered by the same gem smoke effect — wraps any string in an animated, metallic
               liquid-glass treatment.
             </CardDescription>
-            <CardContent className="py-2">
-              <LiquidText text="Alex" scale={5} />
-            </CardContent>
           </CardHeader>
+          <CardContent className="flex flex-col py-2 gap-6">
+            <div>
+              <LiquidText text="Liquid Text" scale={9} />
+            </div>
+            <p className="max-w-md text-sm text-muted-foreground">
+              Use it as a title treatment for landing sections, profile cards, or compact branded surfaces.
+            </p>
+          </CardContent>
         </Card>
       </div>
     </main>
