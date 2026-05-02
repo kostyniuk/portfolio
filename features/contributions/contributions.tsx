@@ -34,7 +34,7 @@ async function Contributions() {
   return (
     <div>
       <h1>Contributions</h1>
-      <Card variant="frosted-light" className="wavy-border-strong mt-3">
+      <Card variant="frosted-light" className="wavy-border mt-3">
         <CardContent>
           <ContributionsGraph contributions={contributions.contributions} total={contributions.total} />
         </CardContent>

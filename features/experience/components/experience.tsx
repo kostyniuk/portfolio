@@ -169,7 +169,7 @@ function Experience() {
   return (
     <div>
       <h1>Experience</h1>
-      <Card variant="frosted-light" className="wavy-border-subtle mt-3 overflow-visible">
+      <Card variant="frosted-light" className="wavy-border mt-3 overflow-visible">
         <CardContent className="flex shrink-0 flex-row gap-6">
           <div ref={containerRef} className="relative flex flex-col">
             {/* Base line — muted, represents path yet to cover */}
