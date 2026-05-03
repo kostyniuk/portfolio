@@ -7,7 +7,7 @@ function Education() {
   return (
     <div>
       <h1>Education</h1>
-      <Card variant="frosted-light" className="wavy-border mt-3">
+      <Card variant="frosted-light" className="wavy-border mt-2">
         <CardContent>
           <Item className="gap-8 p-0">
             <ItemMedia variant="icon">

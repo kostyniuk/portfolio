@@ -1,4 +1,5 @@
 import { GitHubIcon, InstagramIcon, LinkedInIcon, XIcon } from "@/components/icons/social-icons";
+import { Card, CardContent } from "@/components/ui/card";
 import { LinkItem, type LinkItemProps } from "@/features/profile/components/link-item";
 
 const SOCIAL_NETWORKS = {
@@ -12,11 +13,13 @@ function Socials() {
   return (
     <div>
       <h1>Socials</h1>
-      <div className="mt-2 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
-        {Object.entries(SOCIAL_NETWORKS).map(([id, social]) => {
-          return <LinkItem key={id} {...social} />;
-        })}
-      </div>
+      <Card variant="frosted-light" className="wavy-border mt-2">
+        <CardContent className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
+          {Object.entries(SOCIAL_NETWORKS).map(([id, social]) => {
+            return <LinkItem key={id} {...social} />;
+          })}
+        </CardContent>
+      </Card>
     </div>
   );
 }
