@@ -1,8 +1,4 @@
-import {
-  PreferenceGroup,
-  type PreferenceIconProps,
-  type PreferenceItemProps,
-} from "@/components/custom/preference";
+import { PreferenceGroup, type PreferenceIconProps, type PreferenceItemProps } from "@/components/custom/preference";
 import {
   AnthropicPreferenceIcon,
   GeminiPreferenceIcon,
@@ -12,9 +8,9 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 
 const PREFERENCES = [
-  { text: "OpenAI", Icon: OpenAIPreferenceIcon, className: "bg-[#74AA9C]", weight: 0.9 },
-  { text: "Anthropic", Icon: AnthropicPreferenceIcon, className: "bg-[#CC785C]", weight: 0.09 },
-  { text: "Gemini", Icon: GeminiPreferenceIcon, className: "bg-[#4796E3]", weight: 0.04 },
+  { text: "OpenAI", Icon: OpenAIPreferenceIcon, className: "bg-[#74AA9C]", weight: 0.5 },
+  { text: "Anthropic", Icon: AnthropicPreferenceIcon, className: "bg-[#CC785C]", weight: 0.5 },
+  { text: "Gemini", Icon: GeminiPreferenceIcon, className: "bg-[#4796E3]", weight: 0.05 },
 ] satisfies PreferenceItemProps[];
 
 function createAvatarPreferenceIcon(src: string, alt: string) {
@@ -59,24 +55,24 @@ const FORM_PREFERENCES = [
   { text: "React Hook Form", Icon: ReactHookFormPreferenceIcon, className: "bg-[#EC5990]", weight: 0.05 },
 ] satisfies PreferenceItemProps[];
 
+const PREFERENCE_GROUPS = [
+  { title: "AI Model", description: "AI labs", items: PREFERENCES },
+  { title: "Components library", description: "UI component system", items: COMPONENT_LIBRARY_PREFERENCES },
+  { title: "Frameworks", description: "Web frameworks", items: FRAMEWORK_PREFERENCES },
+  { title: "Forms", description: "Form libraries", items: FORM_PREFERENCES },
+];
+
 function Preference() {
   return (
     <div>
       <h1>Preferences</h1>
       <Card variant="frosted-light" className="wavy-border mt-2">
-        <CardContent className="flex flex-col gap-6">
-          <PreferenceGroup title="AI Model" description="AI labs preferences" items={PREFERENCES} />
-          <PreferenceGroup
-            title="Components library"
-            description="UI component preferences"
-            items={COMPONENT_LIBRARY_PREFERENCES}
-          />
-          <PreferenceGroup
-            title="Frameworks"
-            description="Web framework preferences"
-            items={FRAMEWORK_PREFERENCES}
-          />
-          <PreferenceGroup title="Forms" description="Form library preferences" items={FORM_PREFERENCES} />
+        <CardContent className="flex flex-col divide-y divide-border">
+          {PREFERENCE_GROUPS.map((group) => (
+            <div key={group.title} className="py-6 first:pt-0 last:pb-0">
+              <PreferenceGroup {...group} />
+            </div>
+          ))}
         </CardContent>
       </Card>
     </div>
