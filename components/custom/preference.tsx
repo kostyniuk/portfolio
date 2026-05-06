@@ -1,14 +1,13 @@
-import {
-  AnthropicPreferenceIcon,
-  GeminiPreferenceIcon,
-  OpenAIPreferenceIcon,
-  type PreferenceIcon,
-} from "@/components/icons/preference-icons";
+import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import type { CSSProperties } from "react";
-import { Badge } from "../ui/badge";
-import { Card, CardContent } from "../ui/card";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import type { ComponentType, CSSProperties } from "react";
+
+type PreferenceIconProps = {
+  className?: string;
+};
+
+type PreferenceIcon = ComponentType<PreferenceIconProps>;
 
 type PreferenceItemProps = {
   text: string;
@@ -17,11 +16,9 @@ type PreferenceItemProps = {
   weight?: number;
 };
 
-const PREFERENCES = [
-  { text: "OpenAI", Icon: OpenAIPreferenceIcon, className: "bg-[#74AA9C]", weight: 0.9 },
-  { text: "Anthropic", Icon: AnthropicPreferenceIcon, className: "bg-[#CC785C]", weight: 0.09 },
-  { text: "Gemini", Icon: GeminiPreferenceIcon, className: "bg-[#4796E3]", weight: 0.04 },
-] satisfies PreferenceItemProps[];
+type PreferenceGroupProps = {
+  items: PreferenceItemProps[];
+};
 
 function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemProps) {
   return (
@@ -50,16 +47,15 @@ function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemPro
   );
 }
 
-function Preference() {
+function PreferenceGroup({ items }: PreferenceGroupProps) {
   return (
-    <Card className="h-10 p-0">
-      <CardContent className="flex flex-1 justify-center p-0 sm:p-0">
-        {PREFERENCES.map((preference, i) => (
-          <PreferenceItem key={i} {...preference} />
-        ))}
-      </CardContent>
-    </Card>
+    <div className="flex h-10 overflow-hidden rounded-full">
+      {items.map((preference, i) => (
+        <PreferenceItem key={i} {...preference} />
+      ))}
+    </div>
   );
 }
 
-export { Preference };
+export type { PreferenceGroupProps, PreferenceIcon, PreferenceIconProps, PreferenceItemProps };
+export { PreferenceGroup };

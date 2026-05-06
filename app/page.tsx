@@ -7,7 +7,7 @@ import { Education } from "@/features/education/components/education";
 import { Experience } from "@/features/experience/components/experience";
 import { AppleHelloEffectEnglish } from "@/components/apple-hello-effect/apple-hello-effect-english";
 import { Contributions } from "@/features/contributions/contributions";
-import { Preference } from "@/components/custom/preference";
+import { Preference } from "@/features/preferences/components/preference";
 
 export default function Page() {
   return (
