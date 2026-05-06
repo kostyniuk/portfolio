@@ -1,29 +1,41 @@
+import {
+  AnthropicPreferenceIcon,
+  GeminiPreferenceIcon,
+  OpenAIPreferenceIcon,
+  type PreferenceIcon,
+} from "@/components/icons/preference-icons";
 import { cn } from "@/lib/utils";
+import type { CSSProperties } from "react";
+import { Badge } from "../ui/badge";
 import { Card, CardContent } from "../ui/card";
 
-type PreferenceItem = {
+type PreferenceItemProps = {
   text: string;
+  Icon: PreferenceIcon;
   className: string;
   weight?: number;
 };
 
 const PREFERENCES = [
-  { text: "OpenAI", className: "bg-green-400", weight: 0.2 },
-  { text: "Anthropic", className: "bg-red-400", weight: 0.2 },
-  { text: "Gemini", className: "bg-red-900", weight: 0.6 },
-] satisfies PreferenceItem[];
+  { text: "OpenAI", Icon: OpenAIPreferenceIcon, className: "bg-[#74AA9C]", weight: 0.9 },
+  { text: "Anthropic", Icon: AnthropicPreferenceIcon, className: "bg-[#CC785C]", weight: 0.09 },
+  { text: "Gemini", Icon: GeminiPreferenceIcon, className: "bg-[#4796E3]", weight: 0.04 },
+] satisfies PreferenceItemProps[];
 
-function PreferenceItem({ className, text, weight = 1 }: PreferenceItem) {
+function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemProps) {
   return (
     <div
-      className={cn("flex flex-(--preference-weight) items-center justify-center", className)}
+      className={cn("flex flex-(--preference-weight) items-center justify-center overflow-hidden", className)}
       style={
         {
           "--preference-weight": weight,
-        } as React.CSSProperties
+        } as CSSProperties
       }
+      aria-label={text}
     >
-      {text}
+      <Badge variant="secondary" className="size-7 rounded-full p-0 [&>svg]:size-4!">
+        <Icon />
+      </Badge>
     </div>
   );
 }
