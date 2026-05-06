@@ -38,7 +38,7 @@ function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemPro
         <TooltipTrigger
           render={
             <Badge variant="secondary" className="size-7 rounded-full p-0 [&>svg]:size-4!">
-              <Icon />
+              <Icon className="size-full" />
             </Badge>
           }
         />
