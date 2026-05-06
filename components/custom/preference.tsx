@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { ComponentType, CSSProperties } from "react";
+import { ItemDescription, ItemTitle } from "../ui/item";
 
 type PreferenceIconProps = {
   className?: string;
@@ -17,6 +18,8 @@ type PreferenceItemProps = {
 };
 
 type PreferenceGroupProps = {
+  title: string;
+  description: string;
   items: PreferenceItemProps[];
 };
 
@@ -47,12 +50,18 @@ function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemPro
   );
 }
 
-function PreferenceGroup({ items }: PreferenceGroupProps) {
+function PreferenceGroup({ title, description, items }: PreferenceGroupProps) {
   return (
-    <div className="flex h-10 overflow-hidden rounded-full">
-      {items.map((preference, i) => (
-        <PreferenceItem key={i} {...preference} />
-      ))}
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col">
+        <ItemTitle>{title}</ItemTitle>
+        <ItemDescription>{description}</ItemDescription>
+      </div>
+      <div className="flex h-10 overflow-hidden rounded-full">
+        {items.map((preference, i) => (
+          <PreferenceItem key={i} {...preference} />
+        ))}
+      </div>
     </div>
   );
 }

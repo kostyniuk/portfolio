@@ -18,7 +18,7 @@ function Preference() {
       <h1>Preferences</h1>
       <Card variant="frosted-light" className="wavy-border mt-2">
         <CardContent className="flex flex-col">
-          <PreferenceGroup items={PREFERENCES} />
+          <PreferenceGroup title="AI Model" description="AI labs preferences" items={PREFERENCES} />
         </CardContent>
       </Card>
     </div>
