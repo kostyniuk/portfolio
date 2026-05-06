@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import type { CSSProperties } from "react";
 import { Badge } from "../ui/badge";
 import { Card, CardContent } from "../ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type PreferenceItemProps = {
   text: string;
@@ -33,9 +34,18 @@ function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemPro
       }
       aria-label={text}
     >
-      <Badge variant="secondary" className="size-7 rounded-full p-0 [&>svg]:size-4!">
-        <Icon />
-      </Badge>
+      <Tooltip>
+        <TooltipTrigger
+          render={
+            <Badge variant="secondary" className="size-7 rounded-full p-0 [&>svg]:size-4!">
+              <Icon />
+            </Badge>
+          }
+        />
+        <TooltipContent>
+          <p>{text}</p>
+        </TooltipContent>
+      </Tooltip>
     </div>
   );
 }
