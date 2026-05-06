@@ -1,4 +1,8 @@
-import { PreferenceGroup, type PreferenceIconProps, type PreferenceItemProps } from "@/components/custom/preference";
+import {
+  PreferenceGroup,
+  type PreferenceIconProps,
+  type PreferenceItemProps,
+} from "@/components/custom/preference";
 import {
   AnthropicPreferenceIcon,
   GeminiPreferenceIcon,
@@ -13,16 +17,46 @@ const PREFERENCES = [
   { text: "Gemini", Icon: GeminiPreferenceIcon, className: "bg-[#4796E3]", weight: 0.04 },
 ] satisfies PreferenceItemProps[];
 
-function ShadcnPreferenceIcon({ className }: PreferenceIconProps) {
-  return (
-    <Avatar variant="ghost" className={className}>
-      <AvatarImage src="https://github.com/shadcn.png" alt="shadcn" />
-    </Avatar>
-  );
+function createAvatarPreferenceIcon(src: string, alt: string) {
+  return function AvatarPreferenceIcon({ className }: PreferenceIconProps) {
+    return (
+      <Avatar variant="ghost" className={className}>
+        <AvatarImage src={src} alt={alt} />
+      </Avatar>
+    );
+  };
 }
+
+const ShadcnPreferenceIcon = createAvatarPreferenceIcon("https://github.com/shadcn.png", "shadcn");
+const NextPreferenceIcon = createAvatarPreferenceIcon(
+  "https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png",
+  "Next.js",
+);
+const TanStackPreferenceIcon = createAvatarPreferenceIcon("https://github.com/TanStack.png", "TanStack Start");
+const AstroPreferenceIcon = createAvatarPreferenceIcon("https://github.com/withastro.png", "Astro");
+const ReactFinalFormPreferenceIcon = createAvatarPreferenceIcon(
+  "https://github.com/final-form.png",
+  "React Final Form",
+);
+const ReactHookFormPreferenceIcon = createAvatarPreferenceIcon(
+  "https://github.com/react-hook-form.png",
+  "React Hook Form",
+);
 
 const COMPONENT_LIBRARY_PREFERENCES = [
   { text: "shadcn", Icon: ShadcnPreferenceIcon, className: "bg-foreground", weight: 1 },
+] satisfies PreferenceItemProps[];
+
+const FRAMEWORK_PREFERENCES = [
+  { text: "Next.js", Icon: NextPreferenceIcon, className: "bg-foreground", weight: 0.6 },
+  { text: "TanStack Start", Icon: TanStackPreferenceIcon, className: "bg-[#10B981]", weight: 0.35 },
+  { text: "Astro", Icon: AstroPreferenceIcon, className: "bg-[#BC52EE]", weight: 0.05 },
+] satisfies PreferenceItemProps[];
+
+const FORM_PREFERENCES = [
+  { text: "TanStack Form", Icon: TanStackPreferenceIcon, className: "bg-[#10B981]", weight: 0.9 },
+  { text: "React Final Form", Icon: ReactFinalFormPreferenceIcon, className: "bg-[#E57C46]", weight: 0.05 },
+  { text: "React Hook Form", Icon: ReactHookFormPreferenceIcon, className: "bg-[#EC5990]", weight: 0.05 },
 ] satisfies PreferenceItemProps[];
 
 function Preference() {
@@ -37,6 +71,12 @@ function Preference() {
             description="UI component preferences"
             items={COMPONENT_LIBRARY_PREFERENCES}
           />
+          <PreferenceGroup
+            title="Frameworks"
+            description="Web framework preferences"
+            items={FRAMEWORK_PREFERENCES}
+          />
+          <PreferenceGroup title="Forms" description="Form library preferences" items={FORM_PREFERENCES} />
         </CardContent>
       </Card>
     </div>
