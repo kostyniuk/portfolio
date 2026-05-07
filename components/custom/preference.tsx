@@ -26,7 +26,10 @@ type PreferenceGroupProps = {
 function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemProps) {
   return (
     <div
-      className={cn("flex flex-(--preference-weight) items-center justify-center overflow-hidden", className)}
+      className={cn(
+        "flex flex-(--preference-weight) items-center justify-center overflow-hidden transition-[filter,opacity] duration-150 group-hover/preference:not-[&:hover]:opacity-50 group-hover/preference:not-[&:hover]:saturate-50",
+        className,
+      )}
       style={
         {
           "--preference-weight": weight,
@@ -57,7 +60,7 @@ function PreferenceGroup({ title, description, items }: PreferenceGroupProps) {
         <ItemTitle>{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
       </div>
-      <div className="flex h-10 overflow-hidden rounded-full">
+      <div className="group/preference flex h-10 overflow-hidden rounded-full">
         {items.map((preference, i) => (
           <PreferenceItem key={i} {...preference} />
         ))}
