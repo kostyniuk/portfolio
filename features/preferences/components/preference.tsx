@@ -8,9 +8,27 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 
 const PREFERENCES = [
-  { text: "OpenAI", Icon: OpenAIPreferenceIcon, className: "bg-[#74AA9C]", weight: 0.5 },
-  { text: "Anthropic", Icon: AnthropicPreferenceIcon, className: "bg-[#CC785C]", weight: 0.5 },
-  { text: "Gemini", Icon: GeminiPreferenceIcon, className: "bg-[#4796E3]", weight: 0.05 },
+  {
+    text: "OpenAI",
+    description: "Use for daily tasks, review Opus",
+    Icon: OpenAIPreferenceIcon,
+    className: "bg-[#74AA9C]",
+    weight: 0.5,
+  },
+  {
+    text: "Anthropic",
+    description: "Use for UI, review GPT-5.5",
+    Icon: AnthropicPreferenceIcon,
+    className: "bg-[#CC785C]",
+    weight: 0.5,
+  },
+  {
+    text: "Gemini",
+    description: "Rarely use to see if it became any good",
+    Icon: GeminiPreferenceIcon,
+    className: "bg-[#4796E3]",
+    weight: 0.05,
+  },
 ] satisfies PreferenceItemProps[];
 
 function createAvatarPreferenceIcon(src: string, alt: string) {
@@ -40,7 +58,7 @@ const ReactHookFormPreferenceIcon = createAvatarPreferenceIcon(
 );
 
 const COMPONENT_LIBRARY_PREFERENCES = [
-  { text: "shadcn", Icon: ShadcnPreferenceIcon, className: "bg-foreground", weight: 1 },
+  { text: "shadcn", description: "goat 👑", Icon: ShadcnPreferenceIcon, className: "bg-foreground", weight: 1 },
 ] satisfies PreferenceItemProps[];
 
 const FRAMEWORK_PREFERENCES = [

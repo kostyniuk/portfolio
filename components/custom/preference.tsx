@@ -12,6 +12,7 @@ type PreferenceIcon = ComponentType<PreferenceIconProps>;
 
 type PreferenceItemProps = {
   text: string;
+  description?: string;
   Icon: PreferenceIcon;
   className: string;
   weight?: number;
@@ -23,7 +24,7 @@ type PreferenceGroupProps = {
   items: PreferenceItemProps[];
 };
 
-function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemProps) {
+function PreferenceItem({ className, description, Icon, text, weight = 1 }: PreferenceItemProps) {
   return (
     <div
       className={cn(
@@ -45,8 +46,9 @@ function PreferenceItem({ className, Icon, text, weight = 1 }: PreferenceItemPro
             </Badge>
           }
         />
-        <TooltipContent>
-          <p>{text}</p>
+        <TooltipContent className="flex max-w-48 flex-col items-start gap-0.5 px-3 py-2">
+          <ItemTitle className="text-xs text-background">{text}</ItemTitle>
+          {description ? <ItemDescription className="text-xs text-background/70">{description}</ItemDescription> : null}
         </TooltipContent>
       </Tooltip>
     </div>
