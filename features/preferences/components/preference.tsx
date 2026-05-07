@@ -1,23 +1,24 @@
-import { PreferenceGroup, type PreferenceIconProps, type PreferenceItemProps } from "@/components/custom/preference";
 import {
   AnthropicPreferenceIcon,
   GeminiPreferenceIcon,
   OpenAIPreferenceIcon,
+  PreferenceIconProps,
 } from "@/components/icons/preference-icons";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
+import { PreferenceItemProps, PreferenceGroup } from "@/components/ui/glasscn/preference";
 
 const PREFERENCES = [
   {
     text: "OpenAI",
-    description: "Use for daily tasks, review Opus",
+    description: "Use for small daily tasks, backend plans, review Opus",
     Icon: OpenAIPreferenceIcon,
     className: "bg-[#74AA9C]",
     weight: 0.5,
   },
   {
     text: "Anthropic",
-    description: "Use for UI, review GPT-5.5",
+    description: "Use for UI, frontend plans, review GPT-5.5",
     Icon: AnthropicPreferenceIcon,
     className: "bg-[#CC785C]",
     weight: 0.5,
