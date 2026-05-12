@@ -9,6 +9,19 @@ interface Project extends LinkItemProps {
 }
 
 const PROJECTS = {
+  glasscn: {
+    link: "https://glasscn-components.vercel.app/",
+    label: "GlassCN",
+    description: "A library of Apple-like glass components for shadcn/ui.",
+    features: [
+      "20+ Glass-styled UI primitives with 5 different glass effects that works great for both dark and light themes",
+      "Apple-inspired visual treatment with translucent layers, soft highlights, and liquid surfaces",
+      "Physical Refraction: Uses SVG filter primitives and a displacement map to simulate the way light actually bends through thick glass",
+      "Open source package with ready-to-adapt building blocks for custom glassmorphism systems",
+    ],
+    videoHref: "/glasscn.mp4",
+    source: "https://github.com/kostyniuk/glasscn-components",
+  },
   mellow_lines: {
     link: "https://mellowlines.dev",
     label: "Mellow Lines",
