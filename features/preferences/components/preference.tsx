@@ -14,14 +14,14 @@ const PREFERENCES = [
     description: "Use for small daily tasks, backend plans, review Opus",
     Icon: OpenAIPreferenceIcon,
     className: "bg-[#74AA9C]",
-    weight: 0.5,
+    weight: 0.92,
   },
   {
     text: "Anthropic",
     description: "Use for UI, frontend plans, review GPT-5.5",
     Icon: AnthropicPreferenceIcon,
     className: "bg-[#CC785C]",
-    weight: 0.5,
+    weight: 0.05,
   },
   {
     text: "Gemini",
