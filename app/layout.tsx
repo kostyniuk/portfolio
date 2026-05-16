@@ -22,24 +22,41 @@ const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-ti
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.a13x.space"),
   title: {
-    default: "Alex Kostyniuk — Software Engineer",
+    default: "Alex Kostyniuk — Team Lead & Fullstack Engineer",
     template: "%s | Alex Kostyniuk",
   },
-  description: "Taste, experience, preferences and side projects of Alex Kostyniuk",
-  keywords: ["Alex Kostyniuk", "portfolio", "designer", "engineer", "software engineer", "web developer"],
+  description:
+    "Team Lead at AMFG, Stockholm. Open Source contributor. Creator of GlassCN (glass components for shadcn/ui), Mellow Lines (code animation studio), LeeHireMe (best CV builder).",
+  keywords: [
+    "Alex Kostyniuk",
+    "Team Lead",
+    "Fullstack Engineer",
+    "Software Engineer",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "PostgreSQL",
+    "Next.js",
+    "GlassCN",
+    "Mellow Lines",
+    "Stockholm",
+    "AMFG",
+  ],
   authors: [{ name: "Alex Kostyniuk", url: "https://www.a13x.space" }],
   creator: "Alex Kostyniuk",
   openGraph: {
     type: "website",
     locale: "en_US",
     siteName: "Alex Kostyniuk",
-    title: "Alex Kostyniuk — Software Engineer",
-    description: "Taste, experience, preferences and side projects.",
+    title: "Alex Kostyniuk — Team Lead & Fullstack Software Engineer",
+    description:
+      "Team Lead at AMFG, Stockholm. Open Source contributor. Creator of GlassCN (glass components for shadcn/ui), Mellow Lines (code animation studio), LeeHireMe (best CV builder).",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Kostyniuk — Software Engineer",
-    description: "Taste, experience, preferences and side projects.",
+    title: "Alex Kostyniuk — Team Lead & Fullstack Software Engineer",
+    description:
+      "Team Lead at AMFG, Stockholm. Open Source contributor. Creator of GlassCN (glass components for shadcn/ui), Mellow Lines (code animation studio), LeeHireMe (best CV builder).",
     creator: "@kostyniuk00",
   },
   robots: {
