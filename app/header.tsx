@@ -8,6 +8,8 @@ import Link from "next/link";
 import { Octokit } from "octokit";
 import { ItemDescription } from "@/components/ui/item";
 import { Button } from "@/components/ui/button";
+import { DownloadButton } from "@/components/ui/download-button";
+import { FileDown } from "lucide-react";
 
 async function Header() {
   const octokit = new Octokit();
@@ -29,6 +31,13 @@ async function Header() {
             <Link href="/my-components">
               <Button variant="ghost">Components</Button>
             </Link>
+            <SocialItemMotion>
+              <DownloadButton
+                icon={<FileDown className="size-5" />}
+                tooltipText="Download CV"
+                pathToPdf="/cv.pdf"
+              />
+            </SocialItemMotion>
             <Link href="https://github.com/kostyniuk/portfolio">
               <SocialItemMotion>
                 <Button variant={"ghost"} className="flex flex-row gap-2 items-center cursor-pointer">
