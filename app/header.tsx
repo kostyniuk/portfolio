@@ -10,6 +10,7 @@ import { ItemDescription } from "@/components/ui/item";
 import { Button } from "@/components/ui/button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { FileDown } from "lucide-react";
+import { AKLogo } from "@/components/icons/ak-logo";
 
 async function Header() {
   const octokit = new Octokit();
@@ -24,6 +25,9 @@ async function Header() {
       <div className="mt-2 w-[calc(100%-2rem)] sm:w-[calc(50%-10px)] rounded-4xl overflow-hidden">
         <FrostGlass variant="clear">
           <div className="h-12 flex items-center justify-between px-5">
+            <Link href="/" className="flex items-center">
+              <AKLogo size={24} className="text-foreground" />
+            </Link>
             <ThemeToggle />
             <Link href="/">
               <Button variant="ghost">Home</Button>

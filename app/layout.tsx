@@ -20,8 +20,35 @@ const fontMono = Geist_Mono({
 const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-title" });
 
 export const metadata: Metadata = {
-  title: "Alex Kostyniuk",
-  description: "My portfolio. Built with Next.js, shadcn/ui, React Bits, and Motion.",
+  title: {
+    default: "Alex Kostyniuk — Software Engineer",
+    template: "%s | Alex Kostyniuk",
+  },
+  description: "Taste, experience, preferences and side projects of Alex Kostyniuk",
+  keywords: ["Alex Kostyniuk", "portfolio", "designer", "engineer", "software engineer", "web developer"],
+  authors: [{ name: "Alex Kostyniuk", url: "https://www.a13x.space" }],
+  creator: "Alex Kostyniuk",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Alex Kostyniuk",
+    title: "Alex Kostyniuk — Software Engineer",
+    description: "Taste, experience, preferences and side projects.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Alex Kostyniuk — Software Engineer",
+    description: "Taste, experience, preferences and side projects.",
+    creator: "@kostyniuk00",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 export default function RootLayout({
