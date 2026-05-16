@@ -20,6 +20,7 @@ const fontMono = Geist_Mono({
 const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-title" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.a13x.space"),
   title: {
     default: "Alex Kostyniuk — Software Engineer",
     template: "%s | Alex Kostyniuk",
