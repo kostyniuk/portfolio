@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "Alex Kostyniuk — Software Engineer";
+export const alt = "Alex Kostyniuk — Software Engineer & Team Lead at AMFG";
 export const size = {
   width: 1200,
   height: 630,
@@ -73,19 +73,18 @@ export default async function Image() {
               letterSpacing: "-0.01em",
             }}
           >
-            Team Lead & Fullstack Engineer
+            Software Engineer & Team Lead at AMFG
           </div>
           <div
             style={{
-              fontSize: "20px",
+              fontSize: "26px",
               fontWeight: 400,
-              color: "#888888",
+              color: "#a0a0a0",
               lineHeight: 1.5,
-              maxWidth: "520px",
+              maxWidth: "480px",
             }}
           >
-            Team Lead at AMFG, Stockholm. Open Source contributor. Creator of GlassCN (glass components for shadcn/ui),
-            Mellow Lines (code animation studio), LeeHireMe (best CV builder).
+            Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located in Stockholm.
           </div>
         </div>
 

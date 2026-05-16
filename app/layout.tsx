@@ -22,11 +22,11 @@ const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-ti
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.a13x.space"),
   title: {
-    default: "Alex Kostyniuk — Team Lead & Fullstack Engineer",
+    default: "Alex Kostyniuk — Software Engineer & Team Lead at AMFG",
     template: "%s | Alex Kostyniuk",
   },
   description:
-    "Team Lead at AMFG, Stockholm. Open Source contributor. Creator of GlassCN (glass components for shadcn/ui), Mellow Lines (code animation studio), LeeHireMe (best CV builder).",
+    "Open Source contributor. Creator of GlassCN (glass components for shadcn/ui), Mellow Lines (code animation studio), LeeHireMe (best CV builder).",
   keywords: [
     "Alex Kostyniuk",
     "Team Lead",
@@ -48,15 +48,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Alex Kostyniuk",
-    title: "Alex Kostyniuk — Team Lead & Fullstack Software Engineer",
+    title: "Alex Kostyniuk — Software Engineer & Team Lead at AMFG",
     description:
-      "Team Lead at AMFG, Stockholm. Open Source contributor. Creator of GlassCN (glass components for shadcn/ui), Mellow Lines (code animation studio), LeeHireMe (best CV builder).",
+      "Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located in Stockholm.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Kostyniuk — Team Lead & Fullstack Software Engineer",
+    title: "Alex Kostyniuk — Software Engineer & Team Lead at AMFG",
     description:
-      "Team Lead at AMFG, Stockholm. Open Source contributor. Creator of GlassCN (glass components for shadcn/ui), Mellow Lines (code animation studio), LeeHireMe (best CV builder).",
+      "Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located in Stockholm.",
     creator: "@kostyniuk00",
   },
   robots: {
