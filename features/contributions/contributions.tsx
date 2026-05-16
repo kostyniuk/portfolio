@@ -9,7 +9,6 @@ type ContributionsResponse = {
 
 const getContributions = async () => {
   const username = "kostyniuk";
-  const year = new Date().getFullYear();
   const url = new URL(`/v4/${username}`, "https://github-contributions-api.jogruber.de");
 
   const response = await fetch(url);
@@ -19,10 +18,17 @@ const getContributions = async () => {
   }
 
   const data = (await response.json()) as ContributionsResponse;
+
+  const today = new Date();
+  const oneYearAgo = new Date(today);
+  oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+  const oneYearAgoStr = oneYearAgo.toISOString().split("T")[0];
+  const todayStr = today.toISOString().split("T")[0];
+
   const contributions = data.contributions
-    .filter((activity) => activity.date.startsWith(`${year}-`))
+    .filter((activity) => activity.date >= oneYearAgoStr && activity.date <= todayStr)
     .sort((a, b) => a.date.localeCompare(b.date));
-  const total = data.total[String(year)] ?? contributions.reduce((sum, activity) => sum + activity.count, 0);
+  const total = contributions.reduce((sum, activity) => sum + activity.count, 0);
 
   return { contributions, total };
 };

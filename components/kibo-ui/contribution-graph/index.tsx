@@ -19,7 +19,9 @@ import {
   type HTMLAttributes,
   type ReactNode,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
 } from "react";
 import { cn } from "@/lib/utils";
 
@@ -226,7 +228,7 @@ export const ContributionGraph = ({
   const totalCount =
     typeof totalCountProp === "number" ? totalCountProp : data.reduce((sum, activity) => sum + activity.count, 0);
 
-  const width = weeks.length * (blockSize + blockMargin) - blockMargin;
+  const width = labelHeight + weeks.length * (blockSize + blockMargin) - blockMargin;
   const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin;
 
   if (data.length === 0) {
@@ -297,7 +299,7 @@ export const ContributionGraphBlock = ({
       rx={blockRadius}
       ry={blockRadius}
       width={blockSize}
-      x={(blockSize + blockMargin) * weekIndex}
+      x={labelHeight + (blockSize + blockMargin) * weekIndex}
       y={labelHeight + (blockSize + blockMargin) * dayIndex}
       {...props}
     />
@@ -306,28 +308,65 @@ export const ContributionGraphBlock = ({
 
 export type ContributionGraphCalendarProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
   hideMonthLabels?: boolean;
+  hideDayLabels?: boolean;
   className?: string;
   children: (props: { activity: Activity; dayIndex: number; weekIndex: number }) => ReactNode;
 };
 
 export const ContributionGraphCalendar = ({
   hideMonthLabels = false,
+  hideDayLabels = false,
   className,
   children,
   ...props
 }: ContributionGraphCalendarProps) => {
-  const { weeks, width, height, blockSize, blockMargin, labels } = useContributionGraph();
+  const { weeks, width, height, blockSize, blockMargin, labelHeight, labels, weekStart } = useContributionGraph();
 
   const monthLabels = useMemo(() => getMonthLabels(weeks, labels.months), [weeks, labels.months]);
 
+  const dayLabels = useMemo(() => {
+    const weekdayLabels = labels.weekdays ?? DEFAULT_LABELS.weekdays ?? [];
+    const shortLabels = weekdayLabels.map((day) => day.charAt(0));
+    const displayDays = [1, 3, 5];
+    return displayDays.map((dayIndex) => ({
+      dayIndex,
+      label: shortLabels[(weekStart + dayIndex) % 7],
+    }));
+  }, [labels.weekdays, weekStart]);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollLeft = containerRef.current.scrollWidth;
+    }
+  }, []);
+
   return (
-    <div className={cn("max-w-full overflow-x-auto overflow-y-hidden", className)} {...props}>
+    <div ref={containerRef} className={cn("max-w-full overflow-x-auto overflow-y-hidden", className)} {...props}>
       <svg className="block overflow-visible" height={height} viewBox={`0 0 ${width} ${height}`} width={width}>
         <title>Contribution Graph</title>
         {!hideMonthLabels && (
           <g className="fill-current">
             {monthLabels.map(({ label, weekIndex }) => (
-              <text dominantBaseline="hanging" key={weekIndex} x={(blockSize + blockMargin) * weekIndex}>
+              <text
+                dominantBaseline="hanging"
+                key={weekIndex}
+                x={labelHeight + (blockSize + blockMargin) * weekIndex}
+              >
+                {label}
+              </text>
+            ))}
+          </g>
+        )}
+        {!hideDayLabels && (
+          <g className="fill-current text-muted-foreground">
+            {dayLabels.map(({ dayIndex, label }) => (
+              <text
+                key={dayIndex}
+                x={0}
+                y={labelHeight + (blockSize + blockMargin) * dayIndex + blockSize / 2}
+                dominantBaseline="central"
+              >
                 {label}
               </text>
             ))}

@@ -27,7 +27,11 @@ const graphLevelClassNames = [
 
 const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) => (
   <TooltipProvider>
-    <ContributionGraph data={contributions} totalCount={total}>
+    <ContributionGraph
+      data={contributions}
+      totalCount={total}
+      labels={{ totalCount: "{{count}} contributions in the last year" }}
+    >
       <ContributionGraphCalendar>
         {({ activity, dayIndex, weekIndex }) => (
           <Tooltip>
