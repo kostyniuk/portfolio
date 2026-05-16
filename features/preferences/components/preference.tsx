@@ -2,76 +2,98 @@ import {
   AnthropicPreferenceIcon,
   GeminiPreferenceIcon,
   OpenAIPreferenceIcon,
-  PreferenceIconProps,
 } from "@/components/icons/preference-icons";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { PreferenceItemProps, PreferenceGroup } from "@/components/ui/glasscn/preference";
 
+function AvatarPreferenceIcon({ src, alt }: { src: string; alt: string }) {
+  return (
+    <Avatar variant="ghost" className="size-full">
+      <AvatarImage src={src} alt={alt} />
+    </Avatar>
+  );
+}
+
 const PREFERENCES = [
   {
     text: "OpenAI",
     description: "Use for small daily tasks, backend plans, review Opus",
-    Icon: OpenAIPreferenceIcon,
+    icon: <OpenAIPreferenceIcon className="size-full" />,
     className: "bg-[#74AA9C]",
     weight: 0.92,
   },
   {
     text: "Anthropic",
     description: "Use for UI, frontend plans, review GPT-5.5",
-    Icon: AnthropicPreferenceIcon,
+    icon: <AnthropicPreferenceIcon className="size-full" />,
     className: "bg-[#CC785C]",
     weight: 0.05,
   },
   {
     text: "Gemini",
     description: "Rarely use to see if it became any good",
-    Icon: GeminiPreferenceIcon,
+    icon: <GeminiPreferenceIcon className="size-full" />,
     className: "bg-[#4796E3]",
     weight: 0.05,
   },
 ] satisfies PreferenceItemProps[];
 
-function createAvatarPreferenceIcon(src: string, alt: string) {
-  return function AvatarPreferenceIcon({ className }: PreferenceIconProps) {
-    return (
-      <Avatar variant="ghost" className={className}>
-        <AvatarImage src={src} alt={alt} />
-      </Avatar>
-    );
-  };
-}
-
-const ShadcnPreferenceIcon = createAvatarPreferenceIcon("https://github.com/shadcn.png", "shadcn");
-const NextPreferenceIcon = createAvatarPreferenceIcon(
-  "https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png",
-  "Next.js",
-);
-const TanStackPreferenceIcon = createAvatarPreferenceIcon("https://github.com/TanStack.png", "TanStack Start");
-const AstroPreferenceIcon = createAvatarPreferenceIcon("https://github.com/withastro.png", "Astro");
-const ReactFinalFormPreferenceIcon = createAvatarPreferenceIcon(
-  "https://github.com/final-form.png",
-  "React Final Form",
-);
-const ReactHookFormPreferenceIcon = createAvatarPreferenceIcon(
-  "https://github.com/react-hook-form.png",
-  "React Hook Form",
-);
-
 const COMPONENT_LIBRARY_PREFERENCES = [
-  { text: "shadcn", description: "goat 👑", Icon: ShadcnPreferenceIcon, className: "bg-foreground", weight: 1 },
+  {
+    text: "shadcn",
+    description: "goat",
+    icon: <AvatarPreferenceIcon src="https://github.com/shadcn.png" alt="shadcn" />,
+    className: "bg-foreground",
+    weight: 1,
+  },
 ] satisfies PreferenceItemProps[];
 
 const FRAMEWORK_PREFERENCES = [
-  { text: "Next.js", Icon: NextPreferenceIcon, className: "bg-foreground", weight: 0.6 },
-  { text: "TanStack Start", Icon: TanStackPreferenceIcon, className: "bg-[#10B981]", weight: 0.35 },
-  { text: "Astro", Icon: AstroPreferenceIcon, className: "bg-[#BC52EE]", weight: 0.05 },
+  {
+    text: "Next.js",
+    icon: (
+      <AvatarPreferenceIcon
+        src="https://assets.vercel.com/image/upload/v1662130559/nextjs/Icon_dark_background.png"
+        alt="Next.js"
+      />
+    ),
+    className: "bg-foreground",
+    weight: 0.6,
+  },
+  {
+    text: "TanStack Start",
+    icon: <AvatarPreferenceIcon src="https://github.com/TanStack.png" alt="TanStack Start" />,
+    className: "bg-[#10B981]",
+    weight: 0.35,
+  },
+  {
+    text: "Astro",
+    icon: <AvatarPreferenceIcon src="https://github.com/withastro.png" alt="Astro" />,
+    className: "bg-[#BC52EE]",
+    weight: 0.05,
+  },
 ] satisfies PreferenceItemProps[];
 
 const FORM_PREFERENCES = [
-  { text: "TanStack Form", Icon: TanStackPreferenceIcon, className: "bg-[#10B981]", weight: 0.9 },
-  { text: "React Final Form", Icon: ReactFinalFormPreferenceIcon, className: "bg-[#E57C46]", weight: 0.05 },
-  { text: "React Hook Form", Icon: ReactHookFormPreferenceIcon, className: "bg-[#EC5990]", weight: 0.05 },
+  {
+    text: "TanStack Form",
+    icon: <AvatarPreferenceIcon src="https://github.com/TanStack.png" alt="TanStack Form" />,
+    className: "bg-[#10B981]",
+    weight: 0.9,
+  },
+  {
+    text: "React Final Form",
+    icon: <AvatarPreferenceIcon src="https://github.com/final-form.png" alt="React Final Form" />,
+    className: "bg-[#E57C46]",
+    weight: 0.05,
+  },
+  {
+    text: "React Hook Form",
+    icon: <AvatarPreferenceIcon src="https://github.com/react-hook-form.png" alt="React Hook Form" />,
+    className: "bg-[#EC5990]",
+    weight: 0.05,
+  },
 ] satisfies PreferenceItemProps[];
 
 const PREFERENCE_GROUPS = [

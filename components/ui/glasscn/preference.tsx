@@ -1,29 +1,37 @@
-import type { ComponentType, CSSProperties } from "react";
+"use client";
+
+import type { CSSProperties, ReactNode } from "react";
+import { motion, type Variants } from "motion/react";
 
 import { Badge } from "@/components/ui/badge";
 import { ItemDescription, ItemTitle } from "@/components/ui/item";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
-type PreferenceIconProps = { className?: string };
+const badgeMotionVariants: Variants = {
+  rest: { scale: 1 },
+  hover: { scale: 1.15 },
+};
 
-type PreferenceIcon = ComponentType<PreferenceIconProps>;
+const badgeMotionTransition = { type: "spring", stiffness: 400, damping: 20 } as const;
 
 type PreferenceItemProps = {
   text: string;
   description?: string;
-  Icon: PreferenceIcon;
+  icon: ReactNode;
   className: string;
   weight?: number;
 };
 
 type PreferenceGroupProps = { title: string; description: string; items: PreferenceItemProps[] };
 
-function PreferenceItem({ className, description, Icon, text, weight = 1 }: PreferenceItemProps) {
+function PreferenceItem({ className, description, icon, text, weight = 1 }: PreferenceItemProps) {
   return (
-    <div
+    <motion.div
+      initial="rest"
+      whileHover="hover"
       className={cn(
-        "flex flex-(--preference-weight) items-center justify-center overflow-hidden transition-[filter,opacity] duration-300 group-hover/preference:not-[&:hover]:opacity-50 group-hover/preference:not-[&:hover]:saturate-50",
+        "group/item flex flex-(--preference-weight) items-center justify-center overflow-hidden transition-[filter,opacity] duration-300 group-hover/preference:not-[&:hover]:opacity-50 group-hover/preference:not-[&:hover]:saturate-50",
         className,
       )}
       style={{ "--preference-weight": weight } as CSSProperties}
@@ -32,9 +40,11 @@ function PreferenceItem({ className, description, Icon, text, weight = 1 }: Pref
       <Tooltip>
         <TooltipTrigger
           render={
-            <Badge variant="secondary" className="size-7 rounded-full p-0 [&>svg]:size-4!">
-              <Icon className="size-full" />
-            </Badge>
+            <motion.div variants={badgeMotionVariants} transition={badgeMotionTransition}>
+              <Badge variant="secondary" className="size-7 rounded-full p-0 shadow-[0_0_0_0_rgba(255,255,255,0)] transition-shadow duration-300 group-hover/item:shadow-[0_0_12px_2px_rgba(255,255,255,0.5)] [&>svg]:size-4!">
+                {icon}
+              </Badge>
+            </motion.div>
           }
         />
         <TooltipContent className="flex max-w-48 flex-col items-start gap-0.5 px-3 py-2">
@@ -42,7 +52,7 @@ function PreferenceItem({ className, description, Icon, text, weight = 1 }: Pref
           {description ? <ItemDescription className="text-background/70 text-xs">{description}</ItemDescription> : null}
         </TooltipContent>
       </Tooltip>
-    </div>
+    </motion.div>
   );
 }
 
@@ -62,5 +72,5 @@ function PreferenceGroup({ title, description, items }: PreferenceGroupProps) {
   );
 }
 
-export type { PreferenceGroupProps, PreferenceIcon, PreferenceIconProps, PreferenceItemProps };
+export type { PreferenceGroupProps, PreferenceItemProps };
 export { PreferenceGroup };
