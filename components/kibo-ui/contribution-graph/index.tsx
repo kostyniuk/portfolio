@@ -19,9 +19,10 @@ import {
   type HTMLAttributes,
   type ReactNode,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { cn } from "@/lib/utils";
 
@@ -335,14 +336,21 @@ export const ContributionGraphCalendar = ({
   }, [labels.weekdays, weekStart]);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
+  const [ready, setReady] = useState(false);
+
+  useLayoutEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollLeft = containerRef.current.scrollWidth;
     }
+    setReady(true);
   }, []);
 
   return (
-    <div ref={containerRef} className={cn("max-w-full overflow-x-auto overflow-y-hidden", className)} {...props}>
+    <div
+      ref={containerRef}
+      className={cn("max-w-full overflow-x-auto overflow-y-hidden", !ready && "opacity-0", className)}
+      {...props}
+    >
       <svg className="block overflow-visible" height={height} viewBox={`0 0 ${width} ${height}`} width={width}>
         <title>Contribution Graph</title>
         {!hideMonthLabels && (
