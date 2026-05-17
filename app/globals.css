@@ -154,8 +154,7 @@
     background:
       linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
       linear-gradient(var(--page-grid-line) 1px, transparent 1px),
-      radial-gradient(circle at 16% 4%, var(--page-grid-glow), transparent 22rem),
-      var(--page-grid-base);
+      radial-gradient(circle at 16% 4%, var(--page-grid-glow), transparent 22rem), var(--page-grid-base);
     background-size:
       18px 18px,
       18px 18px,

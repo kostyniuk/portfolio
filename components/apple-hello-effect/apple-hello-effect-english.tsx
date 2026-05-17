@@ -1,43 +1,40 @@
-"use client"
+"use client";
 
-import type { TargetAndTransition } from "motion/react"
-import { motion } from "motion/react"
-import { type ComponentProps, useCallback, useState } from "react"
+import type { TargetAndTransition } from "motion/react";
+import { motion } from "motion/react";
+import { type ComponentProps, useCallback, useState } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const initialProps: TargetAndTransition = {
   pathLength: 0,
   opacity: 0,
-}
+};
 
 const animateProps: TargetAndTransition = {
   pathLength: 1,
   opacity: 1,
-}
+};
 
-export type AppleHelloEffectEnglishProps = Omit<
-  ComponentProps<typeof motion.svg>,
-  "speed" | "onAnimationComplete"
-> & {
+export type AppleHelloEffectEnglishProps = Omit<ComponentProps<typeof motion.svg>, "speed" | "onAnimationComplete"> & {
   /**
    * Animation speed multiplier (higher = faster).
    * @defaultValue 1
    * */
-  speed?: number
+  speed?: number;
   /**
    * Whether the animation should loop indefinitely.
    * @defaultValue false
    */
-  loop?: boolean
+  loop?: boolean;
   /**
    * Delay in ms before the animation restarts when looping.
    * @defaultValue 1000
    */
-  loopDelay?: number
+  loopDelay?: number;
   /** Called when the full handwriting animation completes (fires every loop). */
-  onAnimationComplete?: () => void
-}
+  onAnimationComplete?: () => void;
+};
 
 export function AppleHelloEffectEnglish({
   className,
@@ -47,15 +44,15 @@ export function AppleHelloEffectEnglish({
   onAnimationComplete,
   ...props
 }: AppleHelloEffectEnglishProps) {
-  const [key, setKey] = useState(0)
-  const calc = (x: number) => x * speed
+  const [key, setKey] = useState(0);
+  const calc = (x: number) => x * speed;
 
   const handleAnimationComplete = useCallback(() => {
-    onAnimationComplete?.()
+    onAnimationComplete?.();
     if (loop) {
-      setTimeout(() => setKey((k) => k + 1), loopDelay)
+      setTimeout(() => setKey((k) => k + 1), loopDelay);
     }
-  }, [loop, loopDelay, onAnimationComplete])
+  }, [loop, loopDelay, onAnimationComplete]);
 
   return (
     <motion.svg
@@ -100,5 +97,5 @@ export function AppleHelloEffectEnglish({
         onAnimationComplete={handleAnimationComplete}
       />
     </motion.svg>
-  )
+  );
 }

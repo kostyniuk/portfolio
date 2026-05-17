@@ -41,7 +41,10 @@ function PreferenceItem({ className, description, icon, text, weight = 1 }: Pref
         <TooltipTrigger
           render={
             <motion.div variants={badgeMotionVariants} transition={badgeMotionTransition}>
-              <Badge variant="secondary" className="size-7 rounded-full p-0 shadow-[0_0_0_0_rgba(255,255,255,0)] transition-shadow duration-300 group-hover/item:shadow-[0_0_12px_2px_rgba(255,255,255,0.5)] [&>svg]:size-4!">
+              <Badge
+                variant="secondary"
+                className="size-7 rounded-full p-0 shadow-[0_0_0_0_rgba(255,255,255,0)] transition-shadow duration-300 group-hover/item:shadow-[0_0_12px_2px_rgba(255,255,255,0.5)] [&>svg]:size-4!"
+              >
                 {icon}
               </Badge>
             </motion.div>

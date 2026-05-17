@@ -348,11 +348,7 @@ export const ContributionGraphCalendar = ({
         {!hideMonthLabels && (
           <g className="fill-current">
             {monthLabels.map(({ label, weekIndex }) => (
-              <text
-                dominantBaseline="hanging"
-                key={weekIndex}
-                x={labelHeight + (blockSize + blockMargin) * weekIndex}
-              >
+              <text dominantBaseline="hanging" key={weekIndex} x={labelHeight + (blockSize + blockMargin) * weekIndex}>
                 {label}
               </text>
             ))}

@@ -19,9 +19,7 @@ export function LiquidSwitchDemo() {
         <div className="flex items-center justify-between rounded-3xl border border-black/8 bg-black/[0.02] px-4 py-3 dark:border-white/8 dark:bg-white/[0.03]">
           <div className="space-y-1">
             <p className="text-sm font-medium">Push notifications</p>
-            <p className="text-sm text-muted-foreground">
-              Plain inner fill with the liquid-glass border treatment.
-            </p>
+            <p className="text-sm text-muted-foreground">Plain inner fill with the liquid-glass border treatment.</p>
           </div>
           <LiquidSwitch checked={notifications} onCheckedChange={setNotifications} />
         </div>

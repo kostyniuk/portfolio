@@ -233,28 +233,19 @@ export const transitions = {
 // HELPER FUNCTIONS
 // ============================================
 
-export const createContinuousTransition = (
-  duration: number = 1,
-  ease: Easing = "linear",
-): Transition => ({
+export const createContinuousTransition = (duration: number = 1, ease: Easing = "linear"): Transition => ({
   duration,
   ease,
   repeat: Infinity,
 });
 
-export const createDelayedTransition = (
-  delay: number,
-  duration: number = 0.3,
-): Transition => ({
+export const createDelayedTransition = (delay: number, duration: number = 0.3): Transition => ({
   delay,
   duration,
   ease: "easeOut" as Easing,
 });
 
-export const createStaggerTransition = (
-  staggerDelay: number = 0.1,
-  delayChildren: number = 0,
-): Transition => ({
+export const createStaggerTransition = (staggerDelay: number = 0.1, delayChildren: number = 0): Transition => ({
   staggerChildren: staggerDelay,
   delayChildren,
 });

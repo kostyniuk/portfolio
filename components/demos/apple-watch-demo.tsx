@@ -10,8 +10,8 @@ export function AppleWatchDemo() {
       <CardHeader>
         <CardTitle>Apple Watch</CardTitle>
         <CardDescription>
-          Pairs two stacked liquid-text numbers inside a compact card, mirroring the dense data readouts found on
-          Apple Watch faces.
+          Pairs two stacked liquid-text numbers inside a compact card, mirroring the dense data readouts found on Apple
+          Watch faces.
         </CardDescription>
       </CardHeader>
       <CardContent>

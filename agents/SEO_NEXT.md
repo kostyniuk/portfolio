@@ -90,8 +90,8 @@ import { join } from "node:path";
 
 export const alt = "Your Name — Your Title";
 export const size = {
-  width: 1200,  // Standard OG image width
-  height: 630,  // Standard OG image height
+  width: 1200, // Standard OG image width
+  height: 630, // Standard OG image height
 };
 export const contentType = "image/png";
 
@@ -101,31 +101,24 @@ export default async function Image() {
   const profileBase64 = `data:image/jpeg;base64,${profileData.toString("base64")}`;
 
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          padding: "80px",
-          background: "#1a1a1c",
-          color: "#f5f5f3",
-        }}
-      >
-        {/* Your design here */}
-        <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-          <div style={{ fontSize: "64px", fontWeight: 600 }}>Your Name</div>
-          <div style={{ fontSize: "28px", color: "#a0a0a0" }}>Your Title</div>
-        </div>
-        <img
-          src={profileBase64}
-          width={400}
-          height={400}
-          style={{ borderRadius: "24px", objectFit: "cover" }}
-        />
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        padding: "80px",
+        background: "#1a1a1c",
+        color: "#f5f5f3",
+      }}
+    >
+      {/* Your design here */}
+      <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <div style={{ fontSize: "64px", fontWeight: 600 }}>Your Name</div>
+        <div style={{ fontSize: "28px", color: "#a0a0a0" }}>Your Title</div>
       </div>
-    ),
-    { ...size }
+      <img src={profileBase64} width={400} height={400} style={{ borderRadius: "24px", objectFit: "cover" }} />
+    </div>,
+    { ...size },
   );
 }
 ```
@@ -161,25 +154,23 @@ export const contentType = "image/png";
 
 export default function Icon() {
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: 32,
-          height: 32,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#1a1a1c",
-          borderRadius: 4,
-          color: "#f5f5f3",
-          fontSize: 18,
-          fontWeight: 700,
-        }}
-      >
-        AK
-      </div>
-    ),
-    { ...size }
+    <div
+      style={{
+        width: 32,
+        height: 32,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#1a1a1c",
+        borderRadius: 4,
+        color: "#f5f5f3",
+        fontSize: 18,
+        fontWeight: 700,
+      }}
+    >
+      AK
+    </div>,
+    { ...size },
   );
 }
 ```
@@ -196,25 +187,23 @@ export const contentType = "image/png";
 
 export default function Icon() {
   return new ImageResponse(
-    (
-      <div
-        style={{
-          width: 180,
-          height: 180,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#1a1a1c",
-          borderRadius: 32,
-          color: "#f5f5f3",
-          fontSize: 80,
-          fontWeight: 700,
-        }}
-      >
-        AK
-      </div>
-    ),
-    { ...size }
+    <div
+      style={{
+        width: 180,
+        height: 180,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#1a1a1c",
+        borderRadius: 32,
+        color: "#f5f5f3",
+        fontSize: 80,
+        fontWeight: 700,
+      }}
+    >
+      AK
+    </div>,
+    { ...size },
   );
 }
 ```
@@ -225,14 +214,14 @@ export default function Icon() {
 
 Next.js App Router uses **file naming conventions** to auto-generate meta tags:
 
-| File | Generated Tag |
-|------|---------------|
-| `app/opengraph-image.tsx` | `<meta property="og:image" ...>` |
-| `app/twitter-image.tsx` | `<meta name="twitter:image" ...>` |
-| `app/icon.tsx` | `<link rel="icon" ...>` |
-| `app/apple-icon.tsx` | `<link rel="apple-touch-icon" ...>` |
-| `app/sitemap.ts` | `/sitemap.xml` |
-| `app/robots.ts` | `/robots.txt` |
+| File                      | Generated Tag                       |
+| ------------------------- | ----------------------------------- |
+| `app/opengraph-image.tsx` | `<meta property="og:image" ...>`    |
+| `app/twitter-image.tsx`   | `<meta name="twitter:image" ...>`   |
+| `app/icon.tsx`            | `<link rel="icon" ...>`             |
+| `app/apple-icon.tsx`      | `<link rel="apple-touch-icon" ...>` |
+| `app/sitemap.ts`          | `/sitemap.xml`                      |
+| `app/robots.ts`           | `/robots.txt`                       |
 
 ### Static Files Also Work
 
@@ -265,13 +254,13 @@ app/
 
 ### Preview Tools
 
-| Tool | URL | Best For |
-|------|-----|----------|
-| **OpenGraph.xyz** | opengraph.xyz | Multi-platform preview |
-| **Metatags.io** | metatags.io | Live preview + code |
-| **Facebook Debugger** | developers.facebook.com/tools/debug | Facebook + cache clear |
-| **Twitter Validator** | cards-dev.twitter.com/validator | Twitter/X cards |
-| **LinkedIn Inspector** | linkedin.com/post-inspector | LinkedIn posts |
+| Tool                   | URL                                 | Best For               |
+| ---------------------- | ----------------------------------- | ---------------------- |
+| **OpenGraph.xyz**      | opengraph.xyz                       | Multi-platform preview |
+| **Metatags.io**        | metatags.io                         | Live preview + code    |
+| **Facebook Debugger**  | developers.facebook.com/tools/debug | Facebook + cache clear |
+| **Twitter Validator**  | cards-dev.twitter.com/validator     | Twitter/X cards        |
+| **LinkedIn Inspector** | linkedin.com/post-inspector         | LinkedIn posts         |
 
 ### Local Testing
 
@@ -293,12 +282,12 @@ curl -s http://localhost:3000 | grep -E '<meta property="og:|<meta name="twitter
 
 ### Common Issues
 
-| Issue | Solution |
-|-------|----------|
-| Images not showing | Check `metadataBase` is set |
-| Cached old images | Use platform debuggers to clear cache |
-| Wrong dimensions | Ensure 1200x630 for OG, 32x32 for favicon |
-| Fonts not loading | Use system fonts in ImageResponse |
+| Issue              | Solution                                  |
+| ------------------ | ----------------------------------------- |
+| Images not showing | Check `metadataBase` is set               |
+| Cached old images  | Use platform debuggers to clear cache     |
+| Wrong dimensions   | Ensure 1200x630 for OG, 32x32 for favicon |
+| Fonts not loading  | Use system fonts in ImageResponse         |
 
 ---
 

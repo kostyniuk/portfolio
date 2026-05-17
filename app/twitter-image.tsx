@@ -84,7 +84,8 @@ export default async function Image() {
               maxWidth: "480px",
             }}
           >
-            Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located in Stockholm.
+            Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located
+            in Stockholm.
           </div>
         </div>
 
