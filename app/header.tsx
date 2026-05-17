@@ -1,7 +1,7 @@
 "use cache";
 
 import { GitHubIcon } from "@/components/icons/social-icons";
-import { FrostGlass } from "@/components/ui/frost-glass";
+import { LiquidGlass } from "@/components/ui/glasscn/liquid-glass";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SocialItemMotion } from "@/features/profile/components/social-item-motion";
 import Link from "next/link";
@@ -23,7 +23,7 @@ async function Header() {
   return (
     <div className="fixed z-1 w-full flex justify-center">
       <div className="mt-2 w-[calc(100%-2rem)] sm:w-[calc(50%-10px)] rounded-4xl overflow-hidden">
-        <FrostGlass variant="clear">
+        <LiquidGlass className="rounded-4xl" shadow={false}>
           <div className="h-12 flex items-center justify-between px-5">
             <Link href="/" className="flex items-center">
               <AKLogo size={24} className="text-foreground" />
@@ -36,11 +36,7 @@ async function Header() {
               <Button variant="ghost">Components</Button>
             </Link>
             <SocialItemMotion>
-              <DownloadButton
-                icon={<FileDown className="size-5" />}
-                tooltipText="Download CV"
-                pathToPdf="/cv.pdf"
-              />
+              <DownloadButton icon={<FileDown className="size-5" />} tooltipText="Download CV" pathToPdf="/cv.pdf" />
             </SocialItemMotion>
             <Link href="https://github.com/kostyniuk/portfolio">
               <SocialItemMotion>
@@ -51,7 +47,7 @@ async function Header() {
               </SocialItemMotion>
             </Link>
           </div>
-        </FrostGlass>
+        </LiquidGlass>
       </div>
     </div>
   );
