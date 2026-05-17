@@ -6,7 +6,7 @@ import { ProfileHeader } from "./profile-header";
 const BIO_ROWS = [
   { icon: <PinGlass />, title: "Stockholm, 🇸🇪" },
   { icon: <SuitcaseGlass />, title: "Team Lead @AMFG" },
-  { icon: <InboxGlass />, title: "alexandru.costiniuc00@gmail.com", canBeCopied: true },
+  { icon: <InboxGlass />, title: "kostyniuk7@gmail.com", canBeCopied: true },
 ] satisfies BioItem[];
 
 function Bio() {
