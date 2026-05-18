@@ -23,6 +23,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useEffect,
 } from "react";
 import { cn } from "@/lib/utils";
 
@@ -348,7 +349,11 @@ export const ContributionGraphCalendar = ({
   return (
     <div
       ref={containerRef}
-      className={cn("max-w-full overflow-x-auto overflow-y-hidden", !ready && "opacity-0", className)}
+      className={cn(
+        "max-w-full overflow-x-auto overflow-y-hidden", 
+        !ready && "opacity-0", 
+        className
+      )}
       {...props}
     >
       <svg className="block overflow-visible" height={height} viewBox={`0 0 ${width} ${height}`} width={width}>
