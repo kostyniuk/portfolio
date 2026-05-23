@@ -2,7 +2,6 @@
 
 import { JavaScript, MySQL, ReactDark, TypeScript } from "@/components/icons/interests-icons";
 import { Avatar, AvatarGroup, AvatarImage, avatarImageVariants } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { VariantProps } from "class-variance-authority";
 import { ReactElement } from "react";
@@ -88,39 +87,36 @@ const INTERESTS = [
 
 function Interests() {
   return (
-    <div>
-      <h1>Interests</h1>
-      <Card variant="frosted-light" className="wavy-border mt-2">
-        <CardContent>
-          <AvatarGroup className="flex-wrap gap-4 sm:gap-6">
-            {INTERESTS.map(({ name, className, src, Icon, variant }) => (
-              <Tooltip key={name}>
-                <TooltipTrigger>
-                  <Avatar size="lg" variant={variant === "square" ? "square" : "ghost"} className={className}>
-                    {!Icon ? (
-                      <AvatarImage src={src} alt={name} variant={variant} />
-                    ) : (
-                      <div
-                        className={cn(
-                          "size-full",
-                          "[&>svg]:block",
-                          "[&>svg]:size-full",
-                          variant === "square" && "p-1 ",
-                        )}
-                      >
-                        {Icon}
-                      </div>
-                    )}
-                    {/* <AvatarFallback>{interest.fallbac ?? interest.name.slice(0, 2).toUpperCase()}</AvatarFallback> */}
-                  </Avatar>
-                </TooltipTrigger>
-                <TooltipContent>{name}</TooltipContent>
-              </Tooltip>
-            ))}
-          </AvatarGroup>
-        </CardContent>
-      </Card>
-    </div>
+    <section className="page-section">
+      <p className="page-section-title">Interests</p>
+      <div className="page-section-body">
+        <AvatarGroup className="flex-wrap gap-4 sm:gap-6">
+          {INTERESTS.map(({ name, className, src, Icon, variant }) => (
+            <Tooltip key={name}>
+              <TooltipTrigger>
+                <Avatar size="lg" variant={variant === "square" ? "square" : "ghost"} className={className}>
+                  {!Icon ? (
+                    <AvatarImage src={src} alt={name} variant={variant} />
+                  ) : (
+                    <div
+                      className={cn(
+                        "size-full",
+                        "[&>svg]:block",
+                        "[&>svg]:size-full",
+                        variant === "square" && "p-1 ",
+                      )}
+                    >
+                      {Icon}
+                    </div>
+                  )}
+                </Avatar>
+              </TooltipTrigger>
+              <TooltipContent>{name}</TooltipContent>
+            </Tooltip>
+          ))}
+        </AvatarGroup>
+      </div>
+    </section>
   );
 }
 

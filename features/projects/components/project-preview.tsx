@@ -1,5 +1,4 @@
 import { AccordionContent } from "@/components/ui/accordion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Project } from "@/features/projects/components/projects";
 import { BadgeAsLink } from "@/components/ui/badge";
@@ -10,26 +9,31 @@ function PreviewProject({ label, link, Icon, description, features, source, vide
     {
       value: "preview",
       trigger: "Preview",
-      content: <video src={videoHref} loop autoPlay muted className="w-full max-w-192 h-auto object-cover"></video>,
+      content: <video src={videoHref} loop autoPlay muted playsInline className="h-auto w-full max-w-192 object-cover" />,
     },
   ];
 
   return (
-    <Card variant="frosted-light" className="wavy-border">
-      <CardHeader>
-        <CardTitle className="flex flex-wrap items-center gap-2">
+    <article className="grid gap-6 py-6 lg:grid-cols-[minmax(0,1fr)_minmax(19rem,0.9fr)] lg:items-start">
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-center gap-2">
           {Icon && <Icon className="size-10" />}
-          <p>{label}</p>
+          <p className="text-lg font-medium">{label}</p>
           <BadgeAsLink href={link} variant={"secondary"}>
             Website <ArrowUpRightIcon data-icon="inline-end" />
           </BadgeAsLink>
           <BadgeAsLink href={source} variant={"outline"}>
             Source <ArrowUpRightIcon data-icon="inline-end" />
           </BadgeAsLink>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        {/* <Accordion defaultValue={["preview"]}> */}
+        </div>
+        <p>{description}</p>
+        <ul className="mt-1 list-disc space-y-1 pl-4 text-muted-foreground">
+          {features.map((feature, i) => (
+            <li key={i}>{feature}</li>
+          ))}
+        </ul>
+      </div>
+      <div className="border-t border-white/8 pt-4 lg:border-t-0 lg:border-l lg:pl-6 lg:pt-0 dark:border-white/10">
         <Accordion>
           {items.map((item) => (
             <AccordionItem key={item.value} value={item.value}>
@@ -38,14 +42,8 @@ function PreviewProject({ label, link, Icon, description, features, source, vide
             </AccordionItem>
           ))}
         </Accordion>
-        <p>{description}</p>
-        <ul className="mt-1 list-disc space-y-1 pl-4 text-muted-foreground">
-          {features.map((feature, i) => (
-            <li key={i}>{feature}</li>
-          ))}
-        </ul>
-      </CardContent>
-    </Card>
+      </div>
+    </article>
   );
 }
 

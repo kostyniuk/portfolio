@@ -1,5 +1,4 @@
 import { InboxGlass, PinGlass, SuitcaseGlass } from "@/components/icons/bio-icons";
-import { Card, CardContent } from "@/components/ui/card";
 import { BioRow, type BioItem } from "@/features/profile/components/bio-row";
 import { ProfileHeader } from "./profile-header";
 
@@ -11,16 +10,16 @@ const BIO_ROWS = [
 
 function Bio() {
   return (
-    <Card variant="frosted-light" className="wavy-border">
-      <CardContent className="font-mono flex min-w-0 flex-col gap-2">
+    <section className="page-section pt-10 sm:pt-12">
+      <div className="font-mono flex min-w-0 flex-col gap-3">
         <ProfileHeader />
         <div className="text-lg [&_*]:font-mono [&_*]:text-base">
           {BIO_ROWS.map(({ icon, title, canBeCopied }, index) => (
             <BioRow key={index} icon={icon} title={title} canBeCopied={canBeCopied} />
           ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </section>
   );
 }
 

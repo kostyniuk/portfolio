@@ -65,18 +65,18 @@ const PROJECTS = {
 
 function Projects() {
   return (
-    <div>
-      <h1>Projects</h1>
-      <div className="mt-2 flex flex-col gap-4">
+    <section className="page-section">
+      <p className="page-section-title">Projects</p>
+      <div className="page-rule-list mt-4 flex flex-col">
         {Object.entries(PROJECTS).map(([id, project]) => {
           return (
-            <div key={id} className="">
+            <div key={id}>
               <PreviewProject {...project} />
             </div>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }
 

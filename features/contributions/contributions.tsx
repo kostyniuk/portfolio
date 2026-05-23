@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import type { Activity } from "@/components/kibo-ui/contribution-graph";
 import { ContributionsGraph } from "./graph";
 
@@ -38,14 +37,12 @@ async function Contributions() {
   const contributions = await getContributions();
 
   return (
-    <div>
-      <h1>Contributions</h1>
-      <Card variant="frosted-light" className="wavy-border mt-2">
-        <CardContent>
-          <ContributionsGraph contributions={contributions.contributions} total={contributions.total} />
-        </CardContent>
-      </Card>
-    </div>
+    <section className="page-section">
+      <p className="page-section-title">Contributions</p>
+      <div className="page-section-body">
+        <ContributionsGraph contributions={contributions.contributions} total={contributions.total} />
+      </div>
+    </section>
   );
 }
 

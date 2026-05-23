@@ -31,7 +31,7 @@ function ExperienceItem({
         <Icon className="size-3.5" />
       </StickyIcon>
       <div className="my-2">
-        <Item className="mb-12 last:mb-0 wavy-border border-muted-foreground p-4">
+        <Item className="mb-12 last:mb-0 px-5 py-1">
           <ItemContent>
             <span className="text-[0.625rem] font-mono tracking-wide text-muted-foreground">{period}</span>
             <Collapsible open={openDetailedInformation} onOpenChange={setOpenDetailedInformation}>

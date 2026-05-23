@@ -102,9 +102,11 @@
   --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
   --sidebar-border: oklch(0.923 0.003 48.717);
   --sidebar-ring: oklch(0.709 0.01 56.259);
-  --page-grid-base: #fbfaf4;
-  --page-grid-line: rgb(12 12 12 / 3%);
-  --page-grid-glow: rgb(255 255 255 / 90%);
+  --page-grid-base: #faf8f2;
+  --page-grid-line: rgb(15 15 15 / 0.045);
+  --page-grid-line-strong: rgb(15 15 15 / 0.1);
+  --page-grid-glow: transparent;
+  --page-grid-spot: transparent;
 }
 
 .dark {
@@ -140,9 +142,11 @@
   --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.553 0.013 58.071);
-  --page-grid-base: #11100f;
-  --page-grid-line: rgb(255 255 255 / 4%);
-  --page-grid-glow: rgb(255 255 255 / 4%);
+  --page-grid-base: #0f0f10;
+  --page-grid-line: rgb(255 255 255 / 0.06);
+  --page-grid-line-strong: rgb(255 255 255 / 0.12);
+  --page-grid-glow: transparent;
+  --page-grid-spot: transparent;
 }
 
 @layer base {
@@ -151,16 +155,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    background:
-      linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
-      linear-gradient(var(--page-grid-line) 1px, transparent 1px),
-      radial-gradient(circle at 16% 4%, var(--page-grid-glow), transparent 22rem), var(--page-grid-base);
-    background-size:
-      18px 18px,
-      18px 18px,
-      auto,
-      auto;
-    background-attachment: fixed;
+    background: var(--page-grid-base);
   }
   html {
     @apply font-sans;
@@ -209,6 +204,59 @@
       mask-size: 200vmax;
     }
   }
+}
+
+.page-grid-shell {
+  position: relative;
+  overflow: visible;
+  background:
+    linear-gradient(90deg, var(--page-grid-line) 1px, transparent 1px),
+    linear-gradient(var(--page-grid-line) 1px, transparent 1px), var(--page-grid-base);
+  background-size:
+    128px 128px,
+    128px 128px,
+    auto;
+  background-attachment: local;
+}
+
+.page-section {
+  position: relative;
+  padding: clamp(1.5rem, 2vw, 2rem);
+}
+
+.page-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--page-grid-line-strong) 15%,
+    var(--page-grid-line-strong) 85%,
+    transparent
+  );
+}
+
+.page-section:first-child::after {
+  display: none;
+}
+
+.page-section-title {
+  color: var(--muted-foreground);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.page-section-body {
+  margin-top: 1rem;
+}
+
+.page-rule-list > * + * {
+  border-top: 1px solid var(--page-grid-line-strong);
 }
 
 .wavy-border {

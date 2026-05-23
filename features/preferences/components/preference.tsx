@@ -4,7 +4,6 @@ import {
   OpenAIPreferenceIcon,
 } from "@/components/icons/preference-icons";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
 import { PreferenceItemProps, PreferenceGroup } from "@/components/ui/glasscn/preference";
 
 function AvatarPreferenceIcon({ src, alt }: { src: string; alt: string }) {
@@ -105,18 +104,16 @@ const PREFERENCE_GROUPS = [
 
 function Preference() {
   return (
-    <div>
-      <h1>Preferences</h1>
-      <Card variant="frosted-light" className="wavy-border mt-2">
-        <CardContent className="flex flex-col divide-y divide-border">
-          {PREFERENCE_GROUPS.map((group) => (
-            <div key={group.title} className="py-6 first:pt-0 last:pb-0">
-              <PreferenceGroup {...group} />
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    </div>
+    <section className="page-section">
+      <p className="page-section-title">Preferences</p>
+      <div className="page-section-body flex flex-col divide-y divide-border">
+        {PREFERENCE_GROUPS.map((group) => (
+          <div key={group.title} className="py-6 first:pt-0 last:pb-0">
+            <PreferenceGroup {...group} />
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 

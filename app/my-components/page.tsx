@@ -20,8 +20,8 @@ import { LiquidTextDemo } from "@/components/demos/liquid-text-demo";
 
 function MyComponents() {
   return (
-    <main className="min-h-screen bg-background px-4 py-12 sm:px-6">
-      <CardTitle className="text-4xl mb-4">Liquid Glass</CardTitle>
+    <section className="page-section">
+      <CardTitle className="mb-4 text-4xl">Liquid Glass</CardTitle>
       <div className="mx-auto flex max-w-3xl flex-col gap-6">
         <LiquidSwitchDemo />
         <LiquidBadgeDemo />
@@ -80,7 +80,7 @@ function MyComponents() {
         <AppleWatchDemo />
         <LiquidTextDemo />
       </div>
-    </main>
+    </section>
   );
 }
 

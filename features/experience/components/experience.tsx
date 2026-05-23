@@ -1,7 +1,6 @@
 "use client";
 
 import { AMFGIcon, type CompanyIconProps } from "@/components/icons/company-icons";
-import { Card, CardContent } from "@/components/ui/card";
 import { motion, useScroll } from "motion/react";
 import { useRef, type ComponentType } from "react";
 import type { ExperienceSectionData } from "./experience-section";
@@ -167,25 +166,21 @@ function Experience() {
   });
 
   return (
-    <div>
-      <h1>Experience</h1>
-      <Card variant="frosted-light" className="wavy-border mt-2 overflow-visible">
-        <CardContent className="flex shrink-0 flex-row gap-6">
-          <div ref={containerRef} className="relative flex flex-col">
-            {/* Base line — muted, represents path yet to cover */}
-            <div className="absolute top-0 left-3 h-full w-0.5 -translate-x-1/2 rounded-full bg-foreground/20" />
-            {/* Overlay line — solid, grows downward as you scroll */}
-            <motion.div
-              className="absolute top-0 left-3 h-full w-0.5 -translate-x-1/2 rounded-full bg-foreground origin-top"
-              style={{ scaleY: scrollYProgress }}
-            />
-            {EXPERIENCES.map((experience, index) => (
-              <ExperienceItem key={index} {...experience} isExpanded={index === 0} isCurrent={index === 0} />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+    <section className="page-section">
+      <p className="page-section-title">Experience</p>
+      <div className="page-section-body flex shrink-0 flex-row gap-6">
+        <div ref={containerRef} className="relative flex flex-col">
+          <div className="absolute top-0 left-3 h-full w-0.5 -translate-x-1/2 bg-foreground/20" />
+          <motion.div
+            className="absolute top-0 left-3 h-full w-0.5 -translate-x-1/2 bg-foreground origin-top"
+            style={{ scaleY: scrollYProgress }}
+          />
+          {EXPERIENCES.map((experience, index) => (
+            <ExperienceItem key={index} {...experience} isExpanded={index === 0} isCurrent={index === 0} />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 

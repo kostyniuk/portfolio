@@ -82,16 +82,15 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          {" "}
           <TooltipProvider>
             <Header />
             <ScrollProgress />
-            <div className="flex min-h-dvh flex-col">
-              <div className="flex-1 px-0 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-12">
-                <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-3 py-6 text-sm leading-loose sm:px-6 sm:py-8 lg:p-8">
+            <div className="page-grid-shell flex min-h-dvh flex-col pt-20 sm:pt-24">
+              <main className="flex-1">
+                <div className="mx-auto flex w-full max-w-5xl flex-col px-3 py-6 text-sm leading-loose sm:px-6 sm:py-8 lg:px-8 lg:py-10">
                   {children}
                 </div>
-              </div>
+              </main>
               <Footer />
             </div>
           </TooltipProvider>
