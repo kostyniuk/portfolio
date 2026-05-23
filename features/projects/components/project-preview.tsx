@@ -9,7 +9,9 @@ function PreviewProject({ label, link, Icon, description, features, source, vide
     {
       value: "preview",
       trigger: "Preview",
-      content: <video src={videoHref} loop autoPlay muted playsInline className="h-auto w-full max-w-192 object-cover" />,
+      content: (
+        <video src={videoHref} loop autoPlay muted playsInline className="h-auto w-full max-w-192 object-cover" />
+      ),
     },
   ];
 

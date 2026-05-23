@@ -12,10 +12,7 @@ import { Footer } from "./footer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
-const fontMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-});
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-title" });
 
@@ -78,7 +75,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", fontMono.variable, "font-mono", geist.variable, arvo.variable)} // Rewrite default css font for the block/whole page
+      className={cn("antialiased", geistMono.variable, "font-mono", geist.variable, arvo.variable)} // Rewrite default css font for the block/whole page
     >
       <body>
         <ThemeProvider>

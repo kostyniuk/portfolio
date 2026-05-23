@@ -99,12 +99,7 @@ function Interests() {
                     <AvatarImage src={src} alt={name} variant={variant} />
                   ) : (
                     <div
-                      className={cn(
-                        "size-full",
-                        "[&>svg]:block",
-                        "[&>svg]:size-full",
-                        variant === "square" && "p-1 ",
-                      )}
+                      className={cn("size-full", "[&>svg]:block", "[&>svg]:size-full", variant === "square" && "p-1 ")}
                     >
                       {Icon}
                     </div>

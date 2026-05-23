@@ -4,36 +4,20 @@ import * as React from "react";
 import { Avatar as AvatarPrimitive } from "@base-ui/react/avatar";
 
 import { cn } from "@/lib/utils";
-import { VariantProps, cva } from "class-variance-authority";
-
-const avatarVariants = cva("", {
-  variants: {
-    variant: {
-      default: "",
-      ghost: "bg-transparent after:hidden",
-      square: "rounded-none bg-transparent after:hidden",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-});
 
 function Avatar({
   className,
   size = "default",
-  variant = "default",
   ...props
 }: AvatarPrimitive.Root.Props & {
   size?: "default" | "sm" | "lg";
-} & VariantProps<typeof avatarVariants>) {
+}) {
   return (
     <AvatarPrimitive.Root
       data-slot="avatar"
       data-size={size}
       className={cn(
         "group/avatar relative flex size-8 shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten",
-        avatarVariants({ variant }),
         className,
       )}
       {...props}
@@ -41,27 +25,11 @@ function Avatar({
   );
 }
 
-export const avatarImageVariants = cva("", {
-  variants: {
-    variant: {
-      default: "aspect-square size-full rounded-full object-cover",
-      square: "aspect-square size-full rounded-none object-cover",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-});
-
-function AvatarImage({
-  className,
-  variant,
-  ...props
-}: AvatarPrimitive.Image.Props & VariantProps<typeof avatarImageVariants>) {
+function AvatarImage({ className, ...props }: AvatarPrimitive.Image.Props) {
   return (
     <AvatarPrimitive.Image
       data-slot="avatar-image"
-      className={cn(avatarImageVariants({ variant }), className)}
+      className={cn("aspect-square size-full rounded-full object-cover", className)}
       {...props}
     />
   );
@@ -114,7 +82,7 @@ function AvatarGroupCount({ className, ...props }: React.ComponentProps<"div">) 
     <div
       data-slot="avatar-group-count"
       className={cn(
-        "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-sm text-muted-foreground ring-2 ring-background group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=sm]/avatar-group:size-6 [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3",
+        "relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs/relaxed text-muted-foreground ring-2 ring-background group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=sm]/avatar-group:size-6 [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3",
         className,
       )}
       {...props}

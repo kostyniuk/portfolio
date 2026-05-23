@@ -15,7 +15,11 @@ function LinkItem({ label, link, description, Icon }: LinkItemProps) {
       <a href={link} target="_blank" rel="noopener noreferrer" className="block">
         <div className="flex items-center gap-3.5 px-4 py-3.5 transition-colors duration-300 hover:bg-foreground/[0.03] dark:hover:bg-foreground/[0.045]">
           <ItemMedia>
-            {Icon ? <Icon className="size-10 text-black dark:text-white" /> : <DocumentIcon className="size-10 text-black dark:text-white" />}
+            {Icon ? (
+              <Icon className="size-10 text-black dark:text-white" />
+            ) : (
+              <DocumentIcon className="size-10 text-black dark:text-white" />
+            )}
           </ItemMedia>
           <ItemContent>
             <ItemTitle>{label}</ItemTitle>
