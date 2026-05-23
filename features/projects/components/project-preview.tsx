@@ -20,7 +20,7 @@ function PreviewProject({ label, link, Icon, description, features, source, vide
       <div className="space-y-4">
         <div className="flex flex-wrap items-center gap-2">
           {Icon && <Icon className="size-10" />}
-          <p className="text-lg font-medium">{label}</p>
+          <p className="text-sm/relaxed font-medium text-foreground">{label}</p>
           <BadgeAsLink href={link} variant={"secondary"}>
             Website <ArrowUpRightIcon data-icon="inline-end" />
           </BadgeAsLink>
@@ -28,8 +28,8 @@ function PreviewProject({ label, link, Icon, description, features, source, vide
             Source <ArrowUpRightIcon data-icon="inline-end" />
           </BadgeAsLink>
         </div>
-        <p>{description}</p>
-        <ul className="mt-1 list-disc space-y-1 pl-4 text-muted-foreground">
+        <p className="text-xs/relaxed text-muted-foreground">{description}</p>
+        <ul className="mt-1 list-disc space-y-1 pl-4 text-xs/relaxed text-muted-foreground">
           {features.map((feature, i) => (
             <li key={i}>{feature}</li>
           ))}
