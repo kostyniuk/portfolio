@@ -6,10 +6,11 @@ import { Education } from "@/features/education/components/education";
 import { Experience } from "@/features/experience/components/experience";
 import { Contributions } from "@/features/contributions/contributions";
 import { Preference } from "@/features/preferences/components/preference";
+import { MainPageLayout } from "./main-page";
 
 export default function Page() {
   return (
-    <>
+    <MainPageLayout>
       <Bio />
       <Socials />
       <Projects />
@@ -18,6 +19,6 @@ export default function Page() {
       <Interests />
       <Preference />
       <Education />
-    </>
+    </MainPageLayout>
   );
 }

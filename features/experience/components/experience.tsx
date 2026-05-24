@@ -166,7 +166,7 @@ function Experience() {
   });
 
   return (
-    <section className="page-section">
+    <section id="experience" className="page-section scroll-mt-28 sm:scroll-mt-32">
       <p className="page-section-title">Experience</p>
       <div className="page-section-body flex shrink-0 flex-row gap-6">
         <div ref={containerRef} className="relative flex flex-col">
