@@ -39,6 +39,7 @@ function PreferenceItem({ className, description, icon, text, weight = 1 }: Pref
     >
       <Tooltip>
         <TooltipTrigger
+          className={"flex"}
           render={
             <motion.div variants={badgeMotionVariants} transition={badgeMotionTransition}>
               <Badge
