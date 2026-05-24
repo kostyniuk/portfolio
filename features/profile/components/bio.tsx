@@ -10,7 +10,7 @@ const BIO_ROWS = [
 
 function Bio() {
   return (
-    <section id="bio" className="page-section scroll-mt-28 pt-10 sm:scroll-mt-32 sm:pt-12">
+    <section className="page-section scroll-mt-28 pt-10 sm:scroll-mt-32 sm:pt-12">
       <div className="font-mono flex min-w-0 flex-col gap-3">
         <ProfileHeader />
         <div className="text-lg [&_*]:font-mono [&_*]:text-base">

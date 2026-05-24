@@ -87,7 +87,7 @@ const INTERESTS = [
 
 function Interests() {
   return (
-    <section id="interests" className="page-section scroll-mt-28 sm:scroll-mt-32">
+    <section className="page-section scroll-mt-28 sm:scroll-mt-32">
       <p className="page-section-title">Interests</p>
       <div className="page-section-body">
         <AvatarGroup className="flex-wrap gap-4 sm:gap-6">

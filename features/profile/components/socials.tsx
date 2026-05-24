@@ -10,7 +10,7 @@ const SOCIAL_NETWORKS = {
 
 function Socials() {
   return (
-    <section id="socials" className="page-section scroll-mt-28 sm:scroll-mt-32">
+    <section className="page-section scroll-mt-28 sm:scroll-mt-32">
       <p className="page-section-title">Socials</p>
       <div className="page-section-body grid grid-cols-1 gap-2 sm:grid-cols-2">
         {Object.entries(SOCIAL_NETWORKS).map(([id, social]) => {
