@@ -47,6 +47,7 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --spacing-navigation-scroll-margin: var(--navigation-scroll-margin);
   --expo-out: linear(
     0 0%,
     0.1684 2.66%,
@@ -106,6 +107,7 @@
   --page-grid-line-strong: rgb(15 15 15 / 0.1);
   --page-grid-glow: transparent;
   --page-grid-spot: transparent;
+  --navigation-scroll-margin: 8rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
 }
@@ -314,4 +316,12 @@
 
     close
   );
+}
+
+.nav-list {
+  scroll-target-group: auto;
+}
+
+.nav-link:target-current {
+  color: var(--color-foreground);
 }

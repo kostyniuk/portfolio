@@ -104,7 +104,7 @@ const PREFERENCE_GROUPS = [
 
 function Preference() {
   return (
-    <section id="preferences" className="page-section scroll-mt-28 sm:scroll-mt-32">
+    <section id="preferences" className="page-section scroll-mt-navigation-scroll-margin">
       <p className="page-section-title">Preferences</p>
       <div className="page-section-body flex flex-col divide-y divide-border">
         {PREFERENCE_GROUPS.map((group) => (

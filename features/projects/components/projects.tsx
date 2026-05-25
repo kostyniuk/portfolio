@@ -65,7 +65,7 @@ const PROJECTS = {
 
 function Projects() {
   return (
-    <section id="projects" className="page-section scroll-mt-28 sm:scroll-mt-32">
+    <section id="projects" className="page-section scroll-mt-navigation-scroll-margin">
       <p className="page-section-title">Projects</p>
       <div className="page-rule-list mt-4 flex flex-col">
         {Object.entries(PROJECTS).map(([id, project]) => {

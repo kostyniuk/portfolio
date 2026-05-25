@@ -4,7 +4,7 @@ import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/comp
 
 function Education() {
   return (
-    <section id="education" className="page-section scroll-mt-28 sm:scroll-mt-32">
+    <section id="education" className="page-section scroll-mt-navigation-scroll-margin">
       <p className="page-section-title">Education</p>
       <div className="page-section-body">
         <Item className="gap-8 p-0">

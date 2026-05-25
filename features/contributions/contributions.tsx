@@ -37,7 +37,7 @@ async function Contributions() {
   const contributions = await getContributions();
 
   return (
-    <section id="contributions" className="page-section scroll-mt-28 sm:scroll-mt-32">
+    <section id="contributions" className="page-section scroll-mt-navigation-scroll-margin">
       <p className="page-section-title">Contributions</p>
       <div className="page-section-body">
         <ContributionsGraph contributions={contributions.contributions} total={contributions.total} />
