@@ -32,9 +32,9 @@ async function Header() {
             <Link href="/">
               <Button variant="ghost">Home</Button>
             </Link>
-            <Link href="/my-components">
+            {/* <Link href="/my-components">
               <Button variant="ghost">Components</Button>
-            </Link>
+            </Link> */}
             <SocialItemMotion>
               <DownloadButton icon={<FileDown className="size-5" />} tooltipText="Download CV" pathToPdf="/cv.pdf" />
             </SocialItemMotion>
