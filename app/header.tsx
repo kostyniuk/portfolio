@@ -29,9 +29,9 @@ async function Header() {
               <AKLogo size={24} className="text-foreground" />
             </Link>
             <ThemeToggle />
-            <Link href="/">
+            {/* <Link href="/">
               <Button variant="ghost">Home</Button>
-            </Link>
+            </Link> */}
             {/* <Link href="/my-components">
               <Button variant="ghost">Components</Button>
             </Link> */}
