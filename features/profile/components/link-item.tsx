@@ -12,7 +12,7 @@ interface LinkItemProps {
 function LinkItem({ label, link, description, Icon }: LinkItemProps) {
   return (
     <LinkItemMotion>
-      <a href={link} target="_blank" rel="noopener noreferrer" className="block">
+      <a href={link} target="_blank" rel="noopener noreferrer" className="block w-fit">
         <div className="flex items-center gap-3.5 px-4 py-3.5 transition-colors duration-300 hover:bg-foreground/[0.03] dark:hover:bg-foreground/[0.045]">
           <ItemMedia>
             {Icon ? (
