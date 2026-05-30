@@ -164,6 +164,11 @@
     @apply font-mono;
   }
 
+  ::selection {
+    background-color: var(--color-muted-foreground);
+    color: var(--color-muted);
+  }
+
   @keyframes shine {
     0% {
       background-position: 0% 0%;
