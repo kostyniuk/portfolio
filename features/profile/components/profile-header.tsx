@@ -16,7 +16,7 @@ function ProfileHeader() {
   return (
     <>
       <ElectricBorder
-        color={colors.orange[500]}
+        color={colors.pink[300]}
         speed={0.75}
         chaos={0.08}
         className="w-50 h-50 rounded-full object-cover"
