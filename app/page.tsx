@@ -11,16 +11,18 @@ import { MainPageLayout } from "./main-page";
 export default function Page() {
   return (
     <MainPageLayout>
-      <section id="about" className="scroll-mt-navigation-scroll-margin">
-        <Bio />
-        <Socials />
-        <Interests />
-      </section>
-      <Projects />
-      <Experience />
-      <Contributions />
-      <Preference />
-      <Education />
+      <div className="page-reveal">
+        <section id="about" className="scroll-mt-navigation-scroll-margin">
+          <Bio />
+          <Socials />
+          <Interests />
+        </section>
+        <Projects />
+        <Experience />
+        <Contributions />
+        <Preference />
+        <Education />
+      </div>
     </MainPageLayout>
   );
 }
