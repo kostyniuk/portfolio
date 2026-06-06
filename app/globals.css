@@ -285,7 +285,7 @@
   @keyframes content-reveal {
     0% {
       opacity: 0.15;
-      translate: 0 1.5rem;
+      translate: 0 1rem;
     }
 
     20%,
@@ -296,7 +296,7 @@
 
     100% {
       opacity: 0.15;
-      translate: 0 -1.5rem;
+      translate: 0 -1rem;
     }
   }
 }
