@@ -18,16 +18,17 @@ type ContributionsGraphProps = {
 };
 
 const graphLevelClassNames = [
-  "data-[level=0]:fill-zinc-200 dark:data-[level=0]:fill-zinc-800",
-  "data-[level=1]:fill-green-200 dark:data-[level=1]:fill-green-950",
-  "data-[level=2]:fill-green-400 dark:data-[level=2]:fill-green-800",
-  "data-[level=3]:fill-green-600 dark:data-[level=3]:fill-green-700",
-  "data-[level=4]:fill-green-800 dark:data-[level=4]:fill-green-500",
+  "data-[level=0]:fill-contribution-empty",
+  "data-[level=1]:fill-contribution-1",
+  "data-[level=2]:fill-contribution-2",
+  "data-[level=3]:fill-contribution-3",
+  "data-[level=4]:fill-contribution-4",
 ].join(" ");
 
 const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) => (
   <TooltipProvider>
     <ContributionGraph
+      blockRadius={999}
       data={contributions}
       totalCount={total}
       labels={{ totalCount: "{{count}} contributions in the last year" }}
@@ -52,7 +53,21 @@ const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) =
       </ContributionGraphCalendar>
       <ContributionGraphFooter>
         <ContributionGraphTotalCount />
-        <ContributionGraphLegend blockClassName={graphLevelClassNames} />
+        <ContributionGraphLegend
+          blockClassName={graphLevelClassNames}
+          children={({ level }) => (
+            <svg height={12} width={12}>
+              <rect
+                className={cn("stroke-[1px] stroke-border", graphLevelClassNames)}
+                data-level={level}
+                height={12}
+                rx={999}
+                ry={999}
+                width={12}
+              />
+            </svg>
+          )}
+        />
       </ContributionGraphFooter>
     </ContributionGraph>
   </TooltipProvider>

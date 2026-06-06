@@ -358,8 +358,13 @@ export const ContributionGraphCalendar = ({
       className={cn("max-w-full overflow-x-auto overflow-y-hidden", !ready && "opacity-0", className)}
       {...props}
     >
-      <svg className="block overflow-visible" height={height} viewBox={`0 0 ${width} ${height}`} width={width}>
-        <title>Contribution Graph</title>
+      <svg
+        aria-label="Contribution Graph"
+        className="block overflow-visible"
+        height={height}
+        viewBox={`0 0 ${width} ${height}`}
+        width={width}
+      >
         {!hideMonthLabels && (
           <g className="fill-current">
             {monthLabels.map(({ label, weekIndex }) => (
