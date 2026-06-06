@@ -169,6 +169,57 @@
     color: var(--color-muted);
   }
 
+  :where(
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    li,
+    blockquote,
+    figcaption,
+    a,
+    button,
+    img,
+    picture,
+    video,
+    canvas,
+    svg[role="img"],
+    [data-slot="badge"],
+    [data-slot="button"],
+    [data-slot="card"],
+    [data-slot="liquid-metal-card"],
+    [data-slot="card-title"],
+    [data-slot="card-description"],
+    [data-slot="card-content"],
+    [data-slot="item"],
+    [data-slot="item-media"],
+    [data-slot="item-title"],
+    [data-slot="item-description"],
+    [data-slot="avatar"],
+    [data-slot="avatar-image"],
+    [data-slot="avatar-badge"],
+    [data-slot="accordion-trigger"],
+    [data-slot="accordion-content"],
+    [data-slot="switch"],
+    [data-slot="kbd"],
+    [data-slot="frost-glass"],
+    [data-slot="shiny-text"],
+    [data-slot="electric-border"],
+    [data-slot="contribution-graph"],
+    [data-slot="contribution-graph-calendar"],
+    [data-slot="contribution-graph-footer"],
+    [data-slot="preference-group"],
+    [data-slot="preference-bar"],
+    [data-slot="preference-item"]
+  ) {
+    animation: content-reveal linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+
   @keyframes shine {
     0% {
       background-position: 0% 0%;
@@ -210,6 +261,24 @@
   @keyframes scale {
     to {
       mask-size: 200vmax;
+    }
+  }
+
+  @keyframes content-reveal {
+    0% {
+      opacity: 0.15;
+      translate: 0 1.5rem;
+    }
+
+    20%,
+    80% {
+      opacity: 1;
+      translate: 0 0;
+    }
+
+    100% {
+      opacity: 0.15;
+      translate: 0 -1.5rem;
     }
   }
 }

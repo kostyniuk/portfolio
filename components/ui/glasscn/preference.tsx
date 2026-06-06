@@ -28,6 +28,7 @@ type PreferenceGroupProps = { title: string; description: string; items: Prefere
 function PreferenceItem({ className, description, icon, text, weight = 1 }: PreferenceItemProps) {
   return (
     <motion.div
+      data-slot="preference-item"
       initial="rest"
       whileHover="hover"
       className={cn(
@@ -62,12 +63,12 @@ function PreferenceItem({ className, description, icon, text, weight = 1 }: Pref
 
 function PreferenceGroup({ title, description, items }: PreferenceGroupProps) {
   return (
-    <div className="flex flex-col gap-4">
+    <div data-slot="preference-group" className="flex flex-col gap-4">
       <div className="flex flex-col">
         <ItemTitle>{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
       </div>
-      <div className="group/preference flex h-10 overflow-hidden rounded-full">
+      <div data-slot="preference-bar" className="group/preference flex h-10 overflow-hidden rounded-full">
         {items.map((preference, i) => (
           <PreferenceItem key={i} {...preference} />
         ))}

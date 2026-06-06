@@ -299,6 +299,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
 
   return (
     <div
+      data-slot="electric-border"
       ref={containerRef}
       className={`relative overflow-visible isolate ${className ?? ""}`}
       style={{ "--electric-border-color": color, borderRadius, ...style } as CSSProperties}

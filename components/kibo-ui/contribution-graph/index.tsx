@@ -256,7 +256,12 @@ export const ContributionGraph = ({
         height,
       }}
     >
-      <div className={cn("flex w-max max-w-full flex-col gap-2", className)} style={{ fontSize, ...style }} {...props}>
+      <div
+        data-slot="contribution-graph"
+        className={cn("flex w-max max-w-full flex-col gap-2", className)}
+        style={{ fontSize, ...style }}
+        {...props}
+      >
         {props.children}
       </div>
     </ContributionGraphContext.Provider>
@@ -348,6 +353,7 @@ export const ContributionGraphCalendar = ({
 
   return (
     <div
+      data-slot="contribution-graph-calendar"
       ref={containerRef}
       className={cn("max-w-full overflow-x-auto overflow-y-hidden", !ready && "opacity-0", className)}
       {...props}
@@ -394,7 +400,11 @@ export const ContributionGraphCalendar = ({
 export type ContributionGraphFooterProps = HTMLAttributes<HTMLDivElement>;
 
 export const ContributionGraphFooter = ({ className, ...props }: ContributionGraphFooterProps) => (
-  <div className={cn("flex flex-wrap gap-1 whitespace-nowrap sm:gap-x-4", className)} {...props} />
+  <div
+    data-slot="contribution-graph-footer"
+    className={cn("flex flex-wrap gap-1 whitespace-nowrap sm:gap-x-4", className)}
+    {...props}
+  />
 );
 
 export type ContributionGraphTotalCountProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
