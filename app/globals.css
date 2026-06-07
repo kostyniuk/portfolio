@@ -233,7 +233,7 @@
     [data-slot="preference-bar"],
     [data-slot="preference-item"]
   ) {
-    animation: content-reveal linear both;
+    animation: viewport-reveal linear both;
     animation-timeline: view();
     animation-range: cover 0% cover 100%;
   }
@@ -282,7 +282,7 @@
     }
   }
 
-  @keyframes content-reveal {
+  @keyframes viewport-reveal {
     0% {
       opacity: 0.15;
       translate: 0 1rem;
