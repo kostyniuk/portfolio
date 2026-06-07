@@ -187,6 +187,7 @@
     color: var(--color-muted);
   }
 
+  /* Add className="page-reveal" to the page or section you want this reveal to apply to. */
   .page-reveal :where(
     h1,
     h2,
