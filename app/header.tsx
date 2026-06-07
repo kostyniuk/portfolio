@@ -13,7 +13,7 @@ import { FileDown } from "lucide-react";
 import { AKLogo } from "@/components/icons/ak-logo";
 
 async function Header() {
-  const octokit = new Octokit();
+  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
   const { data: repo } = await octokit.rest.repos.get({
     owner: "kostyniuk",

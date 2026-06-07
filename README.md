@@ -42,6 +42,16 @@ bun start
 
 The dev server runs at `http://localhost:3000`.
 
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in as needed. All are optional.
+
+- **`GITHUB_TOKEN`** — used at build time by the Contributions section to fetch
+  top repositories by commits. Without it the section still renders, but the
+  unauthenticated GitHub API rate limit (60 req/hr) can leave the repo list
+  empty. A classic token needs no scopes for public data; a fine-grained token
+  needs read-only **Contents** + **Metadata**.
+
 ## Project Structure
 
 ```
