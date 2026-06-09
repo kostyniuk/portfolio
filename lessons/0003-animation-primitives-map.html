@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0003: Animation Primitives Map</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --code:#f0ece4; --good:#1f7a4d; --bad:#b43c2f; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(980px, calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { max-width:16ch; margin:0 0 12px; font-size:clamp(2.2rem, 6vw, 4.5rem); line-height:.98; letter-spacing:0; }
+    h2 { margin:0 0 10px; font-size:1.15rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    a { color:var(--accent); }
+    code { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .prose { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:20px; margin-top:18px; }
+    .grid { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px; margin-top:24px; }
+    .card { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:18px; min-height:170px; }
+    .demo { height:54px; width:54px; border-radius:8px; background:var(--accent); margin-top:14px; }
+    .transition:hover .demo { transform:translateY(-8px); }
+    .transition .demo { transition:transform 220ms ease; }
+    .keyframes .demo { animation:pulse 1.2s ease-in-out infinite; }
+    .scroll .demo { animation:slide linear both; animation-timeline:view(); animation-range:cover 0% cover 40%; }
+    @keyframes pulse { 50% { scale:1.16; } }
+    @keyframes slide { from { translate:-16px 0; opacity:.3; } to { translate:0; opacity:1; } }
+    .quiz { margin-top:22px; border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:18px; }
+    button { border:0; border-radius:8px; padding:10px 13px; background:var(--accent); color:#fff; font:inherit; font-weight:650; cursor:pointer; margin:0 8px 8px 0; }
+    .feedback { min-height:28px; color:var(--muted); }
+    .good { color:var(--good); } .bad { color:var(--bad); }
+    nav.lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+    @media (max-width:760px){ .grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Choose The Animation Primitive</h1>
+    <p>Skill: decide whether a motion belongs to a transition, a time-based animation, or a scroll-driven animation — before writing any code.</p>
+
+    <section class="prose">
+      <h2>The Problem This Solves</h2>
+      <p>CSS used to have exactly one animation story: write some <code>@keyframes</code> or a <code>transition</code>, and reach for JavaScript for everything else. That left whole categories of motion — scroll effects, entry animations, layout morphs — stuck in JS, with scroll listeners, <code>requestAnimationFrame</code> loops, and libraries to maintain.</p>
+      <p>Today CSS has <strong>four distinct primitives</strong>, and most animation frustration comes from picking the wrong one: writing keyframes to fake a hover effect, wiring up JavaScript scroll handlers to do what <code>animation-timeline: view()</code> does for free, or hand-animating a layout change the View Transition API would handle in three lines. Choosing the right primitive first is the highest-leverage skill in this whole series.</p>
+    </section>
+
+    <section class="prose">
+      <h2>The Idea: Ask "What Drives The Progress?"</h2>
+      <p>Every animation is a value going from 0% to 100%. The primitives differ in <strong>what moves that progress along</strong>:</p>
+      <p><strong>Transition</strong> — progress is driven by a <em>state change</em>. Something flipped (hover, focus, a class toggle), and the browser smooths the gap between old and new style. You only describe the two end states.</p>
+      <p><strong>Keyframes</strong> — progress is driven by the <em>clock</em>. You choreograph beats at percentages, and the animation plays through time, optionally looping. Nothing has to "change" to start it.</p>
+      <p><strong>Scroll-driven animation</strong> — progress is driven by the <em>scrollbar</em>. Same keyframes syntax, but scroll position replaces the clock. Scrolling back rewinds it; no JavaScript listens to anything.</p>
+      <p><strong>View transition</strong> — progress is driven between <em>two document snapshots</em>. The browser photographs the page before and after a DOM change and morphs between the photos. This is for changes too structural for the other three (reordering, navigation).</p>
+    </section>
+
+    <div class="grid">
+      <section class="card transition">
+        <h2>Transition</h2>
+        <p>A simple state change: hover, focus, open, selected. Hover this card.</p>
+        <div class="demo"></div>
+      </section>
+      <section class="card keyframes">
+        <h2>Keyframes</h2>
+        <p>Named sequences, repeated motion, multi-step timing. This pulses on its own.</p>
+        <div class="demo"></div>
+      </section>
+      <section class="card scroll">
+        <h2>Scroll-Driven</h2>
+        <p>Scroll position controls the progress. Reload and scroll to see it enter.</p>
+        <div class="demo"></div>
+      </section>
+    </div>
+
+    <section class="prose">
+      <h2>Why This Matters For Your Portfolio</h2>
+      <p>Your portfolio already mixes three of these: the viewport reveal on the main page is a scroll-driven animation with a fixed range, hover lifts on cards are transitions, and the staggered contribution vitals from <a href="0002-apply-sibling-index-to-contribution-vitals.html">lesson 2</a> are keyframes with <code>sibling-index()</code> delays. Naming which primitive each effect uses is what lets you extend them without adding JavaScript — which is exactly the mission.</p>
+    </section>
+
+    <section class="quiz">
+      <h2>Practice</h2>
+      <p>A card should lift when hovered. Which primitive?</p>
+      <button data-answer="right">Transition</button>
+      <button data-answer="wrong">Scroll-driven animation</button>
+      <button data-answer="wrong">View transition</button>
+      <p class="feedback" aria-live="polite"></p>
+    </section>
+
+    <p>Ask the agent next: "Which primitive should I use for this animation idea?" Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+    <p>Sources: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transitions/Using_CSS_transitions">MDN transitions</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations">MDN animations</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations">MDN scroll-driven animations</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API">MDN View Transition API</a>.</p>
+
+    <nav class="lesson-nav">
+      <a href="0002-apply-sibling-index-to-contribution-vitals.html">← Lesson 2: Contribution vitals</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0004-transitions-state-change.html">Lesson 4: Transitions →</a>
+    </nav>
+  </main>
+  <script>
+    const feedback = document.querySelector(".feedback");
+    document.querySelectorAll(".quiz button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const right = button.dataset.answer === "right";
+        feedback.className = `feedback ${right ? "good" : "bad"}`;
+        feedback.textContent = right ? "Yes. Hover is a two-state change, so transition is the natural primitive." : "Not this time. The trigger is a simple state change, not scroll or a document snapshot.";
+      });
+    });
+  </script>
+</body>
+</html>

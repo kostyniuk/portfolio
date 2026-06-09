@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0002: Apply sibling-index() to Contribution Vitals</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #181818;
+      --muted: #61666f;
+      --paper: #faf8f2;
+      --panel: #fff;
+      --line: #ded8cc;
+      --accent: #255fd7;
+      --accent-soft: #e8efff;
+      --code: #f0ece4;
+      --good: #1f7a4d;
+      --bad: #b43c2f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 58px;
+    }
+
+    h1 {
+      max-width: 14ch;
+      margin: 0 0 12px;
+      font-size: clamp(2.25rem, 6vw, 4.6rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    pre {
+      overflow: auto;
+      margin: 12px 0 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--code);
+      line-height: 1.45;
+    }
+
+    .lede {
+      max-width: 62ch;
+      font-size: 1.06rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 20px;
+    }
+
+    .vitals {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 24px 34px;
+      margin-top: 10px;
+      view-timeline: --vitals block;
+    }
+
+    .vital {
+      --i: calc(sibling-index() - 1);
+      --enter-x: 0;
+      --enter-y: 1rem;
+      min-width: 110px;
+      animation: vital-in linear both;
+      animation-timeline: --vitals;
+      animation-range: cover 0% cover 20%;
+    }
+
+    .vital:nth-child(1) {
+      --enter-x: -2rem;
+      --enter-y: 0.35rem;
+    }
+
+    .vital:nth-child(2) {
+      --enter-x: 0;
+      --enter-y: -1.35rem;
+    }
+
+    .vital:nth-child(3) {
+      --enter-x: 0;
+      --enter-y: 1.35rem;
+    }
+
+    .vital:nth-child(4) {
+      --enter-x: 0;
+      --enter-y: -1.15rem;
+    }
+
+    .vital:nth-child(5) {
+      --enter-x: 2rem;
+      --enter-y: 0.35rem;
+    }
+
+    .number {
+      display: block;
+      color: var(--ink);
+      font-size: 2rem;
+      line-height: 1;
+      font-weight: 650;
+    }
+
+    .label {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    @keyframes vital-in {
+      from {
+        opacity: 0;
+        translate: var(--enter-x) var(--enter-y);
+      }
+
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+
+    .quiz {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      width: fit-content;
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .feedback {
+      min-height: 28px;
+      color: var(--muted);
+    }
+
+    .feedback.good {
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      color: var(--bad);
+    }
+
+    @media (max-width: 760px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Apply The Stagger To Real Markup</h1>
+    <p class="lede">The useful move in the contribution vitals was not just adding an animation. It was making every animated item a direct sibling so <code>sibling-index()</code> can count the sequence correctly.</p>
+
+    <section class="grid" aria-label="Lesson">
+      <article class="panel">
+        <h2>Before: Nested Groups Interrupt The Count</h2>
+        <p>If stats live inside one wrapper and repos live in another, each group gets its own sibling order. That makes the timing harder to reason about.</p>
+        <pre><code>&lt;div class="vitals"&gt;
+  &lt;div class="stats"&gt;
+    &lt;Stat /&gt;
+    &lt;Stat /&gt;
+  &lt;/div&gt;
+
+  &lt;div class="repos"&gt;...&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </article>
+
+      <article class="panel">
+        <h2>After: Direct Animated Siblings</h2>
+        <p>Give each animated block the same class and place them under the same parent. Now the source order is the animation order.</p>
+        <pre><code>&lt;div class="contribution-vitals-stagger"&gt;
+  &lt;Stat /&gt;
+  &lt;Stat /&gt;
+  &lt;Stat /&gt;
+  &lt;Stat /&gt;
+  &lt;div class="contribution-vital"&gt;Repos&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="Demo and code">
+      <article class="panel">
+        <h2>Live Mini Demo</h2>
+        <p>Scroll this demo into view. The timing comes from <code>sibling-index()</code>; the individual directions are separate choreography.</p>
+        <div class="vitals">
+          <div class="vital">
+            <span class="number">1,240</span>
+            <span class="label">Total</span>
+          </div>
+          <div class="vital">
+            <span class="number">12d</span>
+            <span class="label">Current</span>
+          </div>
+          <div class="vital">
+            <span class="number">41d</span>
+            <span class="label">Longest</span>
+          </div>
+          <div class="vital">
+            <span class="number">31</span>
+            <span class="label">Best day</span>
+          </div>
+          <div class="vital">
+            <span class="number">3</span>
+            <span class="label">Top repos</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>The CSS Pattern</h2>
+        <pre><code>.contribution-vitals-stagger {
+  view-timeline: --contribution-vitals block;
+}
+
+.contribution-vitals-stagger &gt; .contribution-vital {
+  --i: calc(sibling-index() - 1);
+  --enter-x: 0;
+  --enter-y: 1rem;
+  animation: contribution-vital-in linear both;
+  animation-timeline: --contribution-vitals;
+  animation-range: cover 0% cover 20%;
+}
+
+.contribution-vital:nth-child(1) { --enter-x: -2rem; }
+.contribution-vital:nth-child(2) { --enter-y: -1.35rem; }
+.contribution-vital:nth-child(5) { --enter-x: 2rem; }</code></pre>
+        <p>This mirrors the page reveal pattern: every item uses the same <code>cover 0% cover 20%</code> timeline window. Use <code>sibling-index()</code> for per-item choices like direction or intensity, not necessarily for shifting the timeline itself.</p>
+      </article>
+    </section>
+
+    <section class="panel" style="margin-top: 18px;">
+      <h2>Practice Check</h2>
+      <p>Question: why did we put the repo block directly inside <code>.contribution-vitals-stagger</code> instead of leaving it in a separate wrapper?</p>
+      <div class="quiz">
+        <button type="button" data-answer="right">Because the repo block needs to be counted as the fifth animated sibling</button>
+        <button type="button" data-answer="wrong">Because flexbox cannot animate nested elements</button>
+        <p class="feedback" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top: 18px;">
+      <h2>Next Agent Question</h2>
+      <p>Ask me to inspect another section and identify which elements should become direct animated siblings before adding a stagger.</p>
+      <p>Reference: <a href="../reference/0001-sibling-index-animation-delays.html">sibling-index() animation delays</a>.</p>
+    </section>
+  </main>
+
+  <script>
+    const feedback = document.querySelector(".feedback");
+
+    document.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const right = button.dataset.answer === "right";
+        feedback.className = `feedback ${right ? "good" : "bad"}`;
+        feedback.textContent = right
+          ? "Exactly. The parent-child shape controls what sibling-index() can count."
+          : "Not quite. Nested elements can animate; the issue is that sibling-index() counts within one parent.";
+      });
+    });
+  </script>
+</body>
+</html>

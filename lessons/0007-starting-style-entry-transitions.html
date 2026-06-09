@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0007: @starting-style Entry Transitions</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(920px, calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { margin:0 0 12px; font-size:clamp(2.2rem, 6vw, 4.4rem); line-height:.98; letter-spacing:0; }
+    h2 { margin:0 0 10px; font-size:1.15rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:14px; border:1px solid var(--line); border-radius:8px; background:var(--code); }
+    button { border:0; border-radius:8px; background:var(--accent); color:#fff; padding:10px 14px; font:inherit; font-weight:650; cursor:pointer; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:20px; margin-top:18px; }
+    .toast { margin-top:16px; width:min(360px, 100%); border:1px solid var(--line); border-radius:8px; background:#fff; padding:14px 16px; transition:opacity 240ms ease, translate 240ms ease; }
+    .toast[hidden] { display:none; }
+    .toast {
+      @starting-style {
+        opacity:0;
+        translate:0 .75rem;
+      }
+    }
+    a { color:var(--accent); }
+    nav.lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Give New Elements A Before State</h1>
+    <p>Skill: use <code>@starting-style</code> when an element needs entry transition styles the moment it appears.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>A transition needs two things: a previous style and a new style. But a <strong>newly rendered element has no previous style</strong> — when a toast mounts, or an element flips from <code>display: none</code> to visible, there is nothing to transition <em>from</em>. So it pops in fully formed, and your carefully written <code>transition</code> line does nothing.</p>
+      <p>For years the workarounds were all JavaScript hacks: insert the element with a "hidden" class, force a reflow (or wait one <code>requestAnimationFrame</code>), <em>then</em> remove the class so the browser perceives a change. Fragile, easy to get wrong, and pure ceremony — the developer's actual desire was just: <strong>"when this thing first appears, pretend it started over here."</strong></p>
+      <p><code>@starting-style</code> says exactly that, in CSS.</p>
+    </section>
+
+    <section class="panel">
+      <h2>The Idea: A Synthetic "Before"</h2>
+      <p>The <code>@starting-style</code> block supplies the missing previous style. On the element's first styled frame, the browser uses these values as the transition's starting point — so the normal style becomes the destination, and the entry animates like any other state change. It only applies at first render; after that, the element transitions between its real states as usual.</p>
+      <h2 style="margin-top:18px">Demo</h2>
+      <button type="button">Toggle toast</button>
+      <div class="toast" hidden>Saved. This toast transitions from its starting style.</div>
+      <pre><code>.toast {
+  transition: opacity 240ms ease, translate 240ms ease;
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 .75rem;
+  }
+}</code></pre>
+      <p>Note what the JavaScript in this demo does: it toggles <code>hidden</code> and nothing else. All the entry motion lives in CSS — that's the whole point.</p>
+    </section>
+
+    <section class="panel">
+      <h2>The Boundaries</h2>
+      <p><code>@starting-style</code> handles <strong>entry</strong>. The exit (transitioning <em>to</em> <code>display: none</code>) is a separate problem with a separate tool — <code>transition-behavior: allow-discrete</code> — because <code>display</code> isn't an interpolatable property. And if the entry needs multiple beats rather than a single glide, use a <a href="0005-keyframes-time-based-sequences.html">keyframes animation</a> instead: animations always play on mount, so they never had this problem in the first place. <code>@starting-style</code> is specifically for when you want the <em>transition</em> model (two states, reactive, reversible) to also cover first render.</p>
+    </section>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>This is the tool for toasts, dropdown menus, dialogs, and anything rendered conditionally by React. Conditional rendering (<code>{isOpen && &lt;Toast /&gt;}</code>) mounts a brand-new element every time — exactly the "no previous style" case — so <code>@starting-style</code> lets those components animate in without effects, refs, or animation libraries.</p>
+    </section>
+
+    <p>Ask the agent next: "Where should @starting-style go in this component?" Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@starting-style">MDN: @starting-style</a>. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+
+    <nav class="lesson-nav">
+      <a href="0006-easing-fill-mode-and-direction.html">← Lesson 6: Easing &amp; fill mode</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0008-scroll-driven-progress.html">Lesson 8: Scroll-driven →</a>
+    </nav>
+  </main>
+  <script>
+    const toast = document.querySelector(".toast");
+    document.querySelector("button").addEventListener("click", () => {
+      toast.hidden = !toast.hidden;
+    });
+  </script>
+</body>
+</html>

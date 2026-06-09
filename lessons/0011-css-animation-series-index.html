@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSS Animation Lesson Series</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(960px, calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { max-width:13ch; margin:0 0 12px; font-size:clamp(2.2rem, 6vw, 4.6rem); line-height:.98; letter-spacing:0; }
+    p { margin:0 0 14px; color:var(--muted); }
+    ol { display:grid; gap:12px; margin:24px 0; padding:0; list-style:none; counter-reset:item; }
+    li { counter-increment:item; border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:16px 18px; }
+    li::before { content:counter(item, decimal-leading-zero); display:inline-grid; place-items:center; width:2.4rem; height:2.4rem; margin-right:10px; border-radius:8px; background:color-mix(in oklch, var(--accent) 12%, white); color:var(--accent); font-weight:750; }
+    a { color:var(--accent); font-weight:700; text-decoration:none; }
+    span { color:var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>CSS Animation Series</h1>
+    <p>Work through these in order. Lessons 1 and 2 are the sibling-index warmup already in this workspace; lessons 3-10 broaden into the animation toolkit. Each lesson explains the problem the feature solves, the idea behind it, and where it fits on this portfolio.</p>
+    <ol>
+      <li><a href="0001-sibling-index-animation-delay.html">Sibling index animation delays</a> <span>- derive stagger timing from DOM order instead of per-item classes.</span></li>
+      <li><a href="0002-apply-sibling-index-to-contribution-vitals.html">Apply sibling-index to contribution vitals</a> <span>- use real portfolio markup.</span></li>
+      <li><a href="0003-animation-primitives-map.html">Animation primitives map</a> <span>- four primitives, distinguished by what drives the progress: state change, clock, scrollbar, or snapshot diff.</span></li>
+      <li><a href="0004-transitions-state-change.html">Transitions for state changes</a> <span>- fix the "instant snap" of style changes by describing two states and letting the browser interpolate.</span></li>
+      <li><a href="0005-keyframes-time-based-sequences.html">Keyframes for time-based sequences</a> <span>- when two states aren't enough: loops, middle beats, and self-starting motion as a named, reusable timeline.</span></li>
+      <li><a href="0006-easing-fill-mode-and-direction.html">Easing, fill mode, and direction</a> <span>- fix robotic motion, the flash-before-delay bug, and the loop snap.</span></li>
+      <li><a href="0007-starting-style-entry-transitions.html">@starting-style entry transitions</a> <span>- new elements have no "before" state to transition from; this supplies a synthetic one, replacing JS reflow hacks.</span></li>
+      <li><a href="0008-scroll-driven-progress.html">Scroll-driven progress</a> <span>- replace laggy JS scroll listeners by making scroll position the animation's clock.</span></li>
+      <li><a href="0009-scroll-triggered-animation-ranges.html">Scroll-triggered animation ranges</a> <span>- crop a view timeline so reveals finish while the element is being read, not as it leaves.</span></li>
+      <li><a href="0010-view-transitions-between-states.html">View transitions between states</a> <span>- animate structural changes (reorders, navigation) by morphing browser snapshots — FLIP without the JavaScript.</span></li>
+    </ol>
+    <p>Reference sheet: <a href="../reference/0002-css-animation-field-guide.html">CSS Animation Field Guide</a>.</p>
+  </main>
+</body>
+</html>

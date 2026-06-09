@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0001: Stagger Animations with sibling-index()</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #181818;
+      --muted: #62666f;
+      --paper: #f8f7f3;
+      --panel: #ffffff;
+      --line: #dfd9cc;
+      --accent: #255fd7;
+      --accent-soft: #e8efff;
+      --good: #1f7a4d;
+      --bad: #b43c2f;
+      --code: #f0ece4;
+      --shadow: 0 14px 40px rgba(34, 31, 25, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(37, 95, 215, 0.12), transparent 34rem),
+        var(--paper);
+      color: var(--ink);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(1040px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 60px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      max-width: 12ch;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 1.25rem;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    code,
+    pre,
+    textarea {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    pre {
+      overflow: auto;
+      margin: 12px 0 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--code);
+      line-height: 1.45;
+    }
+
+    .lede {
+      max-width: 58ch;
+      font-size: 1.08rem;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .demo-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .demo-list > li {
+      --step: 120ms;
+      border: 1px solid #d7ddea;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ffffff, #edf3ff);
+      padding: 12px 14px;
+      animation: rise 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      animation-delay: calc((sibling-index() - 1) * var(--step));
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .formula {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 8px 0 4px;
+      color: var(--ink);
+      font-weight: 650;
+    }
+
+    .pill {
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #1647a3;
+      padding: 4px 10px;
+      font-size: 0.93rem;
+    }
+
+    .practice {
+      display: grid;
+      gap: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 108px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+
+    button {
+      width: fit-content;
+      border: 0;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 14px;
+      font: inherit;
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    button:hover {
+      filter: brightness(0.96);
+    }
+
+    .feedback {
+      min-height: 28px;
+      color: var(--muted);
+    }
+
+    .feedback.good {
+      color: var(--good);
+    }
+
+    .feedback.bad {
+      color: var(--bad);
+    }
+
+    .sources {
+      margin: 30px 0 0;
+      padding-left: 1.2rem;
+      color: var(--muted);
+    }
+
+    .sources li + li {
+      margin-top: 6px;
+    }
+
+    @media (max-width: 760px) {
+      header,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        max-width: 10ch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Stagger With sibling-index()</h1>
+        <p class="lede">Tiny win: make sibling elements animate one after another by deriving each delay from its DOM position.</p>
+      </div>
+      <aside class="panel">
+        <h2>Progressive Enhancement</h2>
+        <p>This lesson uses <code>sibling-index()</code> directly, so the CSS can derive each item’s place without repeated index rules.</p>
+      </aside>
+    </header>
+
+    <section class="grid" aria-label="Concept and demo">
+      <article class="panel">
+        <h2>The One Idea</h2>
+        <p><code>sibling-index()</code> returns an integer for the current element's position among its siblings. The first child returns <code>1</code>, so subtract <code>1</code> when you want the first item to start immediately.</p>
+        <div class="formula">
+          <span class="pill">delay</span>
+          <span>=</span>
+          <span class="pill">(sibling-index() - 1)</span>
+          <span>x</span>
+          <span class="pill">step</span>
+        </div>
+        <pre><code>.item {
+  --step: 120ms;
+  animation-delay:
+    calc((sibling-index() - 1) * var(--step));
+}</code></pre>
+      </article>
+
+      <article class="panel">
+        <h2>Watch It</h2>
+        <p>Refresh the page to replay. The markup has four plain sibling elements; the delay comes from CSS.</p>
+        <ul class="demo-list">
+          <li>First: 0ms delay</li>
+          <li>Second: 120ms delay</li>
+          <li>Third: 240ms delay</li>
+          <li>Fourth: 360ms delay</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="grid" aria-label="Progressive enhancement and practice">
+      <article class="panel">
+        <h2>Progressive Enhancement Rule</h2>
+        <p>Keep the markup plain and let modern CSS derive the index. The content stands on its own; the staggered motion is the enhancement.</p>
+        <pre><code>.item {
+  --step: 120ms;
+  animation-delay: calc((sibling-index() - 1) * var(--step));
+}</code></pre>
+      </article>
+
+      <article class="panel practice">
+        <div>
+          <h2>Practice</h2>
+          <p>Fill in the delay so five cards stagger by <code>80ms</code>, with the first card starting at <code>0ms</code>.</p>
+        </div>
+        <textarea id="answer" spellcheck="false">.card {
+  animation-delay: ;
+}</textarea>
+        <button type="button" id="check">Check answer</button>
+        <p class="feedback" id="feedback" aria-live="polite"></p>
+      </article>
+    </section>
+
+    <section class="panel" style="margin-top: 18px;">
+      <h2>What To Ask The Agent Next</h2>
+      <p>Ask me to look at a real list in this portfolio and convert it to a staggered animation. The useful next step is applying this pattern to your own markup and choosing the right timing shape.</p>
+    </section>
+
+    <ul class="sources">
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/sibling-index">MDN on <code>sibling-index()</code></a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/docs/Web/CSS/animation-delay">MDN on <code>animation-delay</code></a>.</li>
+      <li>Source: <a href="https://drafts.csswg.org/css-values-5/#tree-counting">CSS Values and Units Level 5 tree counting functions</a>.</li>
+    </ul>
+  </main>
+
+  <script>
+    const answer = document.querySelector("#answer");
+    const feedback = document.querySelector("#feedback");
+    const check = document.querySelector("#check");
+
+    check.addEventListener("click", () => {
+      const normalized = answer.value.toLowerCase().replace(/\s+/g, "");
+      const usesSiblingIndex = normalized.includes("sibling-index()") && normalized.includes("-1");
+      const usesStep = normalized.includes("80ms") || normalized.includes("var(--step)");
+      const usesCalc = normalized.includes("calc(");
+
+      feedback.className = "feedback";
+
+      if (usesSiblingIndex && usesStep && usesCalc) {
+        feedback.textContent = "Yes. The key is calc((sibling-index() - 1) * 80ms), or the same thing with --step: 80ms.";
+        feedback.classList.add("good");
+        return;
+      }
+
+      feedback.textContent = "Close. Make the first item zero by subtracting 1, then multiply by 80ms inside calc().";
+      feedback.classList.add("bad");
+    });
+  </script>
+</body>
+</html>

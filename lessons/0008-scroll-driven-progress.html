@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0008: Scroll-Driven Progress</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(920px, calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { margin:0 0 12px; font-size:clamp(2.2rem, 6vw, 4.4rem); line-height:.98; }
+    h2 { margin:0 0 10px; font-size:1.15rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:14px; border:1px solid var(--line); border-radius:8px; background:var(--code); }
+    .panel { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:20px; margin-top:18px; }
+    .spacer { height:45vh; display:grid; place-items:center; color:var(--muted); }
+    .bar { position:sticky; top:12px; height:8px; border-radius:999px; background:color-mix(in oklch, var(--accent) 20%, transparent); overflow:hidden; }
+    .bar::before { content:""; display:block; height:100%; width:100%; background:var(--accent); transform-origin:left; animation:fill linear both; animation-timeline:scroll(root block); }
+    @keyframes fill { from { scale:0 1; } to { scale:1 1; } }
+    a { color:var(--accent); }
+    nav.lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Scroll Can Be The Timeline</h1>
+    <p>Skill: link animation progress to scroll position instead of time.</p>
+    <div class="bar" aria-hidden="true"></div>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>Scroll-linked effects — reading progress bars, parallax, reveal-on-scroll — used to be a JavaScript tax. You attached a <code>scroll</code> listener, recalculated positions on every event, throttled it so it wouldn't melt the main thread, and still got jank: scrolling happens on the browser's compositor thread, but your JavaScript ran on the main thread, so the effect always lagged a frame or two behind the actual scroll. <code>IntersectionObserver</code> helped with <em>"did it enter the viewport?"</em> but gives discrete events, not continuous progress — useless for a progress bar.</p>
+      <p>The underlying desire was simple: <strong>"this animation's progress should just <em>be</em> the scroll position."</strong> Scroll-driven animations grant exactly that, declaratively, with the browser doing the math off the main thread.</p>
+    </section>
+
+    <section class="panel">
+      <h2>The Idea: Swap The Clock</h2>
+      <p>Recall from <a href="0005-keyframes-time-based-sequences.html">lesson 5</a>: keyframes are a timeline, and something moves the progress along it. By default that something is the clock. <code>animation-timeline</code> replaces the clock with a scroller:</p>
+      <p>Time-based animation says: <em>"after 500ms, be halfway done."</em> Scroll-driven animation says: <em>"when scroll is halfway, be halfway done."</em></p>
+      <p>Everything else carries over unchanged — same <code>@keyframes</code>, same easing concepts. Duration becomes meaningless (scroll distance replaces it), and you get two properties for free that JavaScript versions had to hand-build: the animation is perfectly <strong>reversible</strong> (scroll up and it rewinds, watch the bar) and perfectly <strong>synchronized</strong> (it can never lag the scroll, because scroll position <em>is</em> the input).</p>
+      <h2 style="margin-top:18px">Page Progress Demo</h2>
+      <p>Scroll this lesson. The sticky bar at the top is not timed; it is driven by root scroll progress.</p>
+      <pre><code>.bar::before {
+  animation: fill linear both;
+  animation-timeline: scroll(root block);
+}</code></pre>
+    </section>
+
+    <div class="spacer">Keep scrolling — the bar tracks you exactly</div>
+
+    <section class="panel">
+      <h2>Two Kinds Of Scroll Timeline</h2>
+      <p><code>scroll()</code> measures <strong>how far a container has scrolled</strong> — right for whole-page effects like this progress bar. <code>view()</code> measures <strong>how far a specific element has traveled through the visible area</strong> — right for per-element reveals, and the subject of the <a href="0009-scroll-triggered-animation-ranges.html">next lesson</a>. Choosing between them is the first question for any scroll effect: is the driver the page, or the element?</p>
+      <p>One honest caveat: <code>linear</code> easing is usually correct here. The user's finger provides the easing — adding a curve on top makes the element feel detached from the scroll.</p>
+    </section>
+
+    <div class="spacer">Scroll up and the animation reverses</div>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>Your main page's viewport reveal is already a <code>view()</code> timeline animation. Understanding that scroll is "just another clock" means every keyframe trick you know — staggering with <code>sibling-index()</code>, holds, multi-beat sequences — can be driven by scroll with a one-line change.</p>
+    </section>
+
+    <p>Ask the agent next: "Should this animation be scroll progress or view progress?" Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations/Timelines">MDN: scroll-driven animation timelines</a>. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+
+    <nav class="lesson-nav">
+      <a href="0007-starting-style-entry-transitions.html">← Lesson 7: @starting-style</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0009-scroll-triggered-animation-ranges.html">Lesson 9: Animation ranges →</a>
+    </nav>
+  </main>
+</body>
+</html>

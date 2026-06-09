@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reference: sibling-index() Animation Delays</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #171717;
+      --muted: #5f646d;
+      --paper: #fbfaf7;
+      --panel: #ffffff;
+      --line: #ded8cc;
+      --accent: #276ef1;
+      --code: #f3efe7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(920px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 42px 0 56px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 5vw, 3.3rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 34px 0 12px;
+      font-size: 1.15rem;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    pre {
+      overflow: auto;
+      margin: 12px 0;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--code);
+      line-height: 1.45;
+    }
+
+    .sheet {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 18px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    li + li {
+      margin-top: 8px;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    @media (max-width: 720px) {
+      .sheet {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      main {
+        width: auto;
+        padding: 0;
+      }
+
+      .box,
+      pre {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>sibling-index() Animation Delays</h1>
+    <p>A quick pattern for making sibling elements animate one after another without writing a selector for every child.</p>
+
+    <div class="sheet">
+      <section class="box">
+        <h2>Mental Model</h2>
+        <ul>
+          <li><code>sibling-index()</code> returns the current element's position among its siblings.</li>
+          <li>The first child is <code>1</code>, not <code>0</code>.</li>
+          <li>Use it inside <code>calc()</code> when CSS expects a number-like value.</li>
+          <li>For a delay that starts at <code>0ms</code>, subtract <code>1</code>.</li>
+        </ul>
+      </section>
+
+      <section class="box">
+        <h2>Core Formula</h2>
+        <pre><code>.item {
+  --step: 90ms;
+  animation-delay:
+    calc((sibling-index() - 1) * var(--step));
+}</code></pre>
+      </section>
+    </div>
+
+    <h2>Reusable Pattern</h2>
+    <pre><code>.list > * {
+  --step: 90ms;
+  animation: rise 420ms ease both;
+  animation-delay: calc((sibling-index() - 1) * var(--step));
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}</code></pre>
+
+    <h2>Progressive Enhancement</h2>
+    <p>Use <code>sibling-index()</code> directly when staggered motion is an enhancement. The content remains readable even if the motion feature is unavailable.</p>
+    <pre><code>.list > * {
+  --step: 90ms;
+  animation-delay: calc((sibling-index() - 1) * var(--step));
+}</code></pre>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/sibling-index">MDN: sibling-index()</a></li>
+      <li><a href="https://developer.mozilla.org/docs/Web/CSS/animation-delay">MDN: animation-delay</a></li>
+      <li><a href="https://drafts.csswg.org/css-values-5/#tree-counting">CSS Values and Units Level 5: tree counting functions</a></li>
+    </ul>
+  </main>
+</body>
+</html>

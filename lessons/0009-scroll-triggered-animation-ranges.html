@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0009: Scroll-Triggered Animation Ranges</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(920px, calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { margin:0 0 12px; font-size:clamp(2.2rem, 6vw, 4.4rem); line-height:.98; }
+    h2 { margin:0 0 10px; font-size:1.15rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:14px; border:1px solid var(--line); border-radius:8px; background:var(--code); }
+    .panel { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:20px; margin-top:18px; }
+    .spacer { height:45vh; display:grid; place-items:center; color:var(--muted); }
+    .reveal { border:1px solid var(--line); border-radius:8px; background:white; padding:20px; animation:reveal linear both; animation-timeline:view(); animation-range:cover 0% cover 20%; }
+    @keyframes reveal { from { opacity:.15; translate:0 1rem; } to { opacity:1; translate:0 0; } }
+    a { color:var(--accent); }
+    nav.lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Trigger Inside A Scroll Range</h1>
+    <p>Skill: use <code>animation-range</code> to say which part of the view timeline should contain the reveal.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>Attach <code>animation-timeline: view()</code> to an element and by default the animation is stretched across the element's <strong>entire trip through the viewport</strong> — it starts when the top edge enters at the bottom of the screen and only finishes as the element leaves at the top. For a reveal, that's wrong in a specific, predictable way: the card spends its whole on-screen life mid-fade, hitting full opacity only as the user scrolls past it. The user never sees the finished state while actually looking at the element.</p>
+      <p>What you actually want for a reveal: <strong>animate briefly as the element arrives, then sit finished and stable while it's being read.</strong> <code>animation-range</code> is the tool that expresses this — it crops the timeline to just the slice of the journey you care about.</p>
+    </section>
+
+    <div class="spacer">Scroll to the card and watch where the animation starts and stops</div>
+
+    <section class="reveal">
+      <h2>Reveal Card</h2>
+      <p>This animates during the first 20% of its cover range, then holds — matching the style of the portfolio page reveal.</p>
+    </section>
+
+    <section class="panel">
+      <h2>The Idea: Crop The Timeline</h2>
+      <pre><code>.reveal {
+  animation: reveal linear both;
+  animation-timeline: view();
+  animation-range: cover 0% cover 20%;
+}</code></pre>
+      <p>Read the range as two waypoints in the element's viewport journey: <em>start mapping at this point, finish at that point</em>. <code>cover</code> means "the full span from first pixel entering to last pixel leaving," so <code>cover 0% cover 20%</code> says: run the whole animation during the first fifth of the trip. Outside the range, <code>animation-fill-mode: both</code> (from <a href="0006-easing-fill-mode-and-direction.html">lesson 6</a>) holds the edge keyframes — before the range you're at the start state, after it you stay at the finished state. That's what makes the card stable while it's read.</p>
+      <p>The range is also your <strong>feel dial</strong>: a wider range (<code>cover 0% cover 40%</code>) makes the reveal feel slower and more gradual; a later start (<code>cover 20% cover 45%</code>) makes the element wait until it's well inside the viewport before waking up. There are other keywords — <code>entry</code> covers just the entering phase, <code>exit</code> the leaving phase — but <code>cover</code> plus percentages handles most reveal work.</p>
+    </section>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>This is exactly the pattern your <code>viewport-reveal</code> registry item uses, and as you identified earlier: the <strong>same fixed range can serve every item</strong> — each element gets its own view timeline automatically, so <code>cover 0% cover 20%</code> staggers naturally as items occupy different scroll positions. No per-item tuning needed until you want elements at the <em>same</em> scroll depth to differ; that's where per-sibling dynamic ranges come in, a future lesson.</p>
+    </section>
+
+    <p>Ask the agent next: "What animation-range should this section use?" Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-range">MDN: animation-range</a>. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+
+    <nav class="lesson-nav">
+      <a href="0008-scroll-driven-progress.html">← Lesson 8: Scroll-driven</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0010-view-transitions-between-states.html">Lesson 10: View transitions →</a>
+    </nav>
+  </main>
+</body>
+</html>

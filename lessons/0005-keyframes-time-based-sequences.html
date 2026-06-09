@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0005: Keyframes For Time-Based Sequences</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(920px, calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { margin:0 0 12px; font-size:clamp(2.2rem, 6vw, 4.4rem); line-height:.98; letter-spacing:0; }
+    h2 { margin:0 0 10px; font-size:1.15rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:14px; border:1px solid var(--line); border-radius:8px; background:var(--code); }
+    .panel { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:20px; margin-top:18px; }
+    .badge { display:inline-grid; place-items:center; width:92px; height:92px; border-radius:22px; background:var(--accent); color:white; font-weight:750; animation:badge-pop 1.5s ease-in-out infinite both; }
+    @keyframes badge-pop {
+      0% { opacity:.35; scale:.84; rotate:-3deg; }
+      35% { opacity:1; scale:1.08; rotate:2deg; }
+      60%, 100% { opacity:1; scale:1; rotate:0deg; }
+    }
+    a { color:var(--accent); }
+    nav.lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Keyframes Give Motion Beats</h1>
+    <p>Skill: use percentages to define a sequence over time.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p><a href="0004-transitions-state-change.html">Transitions</a> interpolate between exactly two states, and only when something changes. That model breaks down the moment you want any of these:</p>
+      <p><strong>A middle beat.</strong> "Overshoot, then settle" is three states, not two. <strong>A loop.</strong> A pulsing badge never stops — there's no end state to transition to. <strong>Autonomous motion.</strong> An entry animation on page load has no hover or class flip to react to; it just needs to play. <strong>Reuse.</strong> A transition lives on one selector; you can't name it and apply it elsewhere.</p>
+      <p>Keyframes exist because designers wanted <strong>choreography</strong> — multi-step, repeatable, self-starting motion — declared in CSS instead of a JavaScript timer loop.</p>
+    </section>
+
+    <section class="panel">
+      <h2>The Idea: Separate The Dance From The Dancer</h2>
+      <p>A <code>@keyframes</code> block is a <strong>named, reusable timeline</strong>. Percentages are positions in that timeline — not times. <code>35%</code> means "at 35% of however long this plays," so the same choreography works at 300ms or 3s without editing a single keyframe.</p>
+      <p>The <code>animation</code> property is the casting call: it picks which element performs the timeline, at what duration, with what easing, and how many times. One <code>@keyframes</code> block can drive twenty different elements at twenty different speeds. This separation — motion defined once, applied anywhere — is what makes patterns like the <a href="0001-sibling-index-animation-delay.html">sibling-index stagger</a> possible: every item runs the <em>same</em> keyframes, only the delay differs.</p>
+      <div class="badge">NEW</div>
+      <pre><code>.badge {
+  animation: badge-pop 1.5s ease-in-out infinite both;
+}
+
+@keyframes badge-pop {
+  0%        { opacity: .35; scale: .84;  rotate: -3deg; }
+  35%       { opacity: 1;   scale: 1.08; rotate: 2deg;  }
+  60%, 100% { opacity: 1;   scale: 1;    rotate: 0deg;  }
+}</code></pre>
+    </section>
+
+    <section class="panel">
+      <h2>Reading The Choreography</h2>
+      <p>Three beats: start dim and small (<code>0%</code>), overshoot past full size (<code>35%</code>) — overshoot is what makes motion feel alive rather than mechanical — then settle (<code>60%</code>). Listing <code>60%, 100%</code> together pins the same style to both points, which creates a <strong>hold</strong>: the badge rests for the final 40% of each loop instead of immediately popping again. Holds are how you give looping motion a rhythm.</p>
+    </section>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>Keyframes are your tool for anything that plays on its own: entry reveals, attention pulses on a "NEW" badge, looping accents. They also become the raw material for <a href="0008-scroll-driven-progress.html">scroll-driven animations</a> — same <code>@keyframes</code> syntax, different clock.</p>
+    </section>
+
+    <p>Ask the agent next: "Where should the hold keyframe go?" Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations">MDN: Using CSS animations</a>. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+
+    <nav class="lesson-nav">
+      <a href="0004-transitions-state-change.html">← Lesson 4: Transitions</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0006-easing-fill-mode-and-direction.html">Lesson 6: Easing &amp; fill mode →</a>
+    </nav>
+  </main>
+</body>
+</html>

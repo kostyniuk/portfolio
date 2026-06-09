@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0010: View Transitions Between States</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(920px, calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { margin:0 0 12px; font-size:clamp(2.2rem, 6vw, 4.4rem); line-height:.98; }
+    h2 { margin:0 0 10px; font-size:1.15rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:14px; border:1px solid var(--line); border-radius:8px; background:var(--code); }
+    button { border:0; border-radius:8px; background:var(--accent); color:#fff; padding:10px 14px; font:inherit; font-weight:650; cursor:pointer; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:20px; margin-top:18px; }
+    .scene { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+    .tile { border:1px solid var(--line); border-radius:8px; background:#fff; padding:18px; min-height:110px; }
+    .featured { grid-column:span 2; background:color-mix(in oklch, var(--accent) 10%, #fff); view-transition-name:featured-tile; }
+    .scene.alternate .featured { grid-column:auto; order:3; }
+    .scene.alternate .tile:nth-child(2) { grid-column:span 2; }
+    ::view-transition-old(featured-tile), ::view-transition-new(featured-tile) { animation-duration:420ms; }
+    a { color:var(--accent); }
+    nav.lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+    @media (max-width:720px){ .scene{grid-template-columns:1fr;} .featured{grid-column:auto;} }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Animate Between Page States</h1>
+    <p>Skill: recognize when a change is too structural for transitions or keyframes, and hand it to the browser's snapshot machinery instead.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>Every primitive so far animates <strong>an element's own properties</strong>. But the hardest UI changes aren't property changes — they're <strong>structural</strong>: a grid reorders when a filter is applied, a card moves to a different slot, the page navigates. Transitions and keyframes are nearly useless here, for a deep reason: when React re-renders or the layout reflows, the "moved" element may be unmounted and remounted, and its position is decided by layout, not by an animatable property. There <em>is</em> no <code>translate</code> to transition.</p>
+      <p>The pre-existing answer was the FLIP technique: in JavaScript, measure every element's position, apply the change, measure again, then fake the motion with inverted transforms. It works, and it's exactly the kind of fiddly measurement code people wanted gone. The desire behind the View Transition API: <strong>"I'll change the DOM however I like — browser, you figure out how to morph the old screen into the new one."</strong></p>
+    </section>
+
+    <section class="panel">
+      <h2>The Idea: Animate Snapshots, Not Elements</h2>
+      <p>A view transition is not an element animation. When you call <code>document.startViewTransition(update)</code>, the browser <strong>photographs the page</strong>, runs your update function (any DOM change at all), photographs the result, and cross-fades between the two photos. Give an element a <code>view-transition-name</code> and it's paired across the snapshots — the browser computes the position and size delta and morphs it from old slot to new, doing FLIP's job natively.</p>
+      <p>The snapshots are real pseudo-elements (<code>::view-transition-old(...)</code>, <code>::view-transition-new(...)</code>), so you style the transition with ordinary CSS — the demo below just sets <code>animation-duration</code> on them.</p>
+      <h2 style="margin-top:18px">Demo</h2>
+      <button type="button">Move featured tile</button>
+      <div class="scene">
+        <div class="tile featured">Featured project</div>
+        <div class="tile">Secondary</div>
+        <div class="tile">Archive</div>
+      </div>
+      <pre><code>document.startViewTransition(() => {
+  scene.classList.toggle("alternate");
+});
+
+/* the featured tile is paired across snapshots */
+.featured { view-transition-name: featured-tile; }
+::view-transition-old(featured-tile),
+::view-transition-new(featured-tile) { animation-duration: 420ms; }</code></pre>
+      <p>Notice the update itself is one class toggle. The entire morph — the tile gliding to its new slot, the other tiles cross-fading — comes from the browser diffing the snapshots.</p>
+    </section>
+
+    <section class="panel">
+      <h2>The Trade-Off</h2>
+      <p>Snapshots are photos, not live elements: while the transition runs, the page isn't interactive and content inside the snapshots is frozen. So this is the wrong tool for continuous or interactive motion (hover effects, scroll reveals) and the right tool for <strong>discrete moments</strong> — a filter applied, an item promoted, a route change. The other primitives keep elements alive; this one trades liveness for the ability to animate <em>any</em> change. Always keep the no-support fallback in the demo's shape: run the update directly, so the change still happens without the morph.</p>
+    </section>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>Two natural fits: reordering or filtering the project grid (the demo above is exactly that, with <code>view-transition-name</code> on each card), and page navigation — Next.js can drive same-document view transitions on route change, giving the portfolio app-like page-to-page morphs. Both are "discrete moment" changes, squarely in this primitive's territory.</p>
+    </section>
+
+    <p>Ask the agent next: "Is this a view transition or a normal animation?" Sources: <a href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API">MDN: View Transition API</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/View_transitions">MDN: CSS view transitions</a>. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+
+    <nav class="lesson-nav">
+      <a href="0009-scroll-triggered-animation-ranges.html">← Lesson 9: Animation ranges</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <span></span>
+    </nav>
+  </main>
+  <script>
+    const scene = document.querySelector(".scene");
+    document.querySelector("button").addEventListener("click", () => {
+      const update = () => {
+        scene.classList.toggle("alternate");
+      };
+      if (document.startViewTransition) {
+        document.startViewTransition(update);
+      } else {
+        update();
+      }
+    });
+  </script>
+</body>
+</html>

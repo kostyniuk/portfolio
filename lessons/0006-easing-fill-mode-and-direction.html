@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0006: Easing, Fill Mode, Direction</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(920px, calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { margin:0 0 12px; font-size:clamp(2.2rem, 6vw, 4.4rem); line-height:.98; letter-spacing:0; }
+    h2 { margin:0 0 10px; font-size:1.15rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:14px; border:1px solid var(--line); border-radius:8px; background:var(--code); }
+    .panel { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:20px; margin-top:18px; }
+    .track { display:grid; gap:12px; margin:18px 0; }
+    .dot { width:44px; height:44px; border-radius:999px; background:var(--accent); animation:travel 1.8s infinite alternate both; }
+    .linear { animation-timing-function:linear; }
+    .ease { animation-timing-function:cubic-bezier(.16, 1, .3, 1); }
+    @keyframes travel { to { translate: min(520px, calc(100vw - 120px)) 0; } }
+    a { color:var(--accent); }
+    nav.lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Control How Motion Feels</h1>
+    <p>Skill: read the animation shorthand as name, duration, easing, iteration, direction, and fill mode.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>Keyframes define <em>what</em> happens, but two animations with identical keyframes can feel completely different. Three recurring problems live in the gap:</p>
+      <p><strong>Robotic motion.</strong> Nothing in the physical world moves at constant speed — things accelerate and decelerate. Motion that ignores this reads as cheap and mechanical, even when the user can't say why.</p>
+      <p><strong>The flash of un-animated state.</strong> Animation styles only apply <em>while the animation is active</em>. An element with a 400ms delay spends those 400ms in its plain CSS state — so a fade-in element appears at full opacity, blinks away, then fades in. This bug is almost invisible in code and glaring on screen.</p>
+      <p><strong>The loop snap.</strong> A repeating animation jumps from its last frame straight back to its first, producing a visible stutter every cycle.</p>
+      <p>Each has a dedicated knob: <code>animation-timing-function</code>, <code>animation-fill-mode</code>, and <code>animation-direction</code>.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Easing: Same Keyframes, Different Feel</h2>
+      <p>The timing function reshapes how progress is distributed across the duration. Both dots below travel identical keyframes for identical durations — the top one linearly, the bottom one with a curve that starts fast and lands softly. Watch which one feels like an object and which feels like a printer head.</p>
+      <div class="track">
+        <div class="dot linear"></div>
+        <div class="dot ease"></div>
+      </div>
+      <pre><code>.dot {
+  animation: travel 1.8s infinite alternate both;
+}
+.linear { animation-timing-function: linear; }
+.ease   { animation-timing-function: cubic-bezier(.16, 1, .3, 1); }</code></pre>
+      <p>For UI work the default desire is almost always <strong>ease-out</strong> (fast start, soft landing): the interface feels responsive because motion begins instantly, and calm because it never slams to a stop. Save <code>linear</code> for progress bars and spinners, where constant speed <em>is</em> the honest signal.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Fill Mode And Direction: The Edges Of Playback</h2>
+      <p><code>animation-fill-mode</code> answers "what styles apply <em>outside</em> active playback?" — <code>backwards</code> applies the first keyframe during a delay (killing the flash described above), <code>forwards</code> keeps the last keyframe after the animation ends (so a fade-in doesn't pop back to its plain style), and <code>both</code> does both. This is why your <a href="0001-sibling-index-animation-delay.html">sibling-index stagger</a> needs <code>both</code>: every item except the first has a delay, and without fill mode each one would flash visible before its turn.</p>
+      <p><code>animation-direction: alternate</code> answers the loop snap: play forward, then play backward, so the cycle is seamless. The dots above use it — that's why they sweep back instead of teleporting to the start.</p>
+    </section>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>These three knobs are the difference between "has animations" and "feels designed." Every staggered reveal you build from here on should ship with an ease-out curve and <code>animation-fill-mode: both</code> as the default starting point.</p>
+    </section>
+
+    <p>Ask the agent next: "Which easing should this UI motion use?" Source: <a href="https://developer.mozilla.org/docs/Web/CSS/animation-timing-function">MDN: animation-timing-function</a>. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+
+    <nav class="lesson-nav">
+      <a href="0005-keyframes-time-based-sequences.html">← Lesson 5: Keyframes</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0007-starting-style-entry-transitions.html">Lesson 7: @starting-style →</a>
+    </nav>
+  </main>
+</body>
+</html>
