@@ -196,6 +196,15 @@
       color: var(--bad);
     }
 
+    .lesson-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
     @media (max-width: 760px) {
       .grid {
         grid-template-columns: 1fr;
@@ -207,6 +216,12 @@
   <main>
     <h1>Apply The Stagger To Real Markup</h1>
     <p class="lede">The useful move in the contribution vitals was not just adding an animation. It was making every animated item a direct sibling so <code>sibling-index()</code> can count the sequence correctly.</p>
+
+    <section class="panel" style="margin-top: 24px;">
+      <h2>The Problem This Solves</h2>
+      <p><a href="0001-sibling-index-animation-delay.html">Lesson 1</a> worked on an idealized flat list. Real component markup is almost never flat: wrappers accumulate for styling, layout, and component boundaries — a <code>.stats</code> div here, a <code>.repos</code> div there. That's harmless until you reach for <code>sibling-index()</code>, because <strong>it counts within one parent only</strong>. Nested groups each restart the count at 1, so two items in different wrappers get the same index and animate at the same time, and the "sequence" quietly becomes two overlapping sequences.</p>
+      <p>So the real skill isn't writing the delay formula — it's <strong>reading markup as the data structure CSS will count</strong>, and reshaping it so that source order <em>is</em> animation order. This is a general lesson about modern CSS: features like <code>sibling-index()</code> derive everything from document structure, which means the structure itself becomes part of the animation design.</p>
+    </section>
 
     <section class="grid" aria-label="Lesson">
       <article class="panel">
@@ -282,6 +297,7 @@
 .contribution-vital:nth-child(2) { --enter-y: -1.35rem; }
 .contribution-vital:nth-child(5) { --enter-x: 2rem; }</code></pre>
         <p>This mirrors the page reveal pattern: every item uses the same <code>cover 0% cover 20%</code> timeline window. Use <code>sibling-index()</code> for per-item choices like direction or intensity, not necessarily for shifting the timeline itself.</p>
+        <p><strong>The boundary to respect:</strong> flattening has a cost. The wrappers you remove were doing layout work, so the flat parent must take it over (here, one flex container handles all five items). If flattening would wreck the layout or the component structure, that's the signal to fall back to a JS-provided index rather than contort the markup to make CSS counting possible.</p>
       </article>
     </section>
 
@@ -296,10 +312,21 @@
     </section>
 
     <section class="panel" style="margin-top: 18px;">
+      <h2>On Your Portfolio</h2>
+      <p>This is the change live in <code>features/contributions/vitals.tsx</code>: the stat blocks and the repos block share one parent with one class, and the timing rules live entirely in CSS. The payoff of the flat shape is durability — reorder the stats in JSX and the animation order follows automatically; add a sixth vital and it joins the stagger with zero CSS changes.</p>
+    </section>
+
+    <section class="panel" style="margin-top: 18px;">
       <h2>Next Agent Question</h2>
       <p>Ask me to inspect another section and identify which elements should become direct animated siblings before adding a stagger.</p>
-      <p>Reference: <a href="../reference/0001-sibling-index-animation-delays.html">sibling-index() animation delays</a>.</p>
+      <p>Reference: <a href="../reference/0001-sibling-index-animation-delays.html">sibling-index() animation delays</a>. Sources: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/sibling-index">MDN: sibling-index()</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations/Timelines">MDN: scroll-driven animation timelines</a>.</p>
     </section>
+
+    <nav class="lesson-nav">
+      <a href="0001-sibling-index-animation-delay.html">← Lesson 1: Sibling-index stagger</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0003-animation-primitives-map.html">Lesson 3: Primitives map →</a>
+    </nav>
   </main>
 
   <script>

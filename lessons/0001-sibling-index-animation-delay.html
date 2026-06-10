@@ -203,6 +203,15 @@
       color: var(--bad);
     }
 
+    .lesson-nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
     .sources {
       margin: 30px 0 0;
       padding-left: 1.2rem;
@@ -238,6 +247,12 @@
       </aside>
     </header>
 
+    <section class="panel" style="margin-bottom: 18px;">
+      <h2>The Problem This Solves</h2>
+      <p>A staggered reveal needs each item to start a little later than the one before it — which means each item needs to know its own position. CSS had no way to ask "which child am I?", so every workaround smuggled the index in from outside: a ladder of per-item rules (<code>.item:nth-child(2) { animation-delay: 120ms; }</code>, <code>:nth-child(3) { ... }</code>, and so on), an SCSS <code>@for</code> loop generating that same ladder at build time, or JavaScript injecting a custom property per element (<code>style={{ "--i": index }}</code> in React).</p>
+      <p>All three share the same failure: the timing is welded to a fixed item count. Add a fifth stat to a four-item list and the ladder is wrong, the loop needs a rebuild, or the component needs JS it otherwise wouldn't. The desire behind <code>sibling-index()</code> is simply: <strong>let the stylesheet read the DOM position itself</strong>, so one rule covers any number of items.</p>
+    </section>
+
     <section class="grid" aria-label="Concept and demo">
       <article class="panel">
         <h2>The One Idea</h2>
@@ -270,12 +285,9 @@
 
     <section class="grid" aria-label="Progressive enhancement and practice">
       <article class="panel">
-        <h2>Progressive Enhancement Rule</h2>
-        <p>Keep the markup plain and let modern CSS derive the index. The content stands on its own; the staggered motion is the enhancement.</p>
-        <pre><code>.item {
-  --step: 120ms;
-  animation-delay: calc((sibling-index() - 1) * var(--step));
-}</code></pre>
+        <h2>Boundaries: When Is It Enough?</h2>
+        <p><code>sibling-index()</code> is new, so the mission question — when is it enough, when do you need a fallback — has a clean answer rooted in how it fails. In a browser that doesn't support it, the <code>calc()</code> is invalid, the delay resolves to <code>0ms</code>, and <strong>all items animate together</strong>: no stagger, but nothing breaks and the content shows. For decorative motion on a portfolio, that degradation is acceptable and no fallback is needed.</p>
+        <p>Reach for the old JS-injected <code>--i</code> only when the index drives something users would <em>miss</em>, not just motion polish. Keep the markup plain and let CSS derive the index — the content stands on its own; the stagger is the enhancement.</p>
       </article>
 
       <article class="panel practice">
@@ -292,8 +304,13 @@
     </section>
 
     <section class="panel" style="margin-top: 18px;">
+      <h2>On Your Portfolio</h2>
+      <p>This is the pattern behind the contribution vitals stagger: the stat blocks are siblings, so one rule times all of them, and adding a stat never means touching the CSS. <a href="0002-apply-sibling-index-to-contribution-vitals.html">Lesson 2</a> applies it to the real markup.</p>
+    </section>
+
+    <section class="panel" style="margin-top: 18px;">
       <h2>What To Ask The Agent Next</h2>
-      <p>Ask me to look at a real list in this portfolio and convert it to a staggered animation. The useful next step is applying this pattern to your own markup and choosing the right timing shape.</p>
+      <p>Ask me to look at a real list in this portfolio and convert it to a staggered animation. The useful next step is applying this pattern to your own markup and choosing the right timing shape. Reference: <a href="../reference/0001-sibling-index-animation-delays.html">sibling-index() animation delays</a>.</p>
     </section>
 
     <ul class="sources">
@@ -301,6 +318,12 @@
       <li>Source: <a href="https://developer.mozilla.org/docs/Web/CSS/animation-delay">MDN on <code>animation-delay</code></a>.</li>
       <li>Source: <a href="https://drafts.csswg.org/css-values-5/#tree-counting">CSS Values and Units Level 5 tree counting functions</a>.</li>
     </ul>
+
+    <nav class="lesson-nav">
+      <span></span>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0002-apply-sibling-index-to-contribution-vitals.html">Lesson 2: Contribution vitals →</a>
+    </nav>
   </main>
 
   <script>
