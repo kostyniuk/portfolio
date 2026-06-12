@@ -1,6 +1,10 @@
 import type { ComponentPropsWithoutRef } from "react";
 import { cn } from "@/lib/utils";
 
+type DivProps = ComponentPropsWithoutRef<"div"> & {
+  [key: `data-${string}`]: string | undefined;
+};
+
 export type ContributionStats = {
   total: number;
   current: number;
@@ -60,7 +64,7 @@ const Stat = ({ value, label, sub, accent }: StatProps) => (
 type ContributionVitalsProps = {
   stats: ContributionStats;
   repos: ContributionRepo[];
-  rootProps?: ComponentPropsWithoutRef<"div">;
+  rootProps?: DivProps;
 };
 
 const ContributionVitals = ({ stats, repos, rootProps }: ContributionVitalsProps) => (
