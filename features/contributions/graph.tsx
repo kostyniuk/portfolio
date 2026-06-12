@@ -15,9 +15,11 @@ import { cn } from "@/lib/utils";
 type ContributionsGraphProps = {
   contributions: Activity[];
   total: number;
+  range?: string;
 };
 
 const graphLevelClassNames = [
+  "stroke-contribution-border stroke-[1px]",
   "data-[level=0]:fill-contribution-empty",
   "data-[level=1]:fill-contribution-1",
   "data-[level=2]:fill-contribution-2",
@@ -25,15 +27,12 @@ const graphLevelClassNames = [
   "data-[level=4]:fill-contribution-4",
 ].join(" ");
 
-const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) => (
+const legendLevelClassNames = graphLevelClassNames.replace("stroke-contribution-border", "stroke-transparent");
+
+const ContributionsGraph = ({ contributions, total, range }: ContributionsGraphProps) => (
   <TooltipProvider>
-    <ContributionGraph
-      blockRadius={999}
-      data={contributions}
-      totalCount={total}
-      labels={{ totalCount: "{{count}} contributions in the last year" }}
-    >
-      <ContributionGraphCalendar>
+    <ContributionGraph blockRadius={999} data={contributions} totalCount={total}>
+      <ContributionGraphCalendar className="overflow-y-visible pb-1">
         {({ activity, dayIndex, weekIndex }) => (
           <Tooltip>
             <TooltipTrigger render={<g />}>
@@ -52,13 +51,19 @@ const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) =
         )}
       </ContributionGraphCalendar>
       <ContributionGraphFooter>
-        <ContributionGraphTotalCount />
-        <ContributionGraphLegend
-          blockClassName={graphLevelClassNames}
-          children={({ level }) => (
+        <ContributionGraphTotalCount>
+          {({ totalCount }) => (
+            <span className="text-muted-foreground">
+              {totalCount.toLocaleString("en-US")} contributions in the last year
+              {range ? <span className="text-muted-foreground/60"> ({range})</span> : null}
+            </span>
+          )}
+        </ContributionGraphTotalCount>
+        <ContributionGraphLegend blockClassName={legendLevelClassNames}>
+          {({ level }) => (
             <svg height={12} width={12}>
               <rect
-                className={cn("stroke-[1px] stroke-border", graphLevelClassNames)}
+                className={legendLevelClassNames}
                 data-level={level}
                 height={12}
                 rx={999}
@@ -67,7 +72,7 @@ const ContributionsGraph = ({ contributions, total }: ContributionsGraphProps) =
               />
             </svg>
           )}
-        />
+        </ContributionGraphLegend>
       </ContributionGraphFooter>
     </ContributionGraph>
   </TooltipProvider>

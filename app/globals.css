@@ -41,6 +41,7 @@
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-contribution-surface: var(--contribution-surface);
+  --color-contribution-border: var(--contribution-border);
   --color-contribution-empty: var(--contribution-empty);
   --color-contribution-1: var(--contribution-1);
   --color-contribution-2: var(--contribution-2);
@@ -113,12 +114,13 @@
   --page-grid-line-strong: rgb(15 15 15 / 0.1);
   --page-grid-glow: transparent;
   --page-grid-spot: transparent;
-  --contribution-surface: oklch(0.288 0.02 276.961);
-  --contribution-empty: oklch(0.321 0.023 278.14);
-  --contribution-1: oklch(0.443 0.04 324.634);
-  --contribution-2: oklch(0.532 0.052 335.785);
-  --contribution-3: oklch(0.683 0.086 343.24);
-  --contribution-4: oklch(0.803 0.135 349.235);
+  --contribution-surface: oklch(0.979 0.008 91.482);
+  --contribution-border: oklch(0.878 0.017 331.626);
+  --contribution-empty: transparent;
+  --contribution-1: oklch(0.891 0.025 337.83);
+  --contribution-2: oklch(0.73 0.055 349.02);
+  --contribution-3: oklch(0.533 0.055 344.691);
+  --contribution-4: oklch(0.787 0.151 348.269);
   --navigation-scroll-margin: 8rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
@@ -163,7 +165,8 @@
   --page-grid-glow: transparent;
   --page-grid-spot: transparent;
   --contribution-surface: oklch(0.288 0.02 276.961);
-  --contribution-empty: oklch(0.321 0.023 278.14);
+  --contribution-border: oklch(0.392 0.024 278.14);
+  --contribution-empty: transparent;
   --contribution-1: oklch(0.443 0.04 324.634);
   --contribution-2: oklch(0.532 0.052 335.785);
   --contribution-3: oklch(0.683 0.086 343.24);
@@ -188,52 +191,54 @@
   }
 
   /* Add className="page-reveal" to the page or section you want this reveal to apply to. */
-  .page-reveal :where(
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    li,
-    blockquote,
-    figcaption,
-    a,
-    button,
-    img,
-    picture,
-    video,
-    canvas,
-    svg[role="img"],
-    [data-slot="badge"],
-    [data-slot="button"],
-    [data-slot="card"],
-    [data-slot="liquid-metal-card"],
-    [data-slot="card-title"],
-    [data-slot="card-description"],
-    [data-slot="card-content"],
-    [data-slot="item"],
-    [data-slot="item-media"],
-    [data-slot="item-title"],
-    [data-slot="item-description"],
-    [data-slot="avatar"],
-    [data-slot="avatar-image"],
-    [data-slot="avatar-badge"],
-    [data-slot="accordion-trigger"],
-    [data-slot="accordion-content"],
-    [data-slot="switch"],
-    [data-slot="kbd"],
-    [data-slot="frost-glass"],
-    [data-slot="shiny-text"],
-    [data-slot="electric-border"],
-    [data-slot="contribution-graph"],
-    [data-slot="contribution-graph-calendar"],
-    [data-slot="contribution-graph-footer"],
-    [data-slot="preference-group"],
-    [data-slot="preference-bar"],
-    [data-slot="preference-item"]
-  ) {
+  .page-reveal
+    :where(
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      li,
+      blockquote,
+      figcaption,
+      a,
+      button,
+      img,
+      picture,
+      video,
+      canvas,
+      svg[role="img"],
+      [data-slot="badge"],
+      [data-slot="button"],
+      [data-slot="card"],
+      [data-slot="liquid-metal-card"],
+      [data-slot="card-title"],
+      [data-slot="card-description"],
+      [data-slot="card-content"],
+      [data-slot="item"],
+      [data-slot="item-media"],
+      [data-slot="item-title"],
+      [data-slot="item-description"],
+      [data-slot="avatar"],
+      [data-slot="avatar-image"],
+      [data-slot="avatar-badge"],
+      [data-slot="accordion-trigger"],
+      [data-slot="accordion-content"],
+      [data-slot="switch"],
+      [data-slot="kbd"],
+      [data-slot="frost-glass"],
+      [data-slot="shiny-text"],
+      [data-slot="electric-border"],
+      [data-slot="contribution-vitals"],
+      [data-slot="contribution-graph"],
+      [data-slot="contribution-graph-calendar"],
+      [data-slot="contribution-graph-footer"],
+      [data-slot="preference-group"],
+      [data-slot="preference-bar"],
+      [data-slot="preference-item"]
+    ) {
     animation: viewport-reveal linear both;
     animation-timeline: view();
     animation-range: cover 0% cover 100%;
