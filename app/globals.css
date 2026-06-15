@@ -307,6 +307,19 @@
   }
 }
 
+/* AnimatedHeadline: a single "shot" of colour slipping across the grey underline.
+   The gradient is 4x the bar width (background-size:400%), so most of the bar shows
+   grey; moving background-position sweeps the rainbow band through once. Re-triggered
+   by remounting the element (React key) on each word change. */
+@keyframes hero-underline-shimmer {
+  from {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0% 50%;
+  }
+}
+
 @layer components {
   [data-slot="tooltip-content"],
   [data-slot="tooltip-content"] * {

@@ -1,6 +1,7 @@
 "use client";
 
 import ShinyText from "@/components/ShinyText";
+import { AnimatedHeadline } from "@/components/animated-headline";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import ElectricBorder from "@/components/ElectricBorder";
@@ -45,6 +46,12 @@ function ProfileHeader() {
         pauseOnHover={false}
         disabled={false}
         className="text-xl"
+      />
+
+      <AnimatedHeadline
+        prefix="Software Engineer focused on"
+        words={["building", "designing", "shipping", "solving"]}
+        className="text-lg font-mono"
       />
     </>
   );

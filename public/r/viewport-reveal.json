@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "viewport-reveal",
+  "title": "Viewport Reveal",
+  "description": "A page-scoped scroll-driven reveal that fades and lifts content in while entering the viewport, then fades and lifts it out while leaving.",
+  "css": {
+    "@layer base": {
+      ".page-reveal :where(h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, a, button, img, picture, video, canvas, svg[role=\"img\"], [data-slot=\"badge\"], [data-slot=\"button\"], [data-slot=\"card\"], [data-slot=\"liquid-metal-card\"], [data-slot=\"card-title\"], [data-slot=\"card-description\"], [data-slot=\"card-content\"], [data-slot=\"item\"], [data-slot=\"item-media\"], [data-slot=\"item-title\"], [data-slot=\"item-description\"], [data-slot=\"avatar\"], [data-slot=\"avatar-image\"], [data-slot=\"avatar-badge\"], [data-slot=\"accordion-trigger\"], [data-slot=\"accordion-content\"], [data-slot=\"switch\"], [data-slot=\"kbd\"], [data-slot=\"frost-glass\"], [data-slot=\"shiny-text\"], [data-slot=\"electric-border\"], [data-slot=\"contribution-graph\"], [data-slot=\"contribution-graph-calendar\"], [data-slot=\"contribution-graph-footer\"], [data-slot=\"preference-group\"], [data-slot=\"preference-bar\"], [data-slot=\"preference-item\"])": {
+        "animation": "viewport-reveal linear both",
+        "animation-timeline": "view()",
+        "animation-range": "cover 0% cover 100%"
+      },
+      "@keyframes viewport-reveal": {
+        "0%": {
+          "opacity": "0.15",
+          "translate": "0 1rem"
+        },
+        "20%, 80%": {
+          "opacity": "1",
+          "translate": "0 0"
+        },
+        "100%": {
+          "opacity": "0.15",
+          "translate": "0 -1rem"
+        }
+      },
+      "@media (prefers-reduced-motion: reduce)": {
+        ".page-reveal :where(h1, h2, h3, h4, h5, h6, p, li, blockquote, figcaption, a, button, img, picture, video, canvas, svg[role=\"img\"], [data-slot=\"badge\"], [data-slot=\"button\"], [data-slot=\"card\"], [data-slot=\"liquid-metal-card\"], [data-slot=\"card-title\"], [data-slot=\"card-description\"], [data-slot=\"card-content\"], [data-slot=\"item\"], [data-slot=\"item-media\"], [data-slot=\"item-title\"], [data-slot=\"item-description\"], [data-slot=\"avatar\"], [data-slot=\"avatar-image\"], [data-slot=\"avatar-badge\"], [data-slot=\"accordion-trigger\"], [data-slot=\"accordion-content\"], [data-slot=\"switch\"], [data-slot=\"kbd\"], [data-slot=\"frost-glass\"], [data-slot=\"shiny-text\"], [data-slot=\"electric-border\"], [data-slot=\"contribution-graph\"], [data-slot=\"contribution-graph-calendar\"], [data-slot=\"contribution-graph-footer\"], [data-slot=\"preference-group\"], [data-slot=\"preference-bar\"], [data-slot=\"preference-item\"])": {
+          "animation": "none"
+        }
+      }
+    }
+  },
+  "docs": "Wrap the page or section you want to animate with className=\"page-reveal\". The animation is scroll-driven: children fade and lift in during the first 20% of their viewport overlap, remain steady through the middle, and fade/lift out near the end.",
+  "type": "registry:item"
+}
