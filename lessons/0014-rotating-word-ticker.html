@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0014: The Rotating Word — a CSS ticker that swaps the last word on a timer</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff;
+      --line:#ded8cc; --accent:#255fd7; --accent-soft:#e8efff;
+      --good:#1f7a4d; --bad:#b43c2f; --code:#f0ece4;
+      --shadow:0 14px 40px rgba(34,31,25,.08);
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      background:
+        radial-gradient(circle at top left, rgba(37,95,215,.10), transparent 34rem),
+        var(--paper);
+      color:var(--ink);
+      font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width:min(1040px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    h1 { margin:0 0 12px; max-width:18ch; font-size:clamp(2.2rem, 6vw, 4.2rem); line-height:.98; letter-spacing:0; }
+    h2 { margin:0 0 12px; font-size:1.25rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    a { color:var(--accent); }
+    code, pre, textarea { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:16px; border:1px solid var(--line); border-radius:8px; background:var(--code); line-height:1.45; }
+    .lede { max-width:62ch; font-size:1.08rem; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.92); box-shadow:var(--shadow); padding:22px; margin-top:18px; }
+    .grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; margin-top:18px; }
+    .pill { display:inline-block; border-radius:999px; background:var(--accent-soft); color:#1647a3; padding:3px 10px; font-size:.9rem; font-weight:650; }
+    button { width:fit-content; border:0; border-radius:8px; background:var(--accent); color:#fff; padding:10px 14px; font:inherit; font-weight:650; cursor:pointer; }
+    button.ghost { background:#fff; color:var(--accent); border:1px solid var(--line); }
+    button:hover { filter:brightness(.97); }
+    .feedback { min-height:24px; color:var(--muted); margin-top:6px; }
+    .feedback.good { color:var(--good); }
+    .lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+    .lesson-nav a { font-weight:650; text-decoration:none; }
+    .sources { margin:24px 0 0; padding-left:1.2rem; color:var(--muted); }
+    .sources li + li { margin-top:6px; }
+
+    /* ---- Stage: the COMPLETE x.ai hero (flip-up + shimmer underline + rotating word) ---- */
+    .stage {
+      margin-top:8px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:linear-gradient(160deg, #0e1116, #1a2030);
+      color:#f4f6fb;
+      padding:40px 26px;
+      overflow:hidden;
+    }
+    .hero {
+      perspective:1200px;
+      margin:0;
+      font-size:clamp(1.6rem, 4.4vw, 2.9rem);
+      font-weight:650;
+      line-height:1.18;
+      letter-spacing:-.01em;
+    }
+    .hero .word { display:inline-block; transform-origin:50% 100%; }
+    .hero .marked { position:relative; display:inline-block; padding-bottom:.14em; }
+
+    /* the rotating word: a fixed-height window over a vertical reel of words */
+    .rotator {
+      --lh: 1.2em;
+      display:inline-block;
+      height:var(--lh);
+      overflow:hidden;
+      vertical-align:bottom;
+    }
+    .reel { display:block; }
+    .reel > span { display:block; height:var(--lh); line-height:var(--lh); white-space:nowrap; }
+    .hero.play .reel {
+      animation: reel var(--reelDur, 10000ms) cubic-bezier(.7,0,.3,1) infinite;
+      animation-delay: 1500ms;   /* let the headline finish flipping up first */
+    }
+    /* five cells: 4 words + a duplicate of the first, so the loop reset is invisible */
+    @keyframes reel {
+      0%, 20%   { transform: translateY(0); }
+      25%, 45%  { transform: translateY(calc(-1 * var(--lh))); }
+      50%, 70%  { transform: translateY(calc(-2 * var(--lh))); }
+      75%, 95%  { transform: translateY(calc(-3 * var(--lh))); }
+      100%      { transform: translateY(calc(-4 * var(--lh))); }
+    }
+
+    /* underline from Lesson 13 — stays put beneath the swapping word */
+    .underline {
+      position:absolute; left:0; right:0; bottom:0;
+      height:3px; border-radius:999px; transform-origin:left;
+      background-image:linear-gradient(90deg,
+        rgba(255,255,255,.18) 0%, rgba(255,255,255,.18) 35%,
+        #6366f1 40%, #a855f7 45%, #ec4899 50%, #f97316 55%, #eab308 60%,
+        rgba(255,255,255,.18) 65%, rgba(255,255,255,.18) 100%);
+      background-size:400% 100%; background-position:0% 50%; opacity:0;
+    }
+
+    /* flip-up from Lesson 12 */
+    .hero.play .word {
+      animation: flip-up 720ms cubic-bezier(.2,.72,.2,1) both;
+      animation-delay: calc((sibling-index() - 1) * 110ms);
+    }
+    .hero.play .underline {
+      animation: u-grow 360ms ease-out 900ms both, u-shimmer 3000ms linear 1260ms 1 both;
+    }
+    @keyframes flip-up {
+      from { opacity:0; transform: translateY(45%) rotateX(-40deg); }
+      to   { opacity:1; transform: translateY(0) rotateX(0); }
+    }
+    @keyframes u-grow   { from { opacity:0; transform: scaleX(0); } to { opacity:1; transform: scaleX(1); } }
+    @keyframes u-shimmer{ from { background-position:100% 50%; } to { background-position:0% 50%; } }
+
+    .controls { display:grid; gap:14px; margin-top:18px; }
+    .ctl { display:grid; grid-template-columns:minmax(120px,160px) 1fr 70px; align-items:center; gap:12px; }
+    .ctl label { font-weight:650; color:var(--ink); font-size:.95rem; }
+    .ctl output { font-variant-numeric:tabular-nums; color:var(--muted); text-align:right; }
+    input[type=range] { width:100%; accent-color:var(--accent); }
+    .btnrow { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+
+    @media (max-width:760px) {
+      .grid { grid-template-columns:1fr; }
+      .ctl { grid-template-columns:1fr; gap:4px; }
+      .ctl output { text-align:left; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero.play .word { animation-duration:1ms; animation-delay:0ms; }
+      .hero.play .reel { animation:none; }                 /* hold on the first word */
+      .hero.play .underline { animation:none; opacity:1; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>The Rotating Word</h1>
+    <p class="lede">Skill: swap the last word of a headline for another every couple of seconds — "everything you <em>build</em> … <em>create</em> … <em>discover</em>" — as a looping vertical ticker, while a fixed underline stays put beneath. This is the final piece of the <a href="0012-perspective-3d-flip-reveal.html">x.ai hero</a>; the demo below runs all three techniques together.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>One headline, many claims. xAI doesn't want to say only "everything you build" — they want the sentence to keep re-completing itself with <em>build, create, discover, imagine</em>, so a single line advertises a whole range. Hard-coding one word undersells it; shipping four separate headlines is clumsy; and reaching for an animation library just to rotate a word adds a dependency for what is, at heart, copy.</p>
+      <p>The desire is simple: <strong>show a sequence of words in the same spot, one at a time, on a steady beat, forever.</strong> On x.ai this is done in JavaScript (the outgoing and incoming word are briefly stacked in the markup — the tell-tale duplicated <code>&lt;span&gt;build&lt;/span&gt;</code> the snapshot captured). But when the word list is fixed and known, CSS alone can do it — and that fits this workspace's no-library goal.</p>
+    </section>
+
+    <section class="grid" aria-label="Idea and recipe">
+      <article class="panel" style="margin-top:0">
+        <h2>The Idea: A Reel Behind A Slot</h2>
+        <p>Stack the words in a vertical column — a film reel. Put a one-line-tall window over it with <code>overflow:hidden</code> so only one word shows. Then scroll the reel up by exactly one line-height to bring the next word into the slot, pause, scroll again. The motion is a single <code>translateY</code>.</p>
+        <p>The trick that makes it loop seamlessly: <strong>repeat the first word at the bottom of the reel.</strong> The animation ends parked on that duplicate — pixel-identical to where it started — so when the loop resets there's no visible jump. And the "2-second timer" isn't a timer at all: it's a <strong>hold</strong> in the keyframes, the same value repeated across two adjacent percentages so the reel sits still between slides.</p>
+      </article>
+      <article class="panel" style="margin-top:0">
+        <h2>The Recipe</h2>
+        <pre><code>.rotator {                 /* the slot */
+  display: inline-block;
+  height: 1.2em;
+  overflow: hidden;
+}
+.reel > span {             /* each word, one line tall */
+  display: block;
+  height: 1.2em;
+}
+@keyframes reel {
+  0%,  20% { transform: translateY(0); }        /* hold word 1 */
+  25%, 45% { transform: translateY(-1.2em); }   /* hold word 2 */
+  50%, 70% { transform: translateY(-2.4em); }   /* hold word 3 */
+  75%, 95% { transform: translateY(-3.6em); }   /* hold word 4 */
+  100%     { transform: translateY(-4.8em); }   /* dup of word 1 */
+}
+.reel { animation: reel 10s cubic-bezier(.7,0,.3,1) infinite; }</code></pre>
+        <p style="margin-top:12px"><span class="pill">Idea</span> a multi-step <code>@keyframes</code> is just a <strong>timeline through N states</strong>. A pair of equal percentages = a dwell; the gap between pairs = the slide. (See <a href="0005-keyframes-time-based-sequences.html">Lesson 5</a>.)</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Practice — The Whole Hero, Live</h2>
+      <p>All three techniques at once: the words flip up one-by-one (<a href="0012-perspective-3d-flip-reveal.html">Lesson 12</a>), the underline draws and the colour slips across (<a href="0013-gradient-shimmer-underline.html">Lesson 13</a>), and the last word rotates forever on a beat. Adjust the dwell, hit <strong>Replay</strong>, and try to land x.ai's ~2-second beat.</p>
+
+      <div class="stage">
+        <p class="hero" id="hero">
+          <span class="word">Frontier</span> <span class="word">AI</span> <span class="word">models</span>
+          <span class="word">for</span> <span class="word">everything</span> <span class="word">you</span>
+          <span class="word marked">
+            <span class="rotator"><span class="reel">
+              <span>build</span><span>create</span><span>discover</span><span>imagine</span><span>build</span>
+            </span></span><span class="underline" aria-hidden="true"></span>
+          </span>
+        </p>
+      </div>
+
+      <div class="controls">
+        <div class="ctl">
+          <label for="dwell">word dwell</label>
+          <input type="range" id="dwell" min="800" max="3200" step="100" value="2000">
+          <output id="dwellV">2000ms</output>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button type="button" id="replay">▶ Replay</button>
+        <button type="button" class="ghost" id="match">Set to x.ai's ~2s beat</button>
+      </div>
+      <p class="feedback" id="feedback" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <h2>The Boundaries</h2>
+      <p><strong>The slot sizes to the widest word.</strong> A vertical stack makes the container as wide as its longest entry, so the underline holds one steady width while words swap — clean, but it means short words sit in a wider box. If you need the box (and underline) to resize per word, that's a width animation the browser can't infer from a stack — which is exactly why x.ai uses JS layout animation there.</p>
+      <p><strong>CSS rotator vs. JS rotator.</strong> The CSS reel is perfect for a <em>fixed, known</em> list with uniform styling and no interaction. Reach for JS (an index + interval, or a library's presence animation) when the words come from data, each needs its own enter/exit, or it must pause on hover/focus. x.ai chose JS because their list is content; you can choose CSS because yours is decoration.</p>
+      <p><strong>Looping motion needs a reason — and an off switch.</strong> Unlike the flip-up and the underline (which play once), this runs forever, so it's the most attention-grabbing piece. Keep the beat calm (~2s), and honour <code>prefers-reduced-motion</code> by freezing on a single word — this lesson does exactly that. Revisit <a href="0006-easing-fill-mode-and-direction.html">Lesson 6</a> for how iteration and easing shape a loop.</p>
+    </section>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>Use a rotating word in your hero tagline to span your range without a wall of text — "I <em>build</em> / <em>design</em> / <em>ship</em> …". Wrap the swappable word in a <code>.rotator</code> slot over a <code>.reel</code> of spans, remember the duplicate-first-word trick for a seamless loop, and you have a self-contained, dependency-free ticker. Combined with the flip-up and shimmer underline from the previous two lessons, that's the entire x.ai hero — rebuilt from this series' primitives, with zero animation libraries in your bundle.</p>
+    </section>
+
+    <section class="panel">
+      <h2>What To Ask The Agent Next</h2>
+      <p>Ask me to wire this rotating tagline into your real hero with your own word list, to swap the vertical roll for a fade or blur transition between words, or to convert it to the JS version if you want the words to come from data. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+    </section>
+
+    <ul class="sources">
+      <li>Effect source: x.ai homepage hero — the underlined word is rendered as a stacked outgoing/incoming pair (<code>&lt;span&gt;build&lt;/span&gt;&lt;span&gt;build&lt;/span&gt;</code>), a rotating word swapping on a ~2s beat; the word list lives in the client JS bundle, not the static HTML (captured June 2026).</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations" target="_blank" rel="noopener">MDN: Using CSS animations (multi-step keyframes)</a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-iteration-count" target="_blank" rel="noopener">MDN: <code>animation-iteration-count</code></a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/overflow" target="_blank" rel="noopener">MDN: <code>overflow</code></a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noopener">MDN: <code>prefers-reduced-motion</code></a>.</li>
+    </ul>
+
+    <nav class="lesson-nav">
+      <a href="0013-gradient-shimmer-underline.html">← Lesson 13: Shimmer underline</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0015-dynamic-hero-capstone.html">Lesson 15: Capstone →</a>
+    </nav>
+  </main>
+
+  <script>
+    const hero = document.getElementById("hero");
+    const dwell = document.getElementById("dwell");
+    const dwellV = document.getElementById("dwellV");
+    const feedback = document.getElementById("feedback");
+
+    function apply() {
+      // a dwell holds across 20% of the cycle, so cycle = dwell / 0.20 = dwell * 5
+      hero.style.setProperty("--reelDur", (dwell.value * 5) + "ms");
+      dwellV.textContent = dwell.value + "ms";
+      const onTarget = dwell.value === "2000";
+      feedback.className = onTarget ? "feedback good" : "feedback";
+      feedback.textContent = onTarget
+        ? "That's the x.ai beat: each word holds ~2s before the reel rolls to the next."
+        : "";
+    }
+
+    function replay() {
+      hero.classList.remove("play");
+      void hero.offsetWidth;   // force reflow so animations re-trigger
+      hero.classList.add("play");
+    }
+
+    dwell.addEventListener("input", apply);
+    document.getElementById("replay").addEventListener("click", replay);
+    document.getElementById("match").addEventListener("click", () => { dwell.value = 2000; apply(); replay(); });
+
+    apply();
+    replay();
+  </script>
+</body>
+</html>

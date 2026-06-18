@@ -24,6 +24,20 @@
   Explains browser-managed transitions between document or app states. Use for: page/state transitions where the browser captures old and new snapshots.
 - [MDN: CSS view transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/View_transitions)
   CSS-side guide for styling view-transition pseudo-elements. Use for: customizing view transition animations.
+- [MDN: `perspective`](https://developer.mozilla.org/en-US/docs/Web/CSS/perspective)
+  Sets the viewer's distance from the z=0 plane on a parent, giving children a shared vanishing point. Use for: 3D entrance reveals (the x.ai flip-up).
+- [MDN: `rotateX()`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX)
+  Transform function rotating around the horizontal axis. Use for: tipping elements toward/away from the viewer in 3D.
+- [MDN: Using CSS transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transforms/Using_CSS_transforms)
+  Covers 2D and 3D transforms, perspective, and transform-origin together. Use for: the mental model behind 3D motion.
+- [MDN: `background-position`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-position)
+  Sets which slice of a background is visible. Use for: shimmer/sweep effects by animating the window over an oversized gradient.
+- [MDN: `background-size`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-size)
+  Sizes the background relative to its box (e.g. 400%). Use for: making a gradient wider than its element so only a slice shows.
+- [MDN: `transform-origin`](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin)
+  Sets the pivot point for transforms. Use for: growing a bar from the left (`scaleX` with `transform-origin: left`).
+- [MDN: `prefers-reduced-motion`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion)
+  Media feature for users who want minimal animation. Use for: guarding decorative entrance flourishes.
 - [CSS Values and Units Module Level 5 draft: Tree counting functions](https://drafts.csswg.org/css-values-5/#tree-counting)
   Specification home for `sibling-index()` and `sibling-count()`. Use for: precise behavior and future-facing details.
 

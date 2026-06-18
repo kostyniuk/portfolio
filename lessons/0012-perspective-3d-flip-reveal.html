@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0012: The x.ai 3D Flip-Up Reveal (perspective + rotateX)</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff;
+      --line:#ded8cc; --accent:#255fd7; --accent-soft:#e8efff;
+      --good:#1f7a4d; --bad:#b43c2f; --code:#f0ece4;
+      --shadow:0 14px 40px rgba(34,31,25,.08);
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      background:
+        radial-gradient(circle at top left, rgba(37,95,215,.10), transparent 34rem),
+        var(--paper);
+      color:var(--ink);
+      font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width:min(1040px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    h1 { margin:0 0 12px; max-width:16ch; font-size:clamp(2.2rem, 6vw, 4.4rem); line-height:.98; letter-spacing:0; }
+    h2 { margin:0 0 12px; font-size:1.25rem; }
+    h3 { margin:0 0 8px; font-size:1rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    a { color:var(--accent); }
+    code, pre, textarea { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:16px; border:1px solid var(--line); border-radius:8px; background:var(--code); line-height:1.45; }
+    .lede { max-width:60ch; font-size:1.08rem; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.92); box-shadow:var(--shadow); padding:22px; margin-top:18px; }
+    .grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; margin-top:18px; }
+    .pill { display:inline-block; border-radius:999px; background:var(--accent-soft); color:#1647a3; padding:3px 10px; font-size:.9rem; font-weight:650; }
+    button { width:fit-content; border:0; border-radius:8px; background:var(--accent); color:#fff; padding:10px 14px; font:inherit; font-weight:650; cursor:pointer; }
+    button.ghost { background:#fff; color:var(--accent); border:1px solid var(--line); }
+    button:hover { filter:brightness(.97); }
+    .feedback { min-height:24px; color:var(--muted); margin-top:6px; }
+    .feedback.good { color:var(--good); }
+    .lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+    .lesson-nav a { font-weight:650; text-decoration:none; }
+    .sources { margin:24px 0 0; padding-left:1.2rem; color:var(--muted); }
+    .sources li + li { margin-top:6px; }
+
+    /* ---- The live demo: x.ai-style hero reveal ---- */
+    .stage {
+      margin-top:8px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:linear-gradient(160deg, #0e1116, #1a2030);
+      color:#f4f6fb;
+      padding:34px 26px;
+      overflow:hidden;
+    }
+    .hero {
+      perspective: var(--persp, 1200px);   /* the 3D viewing distance, set on the PARENT */
+      margin:0;
+      font-size:clamp(1.6rem, 4.4vw, 2.9rem);
+      font-weight:650;
+      line-height:1.08;
+      letter-spacing:-.01em;
+    }
+    .hero .word {
+      display:inline-block;               /* required: transforms ignore inline elements */
+      transform-origin:50% 100%;
+    }
+    .hero.play .word {
+      animation: flip-up 720ms cubic-bezier(.2,.72,.2,1) both;
+      animation-delay: calc((sibling-index() - 1) * var(--step, 90ms));
+    }
+    @keyframes flip-up {
+      from { opacity:0; transform: translateY(var(--ty, 45%)) rotateX(var(--rx, -40deg)); }
+      to   { opacity:1; transform: translateY(0) rotateX(0); }
+    }
+    .controls { display:grid; gap:14px; margin-top:18px; }
+    .ctl { display:grid; grid-template-columns:minmax(120px,150px) 1fr 64px; align-items:center; gap:12px; }
+    .ctl label { font-weight:650; color:var(--ink); font-size:.95rem; }
+    .ctl output { font-variant-numeric:tabular-nums; color:var(--muted); text-align:right; }
+    input[type=range] { width:100%; accent-color:var(--accent); }
+    .btnrow { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+
+    @media (max-width:760px) {
+      .grid { grid-template-columns:1fr; }
+      .ctl { grid-template-columns:1fr; gap:4px; }
+      .ctl output { text-align:left; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero.play .word { animation-duration:1ms; animation-delay:0ms; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>The x.ai Hero: A 3D Flip-Up Reveal</h1>
+    <p class="lede">Skill: reveal a headline word-by-word with depth — each word tipping and rising into place — using <code>perspective</code> and <code>rotateX</code>. This is the exact effect on <a href="https://x.ai" target="_blank" rel="noopener">x.ai</a>'s "Frontier AI models for everything you …" headline, rebuilt in pure CSS.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>A headline that just fades in, or even slides up a few pixels (the <a href="0001-sibling-index-animation-delay.html">Lesson 1</a> rise), reads as <em>flat</em> — every pixel sits on the same plane, so motion happens but nothing feels physical. The premium "the words are settling into place" feel that studios like xAI ship comes from <strong>depth</strong>: each word starts tipped back in space and rotates upright toward you, as if printed on a card that flips flush to the page.</p>
+      <p>You cannot get that from <code>translate</code> and <code>opacity</code> alone — those live in the 2D plane. You need to rotate around an axis that points <em>into the screen</em>. And here's the catch that bites everyone the first time: rotating in 3D without telling the browser where the viewer's eye is produces a lifeless, squashed result that looks like a flat skew. Before CSS 3D transforms existed, this kind of motion meant canvas, WebGL, or a heavy JS library — overkill for a heading.</p>
+    </section>
+
+    <section class="grid" aria-label="Idea and recipe">
+      <article class="panel" style="margin-top:0">
+        <h2>The Idea: Put An Eye In Front Of The Page</h2>
+        <p><code>perspective</code> is the missing piece. It answers one question: <strong>how far is the viewer's eye from the screen plane?</strong> A small value (300px) means the eye is close — rotations look dramatic, almost fisheye. A large value (2000px) means the eye is far — the same rotation looks subtle and calm. x.ai uses <code>1200px</code>: present, but restrained.</p>
+        <p>Set it on the <strong>parent</strong>, not the words. One shared eye means every word rotates as if it belongs to the same physical surface — that coherence is the whole trick. Then each word's entry is just: start tipped back and dropped down, end upright and home.</p>
+      </article>
+      <article class="panel" style="margin-top:0">
+        <h2>The Recipe</h2>
+        <pre><code>.hero {
+  perspective: 1200px;        /* eye distance, on the parent */
+}
+.hero .word {
+  display: inline-block;      /* transforms need a block box */
+}
+@keyframes flip-up {
+  from {
+    opacity: 0;
+    transform: translateY(45%) rotateX(-40deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+.hero .word {
+  animation: flip-up 720ms cubic-bezier(.2,.72,.2,1) both;
+  animation-delay: calc((sibling-index() - 1) * 90ms);
+}</code></pre>
+        <p style="margin-top:12px"><span class="pill">Reused</span> the stagger is <a href="0001-sibling-index-animation-delay.html">Lesson 1</a>; the self-starting entry is <a href="0005-keyframes-time-based-sequences.html">Lesson 5</a>. The only new primitive is <code>perspective</code> + <code>rotateX</code>.</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Practice — Tune It Until It Matches</h2>
+      <p>This is the real headline, animated by the recipe above. Move the sliders and hit <strong>Replay</strong> to watch each value change the feel. Then try to dial in x.ai's actual settings — the lesson will tell you when you're there.</p>
+
+      <div class="stage">
+        <p class="hero" id="hero">
+          <span class="word">Frontier</span> <span class="word">AI</span> <span class="word">models</span>
+          <span class="word">for</span> <span class="word">everything</span> <span class="word">you</span> <span class="word">build</span>
+        </p>
+      </div>
+
+      <div class="controls">
+        <div class="ctl">
+          <label for="persp">perspective</label>
+          <input type="range" id="persp" min="250" max="2000" step="50" value="1200">
+          <output id="perspV">1200px</output>
+        </div>
+        <div class="ctl">
+          <label for="rx">rotateX (from)</label>
+          <input type="range" id="rx" min="-80" max="0" step="5" value="-40">
+          <output id="rxV">-40deg</output>
+        </div>
+        <div class="ctl">
+          <label for="ty">translateY (from)</label>
+          <input type="range" id="ty" min="0" max="80" step="5" value="45">
+          <output id="tyV">45%</output>
+        </div>
+        <div class="ctl">
+          <label for="step">stagger / word</label>
+          <input type="range" id="step" min="0" max="200" step="10" value="90">
+          <output id="stepV">90ms</output>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button type="button" id="replay">▶ Replay</button>
+        <button type="button" class="ghost" id="match">Set to x.ai's values</button>
+      </div>
+      <p class="feedback" id="feedback" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <h2>The Boundaries</h2>
+      <p><strong>Perspective belongs on the parent.</strong> There is also a <code>perspective()</code> <em>transform function</em> you can put on the element itself, but then every element gets its own private vanishing point and the shared-surface coherence is lost. For a row of words, parent <code>perspective</code> is what you want; the function is for one-off isolated cards.</p>
+      <p><strong>Don't over-rotate.</strong> Past roughly <code>-55deg</code> the text gets hard to read mid-flight and the effect tips from "polished" into "gimmick." This is decoration on top of content that must read instantly — when the motion competes with legibility, dial <code>rotateX</code> back toward <code>-25deg</code> or drop to the flat <a href="0001-sibling-index-animation-delay.html">translateY rise</a>.</p>
+      <p><strong>Respect reduced motion.</strong> A spinning headline is exactly what <code>prefers-reduced-motion</code> exists to suppress; this lesson collapses the animation to near-instant in that mode (look at the stylesheet). Always pair entrance flourish with that guard.</p>
+      <p><strong>CSS vs. JS stagger.</strong> x.ai ships this with framer-motion driving the per-word delay in JavaScript. That buys things CSS can't easily do — replaying on scroll-into-view, interrupting, sequencing with other timelines. But for a headline that animates once on load, <code>sibling-index()</code> does the same job with zero JS, which is exactly this workspace's goal. Reach for the library only when you need orchestration, not just timing.</p>
+    </section>
+
+    <section class="panel">
+      <h2>This Is One Of Three Parts</h2>
+      <p>The full x.ai hero layers three techniques. This lesson is the first: the word-by-word flip-up reveal. The other two each get their own lesson: a <strong>gradient shimmer underline</strong> that grows out and slips a shot of colour across a grey bar (<a href="0013-gradient-shimmer-underline.html">Lesson 13</a>), and a <strong>rotating last word</strong> that swaps to a new word every couple of seconds (<a href="0014-rotating-word-ticker.html">Lesson 14</a>, which runs all three together). The stagger you see here — each word arriving a beat after the last — is the "word-by-word appearance" itself; widen the <code>stagger / word</code> slider above to make it unmistakable.</p>
+    </section>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>This is the move for the <strong>hero heading and section titles</strong> in this portfolio. Wrap each word of a heading in a <code>&lt;span class="word"&gt;</code>, set <code>perspective</code> on the heading, and the whole thing reveals on load with depth — no animation library added to the bundle. Because the stagger is <code>sibling-index()</code>-driven, a longer or shorter heading just works; nothing is welded to a word count. If you want it to fire when the section scrolls into view rather than on load, swap the keyframe trigger for a <a href="0009-scroll-triggered-animation-ranges.html">scroll-triggered range</a> from Lesson 9.</p>
+    </section>
+
+    <section class="panel">
+      <h2>What To Ask The Agent Next</h2>
+      <p>Ask me to wrap a real heading in this workspace in word spans and apply the reveal, or to A/B it against the flat Lesson 1 rise so you can feel the difference depth makes. I'm your teacher here — if <code>perspective</code>, <code>rotateX</code>, or <code>transform-origin</code> still feels fuzzy, ask. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+    </section>
+
+    <ul class="sources">
+      <li>Effect source: x.ai homepage hero, <code>&lt;h1 style="perspective:1200px"&gt;</code> with per-word <code>translateY(45%) rotateX(-40deg)</code> spans (captured June 2026).</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/perspective" target="_blank" rel="noopener">MDN: <code>perspective</code></a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX" target="_blank" rel="noopener">MDN: <code>rotateX()</code></a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transforms/Using_CSS_transforms" target="_blank" rel="noopener">MDN: Using CSS transforms (3D)</a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion" target="_blank" rel="noopener">MDN: <code>prefers-reduced-motion</code></a>.</li>
+    </ul>
+
+    <nav class="lesson-nav">
+      <a href="0010-view-transitions-between-states.html">← Lesson 10: View transitions</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0013-gradient-shimmer-underline.html">Lesson 13: Shimmer underline →</a>
+    </nav>
+  </main>
+
+  <script>
+    const hero = document.getElementById("hero");
+    const els = {
+      persp: document.getElementById("persp"),
+      rx: document.getElementById("rx"),
+      ty: document.getElementById("ty"),
+      step: document.getElementById("step"),
+    };
+    const out = {
+      persp: document.getElementById("perspV"),
+      rx: document.getElementById("rxV"),
+      ty: document.getElementById("tyV"),
+      step: document.getElementById("stepV"),
+    };
+    const feedback = document.getElementById("feedback");
+
+    function apply() {
+      hero.style.setProperty("--persp", els.persp.value + "px");
+      hero.style.setProperty("--rx", els.rx.value + "deg");
+      hero.style.setProperty("--ty", els.ty.value + "%");
+      hero.style.setProperty("--step", els.step.value + "ms");
+      out.persp.textContent = els.persp.value + "px";
+      out.rx.textContent = els.rx.value + "deg";
+      out.ty.textContent = els.ty.value + "%";
+      out.step.textContent = els.step.value + "ms";
+      checkMatch();
+    }
+
+    function replay() {
+      hero.classList.remove("play");
+      void hero.offsetWidth;        // force reflow so the animation re-triggers
+      hero.classList.add("play");
+    }
+
+    function checkMatch() {
+      const onTarget =
+        els.persp.value === "1200" &&
+        els.rx.value === "-40" &&
+        els.ty.value === "45";
+      feedback.className = onTarget ? "feedback good" : "feedback";
+      feedback.textContent = onTarget
+        ? "That's x.ai's recipe: perspective 1200px, rotateX -40deg from 45% below. Hit Replay to feel it."
+        : "";
+    }
+
+    Object.values(els).forEach((el) => el.addEventListener("input", apply));
+    document.getElementById("replay").addEventListener("click", replay);
+    document.getElementById("match").addEventListener("click", () => {
+      els.persp.value = 1200; els.rx.value = -40; els.ty.value = 45; els.step.value = 90;
+      apply();
+      replay();
+    });
+
+    apply();
+    replay();
+  </script>
+</body>
+</html>

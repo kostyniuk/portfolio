@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0013: The Gradient Shimmer Underline (a colour shot across a grey bar)</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff;
+      --line:#ded8cc; --accent:#255fd7; --accent-soft:#e8efff;
+      --good:#1f7a4d; --bad:#b43c2f; --code:#f0ece4;
+      --shadow:0 14px 40px rgba(34,31,25,.08);
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      background:
+        radial-gradient(circle at top left, rgba(37,95,215,.10), transparent 34rem),
+        var(--paper);
+      color:var(--ink);
+      font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width:min(1040px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    h1 { margin:0 0 12px; max-width:18ch; font-size:clamp(2.2rem, 6vw, 4.2rem); line-height:.98; letter-spacing:0; }
+    h2 { margin:0 0 12px; font-size:1.25rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    a { color:var(--accent); }
+    code, pre, textarea { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:16px; border:1px solid var(--line); border-radius:8px; background:var(--code); line-height:1.45; }
+    .lede { max-width:60ch; font-size:1.08rem; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.92); box-shadow:var(--shadow); padding:22px; margin-top:18px; }
+    .grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; margin-top:18px; }
+    .pill { display:inline-block; border-radius:999px; background:var(--accent-soft); color:#1647a3; padding:3px 10px; font-size:.9rem; font-weight:650; }
+    button { width:fit-content; border:0; border-radius:8px; background:var(--accent); color:#fff; padding:10px 14px; font:inherit; font-weight:650; cursor:pointer; }
+    button.ghost { background:#fff; color:var(--accent); border:1px solid var(--line); }
+    button:hover { filter:brightness(.97); }
+    .feedback { min-height:24px; color:var(--muted); margin-top:6px; }
+    .feedback.good { color:var(--good); }
+    .lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+    .lesson-nav a { font-weight:650; text-decoration:none; }
+    .sources { margin:24px 0 0; padding-left:1.2rem; color:var(--muted); }
+    .sources li + li { margin-top:6px; }
+
+    /* ---- Stage: the complete x.ai hero (flip-up from Lesson 12 + shimmer underline) ---- */
+    .stage {
+      margin-top:8px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:linear-gradient(160deg, #0e1116, #1a2030);
+      color:#f4f6fb;
+      padding:38px 26px;
+      overflow:hidden;
+    }
+    .hero {
+      perspective:1200px;
+      margin:0;
+      font-size:clamp(1.6rem, 4.4vw, 2.9rem);
+      font-weight:650;
+      line-height:1.12;
+      letter-spacing:-.01em;
+    }
+    .hero .word { display:inline-block; transform-origin:50% 100%; }
+    /* the underlined word needs a positioning context + room for the bar */
+    .hero .marked { position:relative; padding-bottom:.12em; }
+
+    .underline {
+      position:absolute;
+      left:0; right:0; bottom:0;
+      height:3px;
+      border-radius:999px;
+      transform-origin:left;
+      /* mostly grey, with a rainbow band baked into the MIDDLE of the gradient */
+      background-image:linear-gradient(90deg,
+        rgba(255,255,255,.18) 0%,
+        rgba(255,255,255,.18) 35%,
+        #6366f1 40%,   /* indigo */
+        #a855f7 45%,   /* purple */
+        #ec4899 50%,   /* pink   */
+        #f97316 55%,   /* orange */
+        #eab308 60%,   /* yellow */
+        rgba(255,255,255,.18) 65%,
+        rgba(255,255,255,.18) 100%);
+      /* gradient is 4x the bar's width, so only a slice shows at any moment */
+      background-size: var(--band, 400%) 100%;
+      background-position: 0% 50%;
+      opacity:0;
+    }
+    /* play state drives both flourishes */
+    .hero.play .word {
+      animation: flip-up 720ms cubic-bezier(.2,.72,.2,1) both;
+      animation-delay: calc((sibling-index() - 1) * 90ms);
+    }
+    .hero.play .underline {
+      animation:
+        u-grow 360ms ease-out 520ms both,                 /* grow from nothing to full width */
+        u-shimmer var(--sweep, 3000ms) linear 880ms 1 both; /* slip the colour band across */
+    }
+    @keyframes flip-up {
+      from { opacity:0; transform: translateY(45%) rotateX(-40deg); }
+      to   { opacity:1; transform: translateY(0) rotateX(0); }
+    }
+    @keyframes u-grow {
+      from { opacity:0; transform: scaleX(0); }
+      to   { opacity:1; transform: scaleX(1); }
+    }
+    @keyframes u-shimmer {
+      from { background-position: 100% 50%; }   /* band parked off the right */
+      to   { background-position: 0% 50%; }     /* band swept across to the left */
+    }
+
+    .controls { display:grid; gap:14px; margin-top:18px; }
+    .ctl { display:grid; grid-template-columns:minmax(120px,160px) 1fr 70px; align-items:center; gap:12px; }
+    .ctl label { font-weight:650; color:var(--ink); font-size:.95rem; }
+    .ctl output { font-variant-numeric:tabular-nums; color:var(--muted); text-align:right; }
+    input[type=range] { width:100%; accent-color:var(--accent); }
+    .btnrow { display:flex; gap:10px; flex-wrap:wrap; margin-top:4px; }
+
+    @media (max-width:760px) {
+      .grid { grid-template-columns:1fr; }
+      .ctl { grid-template-columns:1fr; gap:4px; }
+      .ctl output { text-align:left; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero.play .word,
+      .hero.play .underline { animation-duration:1ms; animation-delay:0ms; }
+      .hero.play .underline { opacity:1; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>The Shimmer Underline</h1>
+    <p class="lede">Skill: draw a grey underline that grows out from the left, then send a single shot of rainbow colour slipping across it — like a progress sweep — then back to grey. It's the second half of the <a href="0012-perspective-3d-flip-reveal.html">x.ai hero</a>, and the demo below shows the two combined.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>You want a moment of colour that <em>travels</em> — a highlight that sweeps along a bar and is gone — not a static gradient that just sits there glowing. The naive instinct is to animate the gradient's <em>colours</em>, or to slide a separate coloured element along behind a mask. Both are awkward: colour interpolation across many stops looks muddy mid-transition, and a second moving element means extra DOM and z-index juggling.</p>
+      <p>The clean trick is counterintuitive: <strong>the gradient never changes, and nothing moves the colour — you move the <em>window</em> you're viewing the gradient through.</strong> Bake the colour into a gradient that is much wider than the bar, show only a slice of it, and animate which slice is visible. The colour appears to fly across, but you only ever animated one cheap property: <code>background-position</code>.</p>
+    </section>
+
+    <section class="grid" aria-label="Idea and recipe">
+      <article class="panel" style="margin-top:0">
+        <h2>The Idea: A Wide Gradient, A Narrow Window</h2>
+        <p>Think of the bar as a letterbox slot and the gradient as a long strip of film behind it. The strip is grey for most of its length with one rainbow patch in the middle. <code>background-size: 400%</code> makes the strip four times wider than the slot, so at any instant the slot shows only a quarter of it — usually just grey.</p>
+        <p>Now slide the strip with <code>background-position</code>. As the rainbow patch drifts past the slot, you see a shot of colour cross the bar, then grey returns. Separately, the bar itself <strong>grows in</strong> with <code>transform: scaleX(0) → 1</code> and <code>transform-origin: left</code>, so it draws on from the left edge before the colour runs through it.</p>
+      </article>
+      <article class="panel" style="margin-top:0">
+        <h2>The Recipe</h2>
+        <pre><code>.underline {
+  height: 3px; border-radius: 999px;
+  transform-origin: left;
+  background-image: linear-gradient(90deg,
+    grey 0%, grey 35%,
+    #6366f1 40%, #a855f7 45%, #ec4899 50%,
+    #f97316 55%, #eab308 60%,
+    grey 65%, grey 100%);
+  background-size: 400% 100%;   /* strip 4x the slot */
+}
+@keyframes u-grow {            /* draw the bar on */
+  from { opacity:0; transform: scaleX(0); }
+  to   { opacity:1; transform: scaleX(1); }
+}
+@keyframes u-shimmer {         /* slide the strip */
+  from { background-position: 100% 50%; }
+  to   { background-position:   0% 50%; }
+}
+.underline {
+  animation:
+    u-grow   360ms ease-out  both,
+    u-shimmer 3s   linear  1 both;
+}</code></pre>
+        <p style="margin-top:12px"><span class="pill">Note</span> x.ai folds both motions into a single <code>hero-shimmer</code> keyframe; splitting them into <code>u-grow</code> + <code>u-shimmer</code> is the same result and easier to read and retune.</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Practice — The Complete Hero</h2>
+      <p>Below is the full effect: the words flip up (Lesson 12) and the underline draws under "build", then the colour slips across. Tune the sweep and the strip width, hit <strong>Replay</strong>, and try to land x.ai's settings.</p>
+
+      <div class="stage">
+        <p class="hero" id="hero">
+          <span class="word">Frontier</span> <span class="word">AI</span> <span class="word">models</span>
+          <span class="word">for</span> <span class="word">everything</span> <span class="word">you</span>
+          <span class="word marked">build<span class="underline" aria-hidden="true"></span></span>
+        </p>
+      </div>
+
+      <div class="controls">
+        <div class="ctl">
+          <label for="sweep">colour sweep</label>
+          <input type="range" id="sweep" min="600" max="5000" step="100" value="3000">
+          <output id="sweepV">3000ms</output>
+        </div>
+        <div class="ctl">
+          <label for="band">strip width</label>
+          <input type="range" id="band" min="150" max="600" step="50" value="400">
+          <output id="bandV">400%</output>
+        </div>
+      </div>
+
+      <div class="btnrow">
+        <button type="button" id="replay">▶ Replay</button>
+        <button type="button" class="ghost" id="match">Set to x.ai's values</button>
+      </div>
+      <p class="feedback" id="feedback" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <h2>The Boundaries</h2>
+      <p><strong>Animate <code>background-position</code>, not the colours.</strong> Tweening between many colour stops produces muddy in-between frames; moving the viewport over a fixed gradient keeps every colour crisp. This is the same "move the window, not the content" idea behind classic skeleton-loader shimmers.</p>
+      <p><strong>Wider strip = tighter, faster-looking shot.</strong> A bigger <code>background-size</code> means the rainbow band occupies a smaller fraction of the visible slot, so the colour reads as a thin streak; a smaller size fattens it toward a full-bar wash. It's your main expressiveness dial.</p>
+      <p><strong>It's decoration — mark it as such.</strong> The bar carries no information, so it's <code>aria-hidden</code> and guarded by <code>prefers-reduced-motion</code> (the colour just settles instead of sweeping). If you instead want a bar that fills in proportion to real progress, that's a different tool — a width/scale bound to a value, not a cosmetic sweep.</p>
+      <p><strong>One run, not a loop.</strong> x.ai plays the shimmer once (<code>animation-iteration-count: 1</code>) as part of the entrance. A looping shimmer is for ongoing states like loading — see <a href="0006-easing-fill-mode-and-direction.html">Lesson 6</a> on iteration and direction before you make anything repeat.</p>
+    </section>
+
+    <section class="panel">
+      <h2>On Your Portfolio</h2>
+      <p>Use this to make one word of a heading — or a section title — feel "lit": wrap the word in a relative span, drop an absolutely-positioned <code>.underline</code> inside it, and it draws on and flashes colour as the heading reveals. It pairs naturally with the <a href="0012-perspective-3d-flip-reveal.html">flip-up</a> for a hero, but stands alone under any link or label you want to draw the eye to. Still zero animation libraries: one extra span and two keyframes.</p>
+      <p>One piece remains: on x.ai the underlined word doesn't just sit there — it <strong>rotates</strong> to a new word every couple of seconds while this bar stays put beneath it. <a href="0014-rotating-word-ticker.html">Lesson 14 builds that rotating word</a> and runs all three techniques as the complete hero.</p>
+    </section>
+
+    <section class="panel">
+      <h2>What To Ask The Agent Next</h2>
+      <p>Ask me to drop this onto a real heading in the portfolio, to recolour the band to your accent palette instead of x.ai's rainbow, or to convert it into a looping loading shimmer so you can see how iteration changes the intent. Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+    </section>
+
+    <ul class="sources">
+      <li>Effect source: x.ai homepage hero underline — <code>linear-gradient(90deg, grey, …#6366f1 #a855f7 #ec4899 #f97316 #eab308…, grey)</code>, <code>background-size:400%</code>, <code>animation:hero-shimmer 3000ms linear 1</code>, <code>transform:scaleX(0)</code> with <code>transform-origin:left</code> (captured June 2026).</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-position" target="_blank" rel="noopener">MDN: <code>background-position</code></a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/background-size" target="_blank" rel="noopener">MDN: <code>background-size</code></a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient" target="_blank" rel="noopener">MDN: <code>linear-gradient()</code></a>.</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin" target="_blank" rel="noopener">MDN: <code>transform-origin</code></a>.</li>
+    </ul>
+
+    <nav class="lesson-nav">
+      <a href="0012-perspective-3d-flip-reveal.html">← Lesson 12: 3D flip-up</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <a href="0014-rotating-word-ticker.html">Lesson 14: Rotating word →</a>
+    </nav>
+  </main>
+
+  <script>
+    const hero = document.getElementById("hero");
+    const sweep = document.getElementById("sweep");
+    const band = document.getElementById("band");
+    const sweepV = document.getElementById("sweepV");
+    const bandV = document.getElementById("bandV");
+    const feedback = document.getElementById("feedback");
+
+    function apply() {
+      hero.style.setProperty("--sweep", sweep.value + "ms");
+      hero.style.setProperty("--band", band.value + "%");
+      sweepV.textContent = sweep.value + "ms";
+      bandV.textContent = band.value + "%";
+      const onTarget = sweep.value === "3000" && band.value === "400";
+      feedback.className = onTarget ? "feedback good" : "feedback";
+      feedback.textContent = onTarget
+        ? "That's x.ai's underline: a 400% strip swept over 3000ms. Replay to watch the colour shoot across."
+        : "";
+    }
+
+    function replay() {
+      hero.classList.remove("play");
+      void hero.offsetWidth;   // force reflow so animations re-trigger
+      hero.classList.add("play");
+    }
+
+    sweep.addEventListener("input", apply);
+    band.addEventListener("input", apply);
+    document.getElementById("replay").addEventListener("click", replay);
+    document.getElementById("match").addEventListener("click", () => {
+      sweep.value = 3000; band.value = 400; apply(); replay();
+    });
+
+    apply();
+    replay();
+  </script>
+</body>
+</html>

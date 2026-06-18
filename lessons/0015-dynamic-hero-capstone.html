@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0015: Capstone — The Dynamic x.ai Hero (per-word resize + replaying shimmer)</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff;
+      --line:#ded8cc; --accent:#255fd7; --accent-soft:#e8efff;
+      --good:#1f7a4d; --code:#f0ece4; --shadow:0 14px 40px rgba(34,31,25,.08);
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      background:radial-gradient(circle at top left, rgba(37,95,215,.10), transparent 34rem), var(--paper);
+      color:var(--ink);
+      font:16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width:min(1040px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    h1 { margin:0 0 12px; max-width:18ch; font-size:clamp(2.2rem, 6vw, 4.2rem); line-height:.98; }
+    h2 { margin:0 0 12px; font-size:1.25rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    a { color:var(--accent); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    pre { overflow:auto; margin:12px 0 0; padding:16px; border:1px solid var(--line); border-radius:8px; background:var(--code); line-height:1.45; font-size:.92rem; }
+    .lede { max-width:62ch; font-size:1.08rem; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.92); box-shadow:var(--shadow); padding:22px; margin-top:18px; }
+    .grid { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; margin-top:18px; }
+    .pill { display:inline-block; border-radius:999px; background:var(--accent-soft); color:#1647a3; padding:3px 10px; font-size:.9rem; font-weight:650; }
+    button { width:fit-content; border:0; border-radius:8px; background:var(--accent); color:#fff; padding:10px 14px; font:inherit; font-weight:650; cursor:pointer; }
+    .lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+    .lesson-nav a { font-weight:650; text-decoration:none; }
+    .sources { margin:24px 0 0; padding-left:1.2rem; color:var(--muted); }
+    .sources li + li { margin-top:6px; }
+
+    /* ---------- live vanilla-JS demo: the DYNAMIC hero ---------- */
+    .stage { margin-top:8px; border:1px solid var(--line); border-radius:10px; background:linear-gradient(160deg,#0e1116,#1a2030); color:#f4f6fb; padding:40px 26px; overflow:hidden; }
+    .hero { perspective:1200px; margin:0; font-size:clamp(1.6rem,4.4vw,2.9rem); font-weight:650; line-height:1.18; letter-spacing:-.01em; }
+    .hero .word { display:inline-block; transform-origin:50% 100%; }
+    .hero.play .word { animation:flip-up 720ms cubic-bezier(.2,.72,.2,1) both; animation-delay:calc((sibling-index() - 1) * 110ms); }
+    @keyframes flip-up { from { opacity:0; transform:translateY(45%) rotateX(-40deg); } to { opacity:1; transform:translateY(0) rotateX(0); } }
+
+    /* the rotating slot — width is set by JS to the measured word width, and TRANSITIONS */
+    .rot { position:relative; display:inline-block; vertical-align:bottom; padding-bottom:.14em; transition:width .4s cubic-bezier(.2,.72,.2,1); overflow:hidden; }
+    .rot .w { display:inline-block; white-space:nowrap; transition:transform .26s ease, opacity .26s ease; }
+    .rot .w.out { transform:translateY(-90%); opacity:0; }
+    .rot .w.in  { transform:translateY(90%);  opacity:0; }
+    .measure { position:absolute; left:0; top:0; visibility:hidden; white-space:nowrap; pointer-events:none; }
+
+    .bar { position:absolute; left:0; right:0; bottom:0; height:3px; border-radius:999px; overflow:hidden; }
+    .shine {
+      position:absolute; inset:0; border-radius:999px;
+      background-image:linear-gradient(90deg,
+        rgba(255,255,255,.18) 0%, rgba(255,255,255,.18) 35%,
+        #6366f1 40%, #a855f7 45%, #ec4899 50%, #f97316 55%, #eab308 60%,
+        rgba(255,255,255,.18) 65%, rgba(255,255,255,.18) 100%);
+      background-size:400% 100%; background-position:0% 50%;
+    }
+    .shine.run { animation:shimmer 1.4s linear; }
+    @keyframes shimmer { from { background-position:100% 50%; } to { background-position:0% 50%; } }
+
+    .btnrow { display:flex; gap:10px; flex-wrap:wrap; margin-top:18px; }
+    @media (max-width:760px){ .grid{ grid-template-columns:1fr; } }
+    @media (prefers-reduced-motion:reduce){
+      .hero.play .word { animation-duration:1ms; animation-delay:0; }
+      .rot .w, .rot { transition:none; } .shine.run { animation:none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Capstone: The Dynamic Hero</h1>
+    <p class="lede">Skill: take the recreated x.ai hero the last mile — make the underline <strong>resize to each word</strong> as it rotates, and <strong>replay the colour shimmer on every swap</strong>. These two behaviours are why x.ai reaches for JavaScript, and why your portfolio now ships a React component instead of pure CSS for this one piece.</p>
+
+    <section class="panel">
+      <h2>The Problem This Solves</h2>
+      <p>The pure-CSS reel from <a href="0014-rotating-word-ticker.html">Lesson 14</a> has two honest limitations. First, a vertical stack sizes to its <em>widest</em> word, so the underline is one fixed width — under "use" it overhangs, under "discover" it fits. Second, the shimmer is a one-shot entrance; once it has swept, swapping words doesn't make it sweep again. x.ai does neither: the bar <strong>snaps to the exact width of whatever word is showing</strong>, animating the resize, and the colour <strong>shoots across again every single time a new word arrives</strong>.</p>
+      <p>Both need something CSS can't express on its own. Resizing to arbitrary text means <em>measuring</em> that text — a runtime number. Replaying an animation on a discrete event means <em>re-triggering</em> it on demand. The moment your animation has to react to changing state or measured layout, you've crossed from "timing" (CSS's job) into "orchestration" (JavaScript's job). That line is the whole lesson.</p>
+    </section>
+
+    <section class="grid" aria-label="Idea and the two JS moves">
+      <article class="panel" style="margin-top:0">
+        <h2>The Idea: JS Owns State, The Layout System Tweens</h2>
+        <p>You don't animate in JavaScript — you let JS change two things and let CSS/Motion do the actual motion:</p>
+        <p><strong>1. Resize.</strong> On each word change, measure the new word's width and write it to the box. A CSS <code>transition: width</code> (or Motion's <code>layout</code>) turns that number change into a smooth resize. The underline spans the box, so it follows for free.</p>
+        <p><strong>2. Replay.</strong> Re-trigger the shimmer by <em>remounting</em> the element — in vanilla JS, remove the animation class, force a reflow, add it back; in React, change the element's <code>key</code> so it unmounts and remounts. A fresh element plays its animation from frame zero.</p>
+      </article>
+      <article class="panel" style="margin-top:0">
+        <h2>The Two Moves, In Code</h2>
+        <pre><code>// 1. resize: measure → write width → CSS transitions it
+measure.textContent = nextWord;
+rot.style.width = measure.offsetWidth + "px";
+
+// 2. replay: restart the CSS animation
+shine.classList.remove("run");
+void shine.offsetWidth;        // force reflow
+shine.classList.add("run");</code></pre>
+        <p style="margin-top:12px"><span class="pill">React</span> the same two ideas become <code>&lt;motion.span layout&gt;</code> for the resize and <code>key={index}</code> on the shimmer node for the replay — declarative versions of measure-and-write and remove-reflow-add.</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Practice — The Dynamic Version, Live</h2>
+      <p>Watch the underline: it <strong>changes width</strong> with each word ("use" is narrow, "discover" is wide), and the colour <strong>shoots across again on every swap</strong> — not just once. This demo is plain JavaScript doing exactly the two moves above.</p>
+      <div class="stage">
+        <p class="hero play" id="hero">
+          <span class="word">Engineering</span> <span class="word">things</span> <span class="word">people</span>
+          <span class="word">love</span> <span class="word">to</span>
+          <span class="word"><span class="rot" id="rot">
+            <span class="w" id="w">build</span>
+            <span class="measure" id="measure">build</span>
+            <span class="bar"><span class="shine run" id="shine"></span></span>
+          </span></span>
+        </p>
+      </div>
+      <div class="btnrow">
+        <button type="button" id="replay">▶ Replay reveal</button>
+        <button type="button" id="next">Next word now</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>What Shipped To The Portfolio</h2>
+      <p>This is now a real component — <code>components/animated-headline.tsx</code> — built on Motion (already in the bundle, the same library x.ai uses). It composes all three techniques and adds the two dynamic moves declaratively:</p>
+      <pre><code>// the rotating slot resizes via Motion's layout animation…
+&lt;motion.span layout transition={{ layout: { duration: 0.4 } }}&gt;
+  &lt;AnimatePresence mode="popLayout"&gt;
+    &lt;motion.span key={word} …&gt;{word}&lt;/motion.span&gt;
+  &lt;/AnimatePresence&gt;
+
+  // …and the shimmer replays because its key changes each word
+  &lt;span key={index} style={{ animation: "hero-underline-shimmer 1.4s linear" }} /&gt;
+&lt;/motion.span&gt;</code></pre>
+      <p>It's live in two places: the <strong>About hero</strong> reads "Engineering things people love to <em>build / design / ship / use</em>", and a demo card sits on <code>/my-components</code>. The pure-CSS lessons stay true for the static case; the component is the dynamic upgrade, used precisely because the list rotates and the underline must fit each word.</p>
+    </section>
+
+    <section class="panel">
+      <h2>The Boundaries</h2>
+      <p><strong>Don't reach for this by default.</strong> If your word list is fixed and the words are a similar length, <a href="0014-rotating-word-ticker.html">Lesson 14's CSS reel</a> is lighter and needs no JavaScript — prefer it. The JS version earns its keep only when you need per-word resize, replay-on-change, a data-driven list, or pausing on interaction.</p>
+      <p><strong>Measure off-screen, not by thrashing.</strong> The demo keeps one hidden <code>.measure</code> span and reads <code>offsetWidth</code> once per change. Measuring forces layout, so do it once per swap, not per frame — and never inside an animation loop.</p>
+      <p><strong>Reduced motion still wins.</strong> The component renders the settled state (no flip, no roll, no sweep) when <code>prefers-reduced-motion</code> is set; this demo disables its transitions the same way. Dynamic doesn't mean exempt.</p>
+    </section>
+
+    <section class="panel">
+      <h2>What To Ask The Agent Next</h2>
+      <p>Ask me to swap the vertical roll for a blur or scramble transition, to drive the word list from your projects data, or to add a hover-to-pause. You've now rebuilt a real production hero from primitives and shipped it — a good moment to ask "what other site effect should we reverse-engineer?" Reference: <a href="../reference/0002-css-animation-field-guide.html">CSS animation field guide</a>.</p>
+    </section>
+
+    <ul class="sources">
+      <li>Shipped in this repo: <code>components/animated-headline.tsx</code>, demoed at <code>/my-components</code>, live in the About hero (<code>features/profile/components/profile-header.tsx</code>).</li>
+      <li>Source: <a href="https://motion.dev/docs/react-layout-animations" target="_blank" rel="noopener">Motion: layout animations</a> (the per-word resize).</li>
+      <li>Source: <a href="https://motion.dev/docs/react-animate-presence" target="_blank" rel="noopener">Motion: AnimatePresence</a> (enter/exit on word swap).</li>
+      <li>Source: <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetWidth" target="_blank" rel="noopener">MDN: <code>offsetWidth</code></a> (measuring text width).</li>
+      <li>Source: <a href="https://css-tricks.com/restart-css-animation/" target="_blank" rel="noopener">CSS-Tricks: restart a CSS animation</a> (the reflow trick).</li>
+    </ul>
+
+    <nav class="lesson-nav">
+      <a href="0014-rotating-word-ticker.html">← Lesson 14: Rotating word</a>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <span></span>
+    </nav>
+  </main>
+
+  <script>
+    const WORDS = ["build", "design", "ship", "use"];
+    const hero = document.getElementById("hero");
+    const rot = document.getElementById("rot");
+    const w = document.getElementById("w");
+    const measure = document.getElementById("measure");
+    const shine = document.getElementById("shine");
+    let i = 0, timer = null;
+
+    function setWidth(word) {
+      measure.textContent = word;
+      rot.style.width = measure.offsetWidth + "px";
+    }
+
+    function replayShine() {
+      shine.classList.remove("run");
+      void shine.offsetWidth;     // force reflow so the animation restarts
+      shine.classList.add("run");
+    }
+
+    function showWord(word) {
+      // animate current word out, swap text, animate new word in
+      w.classList.add("out");
+      setTimeout(() => {
+        w.textContent = word;
+        setWidth(word);           // resize the box → CSS transitions the width
+        w.classList.remove("out");
+        w.classList.add("in");
+        requestAnimationFrame(() => requestAnimationFrame(() => w.classList.remove("in")));
+        replayShine();            // colour shoots across again, every swap
+      }, 240);
+    }
+
+    function next() {
+      i = (i + 1) % WORDS.length;
+      showWord(WORDS[i]);
+    }
+
+    function startRotation() {
+      clearInterval(timer);
+      timer = setInterval(next, 2000);
+    }
+
+    function replayReveal() {
+      hero.classList.remove("play");
+      void hero.offsetWidth;
+      hero.classList.add("play");
+      i = 0; w.textContent = WORDS[0]; setWidth(WORDS[0]); replayShine();
+      startRotation();
+    }
+
+    // init
+    setWidth(WORDS[0]);
+    document.getElementById("replay").addEventListener("click", replayReveal);
+    document.getElementById("next").addEventListener("click", () => { startRotation(); next(); });
+    startRotation();
+  </script>
+</body>
+</html>
