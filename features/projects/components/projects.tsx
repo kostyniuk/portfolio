@@ -9,6 +9,20 @@ interface Project extends LinkItemProps {
 }
 
 const PROJECTS = {
+  lee_hire_me: {
+    link: "https://www.leehireme.xyz/",
+    label: "LeeHireMe",
+    description:
+      "A single-page CV builder that makes a candidate easy to reason about by showing personality, taste, and signal beyond raw technical details.",
+    features: [
+      "Modular resume sections for identity, summary, social links, experience, projects, skills, education, awards, inspirations, and portfolio QR",
+      "Strict one-page format that forces prioritization: if it does not fit, link out to the portfolio and let the extra context live there",
+      "AI flow: paste an old CV, LinkedIn export, portfolio, notes, or links into any AI chat and get back a ready-to-edit LeeHireMe URL",
+      "Free, open-source builder with live editing and one-click browser PDF export",
+    ],
+    videoHref: "/lee-hire-me-demo.mp4",
+    source: "https://github.com/kostyniuk/lee-hire-me",
+  },
   glasscn: {
     link: "https://glasscn-components.vercel.app/",
     label: "GlassCN",
