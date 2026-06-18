@@ -5,6 +5,7 @@ import { LiquidSwitchDemo } from "@/components/demos/liquid-switch-demo";
 import { LiquidBadgeDemo } from "@/components/demos/liquid-badge-demo";
 import { AppleWatchDemo } from "@/components/demos/apple-watch-demo";
 import { LiquidTextDemo } from "@/components/demos/liquid-text-demo";
+import { AnimatedHeadlineDemo } from "@/components/demos/animated-headline-demo";
 
 // export function AlertDemo({ variant = "clear" }) {
 //   return (
@@ -79,6 +80,7 @@ function MyComponents() {
         {/* </Card> */}
         <AppleWatchDemo />
         <LiquidTextDemo />
+        <AnimatedHeadlineDemo />
       </div>
     </section>
   );
