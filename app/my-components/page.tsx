@@ -1,11 +1,11 @@
-"use client";
-
 import { CardTitle } from "@/components/ui/liquid-metal-card";
 import { LiquidSwitchDemo } from "@/components/demos/liquid-switch-demo";
 import { LiquidBadgeDemo } from "@/components/demos/liquid-badge-demo";
 import { AppleWatchDemo } from "@/components/demos/apple-watch-demo";
 import { LiquidTextDemo } from "@/components/demos/liquid-text-demo";
 import { AnimatedHeadlineDemo } from "@/components/demos/animated-headline-demo";
+import { PreferenceDemo } from "@/components/demos/preference-demo";
+import { ContributionsDemo } from "@/components/demos/contributions-demo";
 
 // export function AlertDemo({ variant = "clear" }) {
 //   return (
@@ -22,7 +22,7 @@ import { AnimatedHeadlineDemo } from "@/components/demos/animated-headline-demo"
 function MyComponents() {
   return (
     <section className="page-section">
-      <CardTitle className="mb-4 text-4xl">Liquid Glass</CardTitle>
+      <CardTitle className="mb-4 text-4xl">Components</CardTitle>
       <div className="mx-auto flex max-w-3xl flex-col gap-6">
         <LiquidSwitchDemo />
         <LiquidBadgeDemo />
@@ -81,6 +81,8 @@ function MyComponents() {
         <AppleWatchDemo />
         <LiquidTextDemo />
         <AnimatedHeadlineDemo />
+        <PreferenceDemo />
+        <ContributionsDemo />
       </div>
     </section>
   );

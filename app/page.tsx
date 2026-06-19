@@ -4,7 +4,7 @@ import { Socials } from "@/features/profile/components/socials";
 import { Interests } from "@/features/interests/components/interests";
 import { Education } from "@/features/education/components/education";
 import { Experience } from "@/features/experience/components/experience";
-import { Contributions } from "@/features/contributions/contributions";
+import { Contributions } from "@/components/ui/contributions";
 import { Preference } from "@/features/preferences/components/preference";
 import { MainPageLayout } from "./main-page";
 

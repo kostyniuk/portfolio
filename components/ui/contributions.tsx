@@ -1,6 +1,6 @@
 import type { Activity } from "@/components/kibo-ui/contribution-graph";
-import { ContributionsGraph } from "./graph";
-import { type ContributionRepo, type ContributionStats, ContributionVitals } from "./vitals";
+import { ContributionsGraph } from "@/features/contributions/graph";
+import { type ContributionRepo, type ContributionStats, ContributionVitals } from "@/features/contributions/vitals";
 
 const USERNAME = "kostyniuk";
 
@@ -165,7 +165,7 @@ const getTopRepos = async (since: string, until: string): Promise<ContributionRe
   }
 };
 
-async function Contributions() {
+async function ContributionsContent() {
   "use cache";
   const today = new Date();
   const oneYearAgo = new Date(today);
@@ -183,14 +183,22 @@ async function Contributions() {
       : undefined;
 
   return (
+    <>
+      <ContributionVitals stats={stats} repos={repos} rootProps={{ "data-slot": "contribution-vitals" }} />
+      <ContributionsGraph contributions={contributions} total={total} range={range} />
+    </>
+  );
+}
+
+function Contributions() {
+  return (
     <section id="contributions" className="page-section scroll-mt-navigation-scroll-margin">
       <p className="page-section-title">Contributions</p>
       <div className="page-section-body flex flex-col gap-8">
-        <ContributionVitals stats={stats} repos={repos} rootProps={{ "data-slot": "contribution-vitals" }} />
-        <ContributionsGraph contributions={contributions} total={total} range={range} />
+        <ContributionsContent />
       </div>
     </section>
   );
 }
 
-export { Contributions };
+export { Contributions, ContributionsContent };

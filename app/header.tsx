@@ -28,13 +28,9 @@ async function Header() {
             <Link href="/" className="flex items-center">
               <AKLogo size={24} className="text-foreground" />
             </Link>
-            <ThemeToggle />
-            {/* <Link href="/">
-              <Button variant="ghost">Home</Button>
-            </Link> */}
-            {/* <Link href="/my-components">
+            <Link href="/my-components">
               <Button variant="ghost">Components</Button>
-            </Link> */}
+            </Link>
             <SocialItemMotion>
               <DownloadButton icon={<FileDown className="size-5" />} tooltipText="Download CV" pathToPdf="/cv.pdf" />
             </SocialItemMotion>
@@ -46,6 +42,7 @@ async function Header() {
                 </Button>
               </SocialItemMotion>
             </Link>
+            <ThemeToggle />
           </div>
         </LiquidGlass>
       </div>
