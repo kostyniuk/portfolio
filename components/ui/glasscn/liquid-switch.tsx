@@ -49,6 +49,9 @@ function LiquidSwitch({
         className={cn(
           "peer/liquid-switch absolute inset-0 z-10 border-transparent bg-transparent shadow-none data-checked:border-transparent data-checked:bg-transparent data-unchecked:border-transparent data-unchecked:bg-transparent",
           "data-[size=default]:size-full data-[size=sm]:size-full",
+          "data-[size=default]:[&_[data-slot=switch-thumb]]:ms-px data-[size=sm]:[&_[data-slot=switch-thumb]]:ms-px",
+          "data-[size=default]:[&_[data-slot=switch-thumb][data-checked]]:translate-x-[26px] data-[size=sm]:[&_[data-slot=switch-thumb][data-checked]]:translate-x-[12px]",
+          "[&_[data-slot=switch-thumb][data-unchecked]]:translate-x-0",
           "[&_[data-slot=switch-thumb]]:bg-foreground",
         )}
         {...props}
