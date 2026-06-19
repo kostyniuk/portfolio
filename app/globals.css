@@ -504,7 +504,3 @@
 .nav-list {
   scroll-target-group: auto;
 }
-
-.nav-link:target-current {
-  color: var(--color-foreground);
-}
