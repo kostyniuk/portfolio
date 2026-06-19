@@ -1,6 +1,7 @@
 "use client";
 
-import { JavaScript, MySQL, ReactDark, TypeScript } from "@/components/icons/interests-icons";
+import { AnthropicPreferenceIcon, OpenAIPreferenceIcon } from "@/components/icons/preference-icons";
+import { Cursor, JavaScript, MySQL, ReactDark, TypeScript } from "@/components/icons/interests-icons";
 import { Avatar, AvatarGroup, AvatarImage, avatarImageVariants } from "@/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { VariantProps } from "class-variance-authority";
@@ -82,6 +83,22 @@ const INTERESTS = [
   {
     name: "Vercel",
     src: "https://github.com/vercel.png",
+  },
+  // AI
+  {
+    name: "OpenAI",
+    Icon: <OpenAIPreferenceIcon className="size-full" />,
+    className: "bg-black p-1.5 text-white dark:bg-white dark:text-black",
+  },
+  {
+    name: "Anthropic",
+    Icon: <AnthropicPreferenceIcon className="size-full" />,
+    className: "bg-black p-1.5 text-white dark:bg-white dark:text-black",
+  },
+  {
+    name: "Cursor",
+    Icon: <Cursor />,
+    className: "after:hidden text-black dark:text-white",
   },
 ] satisfies Interest[];
 
