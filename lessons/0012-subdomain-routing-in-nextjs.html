@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Subdomain Routing in Next.js</title>
   <style>
-    :root { --ink:#181818; --muted:#62666f; --paper:#f8f6f1; --panel:#fff; --line:#ded8cc; --accent:#18635c; --accent-2:#8a4b23; --good:#0f7a49; --bad:#b42318; }
+    :root { --ink:#181818; --muted:#62666f; --paper:#f8f6f1; --panel:#fff; --line:#ded8cc; --accent:#18635c; --accent-2:#8a4b23; --good:#0f7a49; --bad:#b42318; --wash:#eef5f2; }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     main { width:min(980px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
@@ -33,6 +33,13 @@
     ol, ul { padding-left:1.25rem; color:var(--muted); }
     li { margin:.4rem 0; }
     .callout { border-left:4px solid var(--accent-2); background:#fff7ef; padding:14px 16px; border-radius:0 8px 8px 0; }
+    .table { width:100%; border-collapse:collapse; margin:16px 0 22px; background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; display:table; }
+    .table th, .table td { padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    .table th { color:var(--accent); background:var(--wash); }
+    .table tr:last-child td { border-bottom:0; }
+    .note { border:1px solid var(--line); border-radius:8px; background:var(--wash); padding:16px; margin:16px 0; }
+    .checklist { display:grid; gap:10px; list-style:none; padding:0; }
+    .checklist li { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:13px 15px; }
     @media (max-width:760px) { .flow { grid-template-columns:1fr; } }
   </style>
 </head>
@@ -45,7 +52,7 @@
     </nav>
 
     <h1>Subdomain Routing in Next.js</h1>
-    <p class="lead">Today you wanted <code>https://www.lovable.a13x.space/</code> to render the existing <code>/lovable</code> page. The skill is learning which part belongs to DNS/Vercel and which part belongs to Next.js.</p>
+    <p class="lead">Today you wanted <code>https://www.lovable.a13x.space/</code> to render the existing <code>/lovable</code> page. The skill is learning which part belongs to DNS, which part belongs to Vercel, and which part belongs to Next.js.</p>
 
     <h2>The problem it solves</h2>
     <p>A path route is easy: <code>/lovable</code> maps to <code>app/lovable/page.tsx</code>. A subdomain is different. The browser first has to find a server for <code>www.lovable.a13x.space</code>, and only after that can your Next app decide what page to render.</p>
@@ -67,6 +74,52 @@
       </section>
     </div>
     <p>That third step is what we changed in <code>next.config.mjs</code>. Next.js documents rewrites as a way to map one incoming path to another destination path while masking the destination URL, and its rewrite matching supports <code>has</code> rules for <code>host</code> values.</p>
+
+    <h2>What DNS is doing</h2>
+    <p>DNS is the internet's lookup system for names. Humans type names like <code>www.lovable.a13x.space</code>; browsers need to know where to send the request. DNS records are the small pieces of data that answer that lookup.</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Piece</th>
+          <th>Plain-language meaning</th>
+          <th>In this setup</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>a13x.space</code></td>
+          <td>The domain, also called the zone when you are editing its DNS records.</td>
+          <td>Your zone is managed by Vercel nameservers.</td>
+        </tr>
+        <tr>
+          <td><code>www.lovable</code></td>
+          <td>The record name inside the <code>a13x.space</code> zone.</td>
+          <td>Vercel combines it into <code>www.lovable.a13x.space</code>.</td>
+        </tr>
+        <tr>
+          <td><code>CNAME</code></td>
+          <td>An alias from one hostname to another hostname.</td>
+          <td>The subdomain aliases to Vercel's domain-specific target.</td>
+        </tr>
+        <tr>
+          <td><code>A</code></td>
+          <td>A direct mapping from a hostname to an IPv4 address.</td>
+          <td>Useful for apex domains like <code>a13x.space</code>, not the subdomain we added.</td>
+        </tr>
+        <tr>
+          <td><code>TTL</code></td>
+          <td>How long DNS resolvers can cache the answer.</td>
+          <td><code>60</code> means changes can be checked again quickly, though caches can still take time.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="note">
+      <p><strong>Why the first attempt failed:</strong> the form was set to <code>A</code>, so Vercel expected an IPv4 address in the value field. The target Vercel showed you was a hostname, so the correct type was <code>CNAME</code>.</p>
+    </div>
+
+    <h2>Why Vercel needs its own domain entry</h2>
+    <p>The DNS record says, "send this hostname to Vercel." The project domain entry says, "this specific Vercel project is allowed to answer for this hostname." That second step matters because Vercel hosts many projects. It also lets Vercel provision the HTTPS certificate for the exact hostname.</p>
+    <p>That is why we saw the domain begin resolving to Vercel, but HTTPS still failed before the project domain was fully configured: the request could reach Vercel, but Vercel had not finished treating <code>www.lovable.a13x.space</code> as a valid secure hostname for this project.</p>
 
     <h2>What we changed</h2>
     <pre><code>async rewrites() {
@@ -104,6 +157,41 @@
       </section>
     </div>
 
+    <h2>What Vercel asked for</h2>
+    <p>After adding <code>www.lovable.a13x.space</code> to the portfolio project's Domains page, Vercel recommended a DNS change like this:</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Value we used</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Type</td>
+          <td><code>CNAME</code></td>
+          <td>Subdomains can point at another hostname.</td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td><code>www.lovable</code></td>
+          <td>You were editing the <code>a13x.space</code> zone, so the form only needed the prefix.</td>
+        </tr>
+        <tr>
+          <td>Value</td>
+          <td><code>8034576ba7dae91d.vercel-dns-017.com.</code></td>
+          <td>Vercel's current recommended domain-specific target for this project/domain.</td>
+        </tr>
+        <tr>
+          <td>TTL</td>
+          <td><code>60</code></td>
+          <td>A short cache time while the setup settles.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The final dot in the CNAME value matters when Vercel shows one. It means the value is a full absolute hostname, not something that should be completed with <code>a13x.space</code> after it.</p>
+
     <h2>Practice</h2>
     <p>Use this mental debugger: when a subdomain fails, ask which layer is failing.</p>
     <div class="quiz">
@@ -112,6 +200,15 @@
         <button data-correct="false">The <code>destination</code> in <code>next.config.mjs</code></button>
         <button data-correct="true">The DNS record and Vercel domain assignment</button>
         <button data-correct="false">The React component inside <code>app/lovable/page.tsx</code></button>
+      </div>
+      <div class="feedback" aria-live="polite"></div>
+    </div>
+    <div class="quiz">
+      <p><strong>Scenario:</strong> Vercel's DNS form says <code>value should match format "ipv4"</code>. What does that tell you?</p>
+      <div class="answers">
+        <button data-correct="true">The record type is probably <code>A</code>, but the value is a hostname, so switch to <code>CNAME</code>.</button>
+        <button data-correct="false">The Next.js rewrite should use <code>afterFiles</code> instead of <code>beforeFiles</code>.</button>
+        <button data-correct="false">The browser cache needs to be cleared before the record can be saved.</button>
       </div>
       <div class="feedback" aria-live="polite"></div>
     </div>
@@ -127,6 +224,17 @@
       <li>If you wanted many tenant subdomains, you would likely move this into a more general host-routing layer instead of hard-coding one hostname.</li>
     </ul>
 
+    <h2>How we made it work on Vercel</h2>
+    <ol class="checklist">
+      <li><strong>Created the page:</strong> the Lovable background lived at <code>app/lovable/page.tsx</code> and used <code>public/lovable/pulse.webp</code>.</li>
+      <li><strong>Added a host rewrite:</strong> <code>next.config.mjs</code> maps <code>www.lovable.a13x.space/</code> to the internal <code>/lovable</code> route.</li>
+      <li><strong>Added the domain to the project:</strong> in Vercel, Project Settings -> Domains, we added <code>www.lovable.a13x.space</code>.</li>
+      <li><strong>Read Vercel's recommended DNS record:</strong> Vercel asked for a <code>CNAME</code> named <code>www.lovable</code> pointing at <code>8034576ba7dae91d.vercel-dns-017.com.</code>.</li>
+      <li><strong>Added the DNS record in the <code>a13x.space</code> zone:</strong> because the domain uses Vercel nameservers, the DNS record was added in Vercel's domain DNS UI.</li>
+      <li><strong>Waited for validation:</strong> after DNS updated, Vercel could verify the domain and issue HTTPS.</li>
+      <li><strong>Opened the final URL:</strong> <code>https://www.lovable.a13x.space/</code> now reaches Vercel, passes the host to Next.js, and renders the Lovable route.</li>
+    </ol>
+
     <h2>Mission tie-in</h2>
     <p>Your main mission is CSS animation fluency for this portfolio, and this is a useful supporting skill: it lets a visual experiment live at its own clean URL without turning into a separate project. The Lovable background can stay as a focused route while the public URL feels purpose-built.</p>
 
@@ -135,20 +243,23 @@
       <li><a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/rewrites">Next.js rewrites documentation</a></li>
       <li><a href="https://vercel.com/docs/domains/working-with-domains/add-a-domain">Vercel custom domain documentation</a></li>
       <li><a href="https://vercel.com/docs/domains/managing-dns-records">Vercel DNS records documentation</a></li>
+      <li><a href="https://vercel.com/docs/domains/working-with-dns">Vercel working with DNS documentation</a></li>
+      <li><a href="https://vercel.com/docs/domains/troubleshooting">Vercel domain troubleshooting documentation</a></li>
     </ul>
     <p class="callout">Ask me followup questions while this is still warm: good ones are “why not middleware?”, “what does CNAME actually do?”, and “how would this change for many subdomains?”</p>
   </main>
   <script>
-    const quiz = document.querySelector(".quiz");
-    const feedback = quiz.querySelector(".feedback");
-    quiz.addEventListener("click", (event) => {
-      const button = event.target.closest("button");
-      if (!button) return;
-      const isCorrect = button.dataset.correct === "true";
-      feedback.className = `feedback ${isCorrect ? "good" : "bad"}`;
-      feedback.textContent = isCorrect
-        ? "Correct. If the browser cannot resolve the hostname, Next.js has not even entered the story yet."
-        : "Not that layer first. Next.js only gets a chance after DNS and Vercel route the hostname to the deployment.";
+    document.querySelectorAll(".quiz").forEach((quiz) => {
+      const feedback = quiz.querySelector(".feedback");
+      quiz.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        const isCorrect = button.dataset.correct === "true";
+        feedback.className = `feedback ${isCorrect ? "good" : "bad"}`;
+        feedback.textContent = isCorrect
+          ? "Correct. You found the layer that owns the failure."
+          : "Not that layer first. Find whether the failure is DNS, Vercel project configuration, or app routing.";
+      });
     });
   </script>
 </body>

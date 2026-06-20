@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Next.js Subdomain Routing Reference</title>
   <style>
-    :root { --ink:#181818; --muted:#62666f; --paper:#fbfaf7; --panel:#fff; --line:#ddd7ca; --accent:#18635c; --code:#10201e; }
+    :root { --ink:#181818; --muted:#62666f; --paper:#fbfaf7; --panel:#fff; --line:#ddd7ca; --accent:#18635c; --code:#10201e; --wash:#eef5f2; }
     * { box-sizing:border-box; }
     body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
     main { width:min(920px, calc(100% - 32px)); margin:0 auto; padding:40px 0 56px; }
@@ -19,6 +19,10 @@
     .grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); margin:18px 0; }
     .card { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:16px; }
     .card strong { display:block; margin-bottom:6px; }
+    table { width:100%; border-collapse:collapse; margin:16px 0 22px; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:var(--panel); }
+    th, td { padding:11px 13px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    th { background:var(--wash); color:var(--accent); }
+    tr:last-child td { border-bottom:0; }
     ol, ul { padding-left:1.2rem; color:var(--muted); }
     li { margin:.35rem 0; }
     @media print { body { background:#fff; } main { width:auto; padding:0; } .card, pre { break-inside:avoid; } }
@@ -27,19 +31,77 @@
 <body>
   <main>
     <h1>Subdomain Routing</h1>
-    <p>A subdomain route has two jobs: get the hostname to your deployment, then decide what page that hostname should render.</p>
+    <p>A subdomain route has three jobs: DNS makes the hostname reach Vercel, Vercel assigns that hostname to a project and provisions HTTPS, then Next.js decides what page that hostname should render.</p>
 
-    <h2>The Two Layers</h2>
+    <h2>The Layers</h2>
     <div class="grid">
       <section class="card">
-        <strong>DNS and Vercel</strong>
-        <p>Make <code>www.lovable.a13x.space</code> resolve to the Vercel project. For a subdomain, Vercel asks for a CNAME record.</p>
+        <strong>DNS</strong>
+        <p>Make <code>www.lovable.a13x.space</code> resolve to Vercel by adding the CNAME record Vercel recommends.</p>
+      </section>
+      <section class="card">
+        <strong>Vercel project domain</strong>
+        <p>Add <code>www.lovable.a13x.space</code> to Project Settings -> Domains so Vercel can serve this project and issue HTTPS.</p>
       </section>
       <section class="card">
         <strong>Next.js routing</strong>
         <p>Once the request reaches the app, use the request <code>Host</code> header to map <code>/</code> on that host to an internal page.</p>
       </section>
     </div>
+
+    <h2>DNS Terms</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Term</th>
+          <th>Use it for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>A</code> record</td>
+          <td>Point a hostname directly to an IPv4 address. Vercel uses this for apex domains such as <code>a13x.space</code>.</td>
+        </tr>
+        <tr>
+          <td><code>CNAME</code> record</td>
+          <td>Point a subdomain to another hostname. Vercel uses this for subdomains such as <code>www.lovable.a13x.space</code>.</td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td>The prefix inside the current DNS zone. Inside <code>a13x.space</code>, use <code>www.lovable</code>, not the full hostname.</td>
+        </tr>
+        <tr>
+          <td>Value</td>
+          <td>The target. Copy Vercel's recommended CNAME exactly, including the final dot when shown.</td>
+        </tr>
+        <tr>
+          <td>TTL</td>
+          <td>Cache lifetime for DNS resolvers. <code>60</code> is a short, normal value during setup.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Record Used Here</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td>Type</td>
+          <td><code>CNAME</code></td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td><code>www.lovable</code></td>
+        </tr>
+        <tr>
+          <td>Value</td>
+          <td><code>8034576ba7dae91d.vercel-dns-017.com.</code></td>
+        </tr>
+        <tr>
+          <td>TTL</td>
+          <td><code>60</code> or Auto</td>
+        </tr>
+      </tbody>
+    </table>
 
     <h2>Pattern Used Here</h2>
     <pre><code>async rewrites() {
@@ -70,8 +132,10 @@ curl -H "Host: www.lovable.a13x.space:3000" http://127.0.0.1:3000/</code></pre>
     <h2>Deployment Checklist</h2>
     <ol>
       <li>Add <code>www.lovable.a13x.space</code> to the Vercel project domains.</li>
-      <li>Add the CNAME record Vercel requests at your DNS provider.</li>
+      <li>Open the domain row and read Vercel's recommended DNS record.</li>
+      <li>Add the CNAME record in the <code>a13x.space</code> DNS zone.</li>
       <li>Deploy the code containing the host rewrite.</li>
+      <li>Refresh the Vercel domain row until it says the configuration is valid.</li>
       <li>Visit <code>https://www.lovable.a13x.space/</code> after DNS and SSL finish provisioning.</li>
     </ol>
 

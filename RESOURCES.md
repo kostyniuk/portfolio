@@ -32,6 +32,10 @@
   Official guide to assigning custom domains to a Vercel project. Use for: the Vercel-side step before a subdomain can reach a deployment.
 - [Vercel Docs: Managing DNS records](https://vercel.com/docs/domains/managing-dns-records)
   Official guide to DNS record names, types, values, and propagation. Use for: understanding CNAME records for subdomains.
+- [Vercel Docs: Working with DNS](https://vercel.com/docs/domains/working-with-dns)
+  Official glossary of DNS record types, including A, CNAME, NS, MX, and TXT. Use for: explaining what each DNS record type means.
+- [Vercel Docs: Troubleshooting domains](https://vercel.com/docs/domains/troubleshooting)
+  Official troubleshooting guide for domain setup, including absolute CNAME values with a trailing dot. Use for: diagnosing why Vercel still recommends DNS changes.
 
 ## Wisdom (Communities)
 
