@@ -26,6 +26,12 @@
   CSS-side guide for styling view-transition pseudo-elements. Use for: customizing view transition animations.
 - [CSS Values and Units Module Level 5 draft: Tree counting functions](https://drafts.csswg.org/css-values-5/#tree-counting)
   Specification home for `sibling-index()` and `sibling-count()`. Use for: precise behavior and future-facing details.
+- [Next.js Docs: `rewrites` in `next.config.js`](https://nextjs.org/docs/app/api-reference/config/next-config-js/rewrites)
+  Official reference for internal rewrites, rewrite order, and `has` host matching. Use for: mapping a hostname and path to a different internal route.
+- [Vercel Docs: Adding and configuring a custom domain](https://vercel.com/docs/domains/working-with-domains/add-a-domain)
+  Official guide to assigning custom domains to a Vercel project. Use for: the Vercel-side step before a subdomain can reach a deployment.
+- [Vercel Docs: Managing DNS records](https://vercel.com/docs/domains/managing-dns-records)
+  Official guide to DNS record names, types, values, and propagation. Use for: understanding CNAME records for subdomains.
 
 ## Wisdom (Communities)
 

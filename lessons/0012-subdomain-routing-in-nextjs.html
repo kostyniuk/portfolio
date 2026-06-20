@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subdomain Routing in Next.js</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#f8f6f1; --panel:#fff; --line:#ded8cc; --accent:#18635c; --accent-2:#8a4b23; --good:#0f7a49; --bad:#b42318; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(980px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    nav { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; color:var(--muted); }
+    nav a, a { color:var(--accent); font-weight:750; text-decoration:none; }
+    h1 { max-width:12ch; margin:0 0 14px; font-size:clamp(2.2rem, 7vw, 5rem); line-height:.96; letter-spacing:0; }
+    h2 { margin:34px 0 12px; font-size:1.15rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); }
+    p { margin:0 0 14px; color:var(--muted); }
+    code { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background:#e8f0ed; color:#10201e; border-radius:5px; padding:.08rem .3rem; }
+    pre { overflow:auto; border:1px solid var(--line); border-radius:8px; background:#10201e; color:#e7fff8; padding:16px; font-size:.88rem; line-height:1.5; }
+    pre code { background:transparent; color:inherit; padding:0; }
+    .lead { max-width:760px; font-size:1.08rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:14px; margin:18px 0; }
+    .card, .quiz { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:17px; }
+    .card strong { display:block; margin-bottom:8px; color:var(--ink); }
+    .flow { display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin:18px 0; }
+    .step { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:16px; min-height:148px; }
+    .step b { display:inline-grid; place-items:center; width:2rem; height:2rem; border-radius:8px; background:#e8f0ed; color:var(--accent); margin-bottom:10px; }
+    button { appearance:none; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; padding:10px 12px; cursor:pointer; text-align:left; }
+    button:hover { border-color:var(--accent); }
+    .answers { display:grid; gap:8px; margin-top:12px; }
+    .feedback { margin-top:12px; font-weight:700; min-height:1.5rem; }
+    .feedback.good { color:var(--good); }
+    .feedback.bad { color:var(--bad); }
+    ol, ul { padding-left:1.25rem; color:var(--muted); }
+    li { margin:.4rem 0; }
+    .callout { border-left:4px solid var(--accent-2); background:#fff7ef; padding:14px 16px; border-radius:0 8px 8px 0; }
+    @media (max-width:760px) { .flow { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <nav>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <span>/</span>
+      <a href="../reference/0003-nextjs-subdomain-routing.html">Reference sheet</a>
+    </nav>
+
+    <h1>Subdomain Routing in Next.js</h1>
+    <p class="lead">Today you wanted <code>https://www.lovable.a13x.space/</code> to render the existing <code>/lovable</code> page. The skill is learning which part belongs to DNS/Vercel and which part belongs to Next.js.</p>
+
+    <h2>The problem it solves</h2>
+    <p>A path route is easy: <code>/lovable</code> maps to <code>app/lovable/page.tsx</code>. A subdomain is different. The browser first has to find a server for <code>www.lovable.a13x.space</code>, and only after that can your Next app decide what page to render.</p>
+    <p>Without separating those layers, it is easy to edit app code while DNS still points nowhere, or to add DNS while the app still renders the normal homepage.</p>
+
+    <h2>The idea</h2>
+    <div class="flow">
+      <section class="step">
+        <b>1</b>
+        <p><strong>DNS</strong> turns a hostname into a destination. For Vercel subdomains, that is usually a CNAME record.</p>
+      </section>
+      <section class="step">
+        <b>2</b>
+        <p><strong>Vercel domains</strong> decide which project is allowed to receive that hostname and provision HTTPS for it.</p>
+      </section>
+      <section class="step">
+        <b>3</b>
+        <p><strong>Next rewrites</strong> inspect the <code>Host</code> header and serve an internal route while keeping the visible URL.</p>
+      </section>
+    </div>
+    <p>That third step is what we changed in <code>next.config.mjs</code>. Next.js documents rewrites as a way to map one incoming path to another destination path while masking the destination URL, and its rewrite matching supports <code>has</code> rules for <code>host</code> values.</p>
+
+    <h2>What we changed</h2>
+    <pre><code>async rewrites() {
+  return {
+    beforeFiles: [
+      {
+        source: "/",
+        has: [
+          {
+            type: "host",
+            value: "www\\.lovable\\.a13x\\.space(?::\\d+)?",
+          },
+        ],
+        destination: "/lovable",
+      },
+    ],
+  };
+}</code></pre>
+    <div class="grid">
+      <section class="card">
+        <strong><code>source: "/"</code></strong>
+        <p>Only the root of the subdomain is rewritten. Assets and other paths keep working normally.</p>
+      </section>
+      <section class="card">
+        <strong><code>type: "host"</code></strong>
+        <p>The rule only runs when the request host is <code>www.lovable.a13x.space</code>.</p>
+      </section>
+      <section class="card">
+        <strong><code>destination: "/lovable"</code></strong>
+        <p>Next renders the existing Lovable route without redirecting the browser.</p>
+      </section>
+      <section class="card">
+        <strong><code>beforeFiles</code></strong>
+        <p>The homepage at <code>/</code> already exists, so the host-specific rewrite must run before filesystem page matching.</p>
+      </section>
+    </div>
+
+    <h2>Practice</h2>
+    <p>Use this mental debugger: when a subdomain fails, ask which layer is failing.</p>
+    <div class="quiz">
+      <p><strong>Scenario:</strong> <code>www.lovable.a13x.space</code> shows a browser DNS error before any request reaches Vercel. Which layer should you inspect first?</p>
+      <div class="answers">
+        <button data-correct="false">The <code>destination</code> in <code>next.config.mjs</code></button>
+        <button data-correct="true">The DNS record and Vercel domain assignment</button>
+        <button data-correct="false">The React component inside <code>app/lovable/page.tsx</code></button>
+      </div>
+      <div class="feedback" aria-live="polite"></div>
+    </div>
+    <p>Local test command:</p>
+    <pre><code>curl -H "Host: www.lovable.a13x.space:3000" http://127.0.0.1:3000/</code></pre>
+    <p>This works because the <code>Host</code> header is the same signal Vercel will pass to Next in production.</p>
+
+    <h2>Boundaries</h2>
+    <ul>
+      <li>A rewrite does not create DNS records. You still have to add the subdomain to Vercel and point DNS at it.</li>
+      <li>A rewrite is not a redirect. The browser URL stays <code>/</code> on the subdomain, while the app internally renders <code>/lovable</code>.</li>
+      <li>A broad rewrite like <code>/:path*</code> can accidentally catch images and framework assets. For this case, exact <code>/</code> is safer.</li>
+      <li>If you wanted many tenant subdomains, you would likely move this into a more general host-routing layer instead of hard-coding one hostname.</li>
+    </ul>
+
+    <h2>Mission tie-in</h2>
+    <p>Your main mission is CSS animation fluency for this portfolio, and this is a useful supporting skill: it lets a visual experiment live at its own clean URL without turning into a separate project. The Lovable background can stay as a focused route while the public URL feels purpose-built.</p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/rewrites">Next.js rewrites documentation</a></li>
+      <li><a href="https://vercel.com/docs/domains/working-with-domains/add-a-domain">Vercel custom domain documentation</a></li>
+      <li><a href="https://vercel.com/docs/domains/managing-dns-records">Vercel DNS records documentation</a></li>
+    </ul>
+    <p class="callout">Ask me followup questions while this is still warm: good ones are “why not middleware?”, “what does CNAME actually do?”, and “how would this change for many subdomains?”</p>
+  </main>
+  <script>
+    const quiz = document.querySelector(".quiz");
+    const feedback = quiz.querySelector(".feedback");
+    quiz.addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const isCorrect = button.dataset.correct === "true";
+      feedback.className = `feedback ${isCorrect ? "good" : "bad"}`;
+      feedback.textContent = isCorrect
+        ? "Correct. If the browser cannot resolve the hostname, Next.js has not even entered the story yet."
+        : "Not that layer first. Next.js only gets a chance after DNS and Vercel route the hostname to the deployment.";
+    });
+  </script>
+</body>
+</html>
