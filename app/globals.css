@@ -385,8 +385,21 @@
   }
 }
 
+@keyframes lovable-portrait-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(-50%, -44%, 0) scale(0.94) rotateX(-10deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(-50%, -50%, 0) scale(1) rotateX(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  [data-slot="rotate-appearance"] {
+  [data-slot="rotate-appearance"],
+  [data-slot="lovable-portrait"] {
     animation: none !important;
     transition: none !important;
   }
