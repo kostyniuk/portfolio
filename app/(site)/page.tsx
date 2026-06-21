@@ -6,7 +6,7 @@ import { Education } from "@/features/education/components/education";
 import { Experience } from "@/features/experience/components/experience";
 import { Contributions } from "@/components/ui/contributions";
 import { Preference } from "@/features/preferences/components/preference";
-import { MainPageLayout } from "./main-page";
+import { MainPageLayout } from "@/app/main-page";
 
 export default function Page() {
   return (

@@ -4,11 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { Header } from "./header";
 import { Analytics } from "@vercel/analytics/next";
 import { Metadata } from "next/types";
-import { ScrollProgress } from "@/components/scroll-progress";
-import { Footer } from "./footer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -79,18 +76,7 @@ export default function RootLayout({
     >
       <body>
         <ThemeProvider>
-          <TooltipProvider>
-            <Header />
-            <ScrollProgress />
-            <div className="page-grid-shell flex min-h-dvh flex-col pt-20 sm:pt-24">
-              <main className="flex-1">
-                <div className="mx-auto flex w-full max-w-5xl flex-col px-3 py-6 text-sm leading-loose sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-                  {children}
-                </div>
-              </main>
-              <Footer />
-            </div>
-          </TooltipProvider>
+          <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
         <Analytics />
       </body>
