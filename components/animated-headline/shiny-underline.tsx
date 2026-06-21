@@ -2,12 +2,14 @@
 
 import { type Key } from "react";
 
-import { DEFAULT_SHIMMER } from "./constants";
+import { DEFAULT_SHIMMER, UNDERLINE_SHIMMER_MS } from "./constants";
 import { usePrefersReducedMotion } from "./use-prefers-reduced-motion";
 
 export interface ShinyUnderlineProps {
   replayKey?: Key;
   shimmerColors?: string[];
+  shimmerDurationMs?: number;
+  repeat?: boolean;
   reduceMotion?: boolean | null;
   className?: string;
 }
@@ -15,6 +17,8 @@ export interface ShinyUnderlineProps {
 export function ShinyUnderline({
   replayKey,
   shimmerColors = DEFAULT_SHIMMER,
+  shimmerDurationMs = UNDERLINE_SHIMMER_MS,
+  repeat = false,
   reduceMotion,
   className = "",
 }: ShinyUnderlineProps) {
@@ -24,7 +28,9 @@ export function ShinyUnderline({
   const rainbow = shimmerColors.map((color, index) => `${color} ${40 + index * 5}%`).join(", ");
   const underlineGradient = `linear-gradient(90deg, ${grey} 0%, ${grey} 35%, ${rainbow}, ${grey} 65%, ${grey} 100%)`;
   const revealAnimation = shouldReduceMotion ? undefined : "hero-underline-reveal 0.36s ease-out 0.5s both";
-  const shimmerAnimation = shouldReduceMotion ? undefined : "hero-underline-shimmer 1.5s linear";
+  const shimmerAnimation = shouldReduceMotion
+    ? undefined
+    : `hero-underline-shimmer ${shimmerDurationMs}ms linear ${repeat ? "infinite" : ""}`;
 
   return (
     <span

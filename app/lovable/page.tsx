@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
+import { UNDERLINE_SHIMMER_MS } from "@/components/animated-headline/constants";
 import { RotateAppearance } from "@/components/animated-headline/rotate-appearance";
+import { ShinyUnderline } from "@/components/animated-headline/shiny-underline";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -30,11 +32,20 @@ function LovableAnimatedText({
 
   return (
     <Component className={className} style={{ perspective: 1200 }}>
-      <span className="flex flex-wrap items-baseline justify-center gap-x-[0.28em] gap-y-2">
+      <span className="flex flex-wrap items-baseline justify-center gap-x-[0.28em] gap-y-2 text-white/85">
         {words.map((word, index) => (
           <RotateAppearance key={`${word}-${index}`} delayMs={startDelayMs + index * staggerMs}>
-            <span key={word} className={cn(emphasizedWords.has(word) && "font-extrabold")}>
+            <span
+              key={word}
+              className={cn(
+                emphasizedWords.has(word) && "font-extrabold text-white",
+                word === "Lovable" && "relative inline-block",
+              )}
+            >
               {word}
+              {word === "Lovable" ? (
+                <ShinyUnderline replayKey={index} shimmerDurationMs={UNDERLINE_SHIMMER_MS} repeat className="h-[2px]" />
+              ) : null}
             </span>
           </RotateAppearance>
         ))}
