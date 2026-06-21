@@ -59,8 +59,8 @@ export default function LovablePage() {
   return (
     <>
       <Header />
-      <main>
-        <section className="relative h-dvh overflow-hidden bg-[#1c1c1c]" aria-label="Lovable Application">
+      <main className="h-dvh overflow-y-auto scroll-smooth snap-y snap-mandatory">
+        <section className="relative h-dvh snap-start overflow-hidden bg-[#1c1c1c]" aria-label="Lovable Application">
           <div
             aria-hidden="true"
             className="absolute"
@@ -97,7 +97,7 @@ export default function LovablePage() {
             staggerMs={10}
           />
         </section>
-        <section className="h-dvh bg-black" />
+        <section className="h-dvh snap-start bg-black" />
       </main>
     </>
   );
