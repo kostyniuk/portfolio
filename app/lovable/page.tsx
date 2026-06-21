@@ -4,7 +4,7 @@ import { RotateAppearance } from "@/components/animated-headline/rotate-appearan
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Lovable Background",
+  title: "Lovable Application",
   robots: {
     index: false,
     follow: false,
@@ -45,7 +45,7 @@ function LovableAnimatedText({
 
 export default function LovablePage() {
   return (
-    <div className="fixed inset-0 z-[9999] overflow-hidden bg-[#1c1c1c]" aria-label="Lovable background">
+    <div className="fixed inset-0 z-[9999] overflow-hidden bg-[#1c1c1c]" aria-label="Lovable Application">
       <div
         aria-hidden="true"
         className="absolute"
