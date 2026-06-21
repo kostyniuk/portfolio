@@ -68,12 +68,7 @@ export default function LovablePage() {
         src="/lovable/me.png"
         alt="Alex"
         data-slot="lovable-portrait"
-        className="absolute h-100 left-1/2 top-1/2 object-contain"
-        style={{
-          animation: "lovable-portrait-reveal 0.82s cubic-bezier(0.2, 0.72, 0.2, 1) 240ms both",
-          transform: "translate3d(-50%, -50%, 0)",
-          transformOrigin: "50% 82%",
-        }}
+        className="lovable-portrait absolute h-100 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 object-contain"
       />
       <LovableAnimatedText
         className="absolute left-1/2 top-[calc(50%_+_13.5rem)] w-[min(90vw,48rem)] -translate-x-1/2 text-center text-2xl font-semibold tracking-normal text-white sm:text-4xl lg:text-5xl"

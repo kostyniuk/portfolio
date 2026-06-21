@@ -388,18 +388,27 @@
 @keyframes lovable-portrait-reveal {
   from {
     opacity: 0;
-    transform: translate3d(-50%, -44%, 0) scale(0.94) rotateX(-10deg);
+    translate: -50% -44%;
+    scale: 0.94;
+    transform: rotateX(-10deg);
   }
 
   to {
     opacity: 1;
-    transform: translate3d(-50%, -50%, 0) scale(1) rotateX(0);
+    translate: -50% -50%;
+    scale: 1;
+    transform: rotateX(0);
   }
+}
+
+.lovable-portrait {
+  transform-origin: 50% 82%;
+  animation: lovable-portrait-reveal 0.82s cubic-bezier(0.2, 0.72, 0.2, 1) 240ms both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   [data-slot="rotate-appearance"],
-  [data-slot="lovable-portrait"] {
+  .lovable-portrait {
     animation: none !important;
     transition: none !important;
   }
