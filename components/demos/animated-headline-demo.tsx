@@ -12,7 +12,7 @@ export function AnimatedHeadlineDemo() {
         <CardDescription>
           A recreation of x.ai&apos;s hero: words flip up in 3D one-by-one, the last word rotates on a ~2s beat, and a
           gradient underline grows on and sends a shot of colour across a grey bar — replaying on every word change.
-          Built on the lessons in <code>lessons/0012–0014</code>.
+          Built on the lessons in <code>lessons/0013-0016</code>.
         </CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-6 py-2">

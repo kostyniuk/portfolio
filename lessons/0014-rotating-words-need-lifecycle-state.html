@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rotating Words Need Lifecycle State</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --good:#0f7a49; --bad:#b42318; --wash:#eef3ff; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(980px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    nav { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; color:var(--muted); }
+    nav a, a { color:var(--accent); font-weight:750; text-decoration:none; }
+    h1 { max-width:12ch; margin:0 0 14px; font-size:clamp(2.2rem, 7vw, 5rem); line-height:.96; letter-spacing:0; }
+    h2 { margin:34px 0 12px; font-size:1.12rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); }
+    p { margin:0 0 14px; color:var(--muted); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    code { background:var(--code); border-radius:5px; padding:.08rem .3rem; color:#201b13; }
+    pre { overflow:auto; border:1px solid var(--line); border-radius:8px; background:#15181f; color:#f7f4ec; padding:16px; line-height:1.5; }
+    .lead { max-width:780px; font-size:1.08rem; }
+    .demo { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:22px; margin:18px 0; }
+    .headline { display:flex; flex-wrap:wrap; align-items:baseline; gap:.28em; font-size:clamp(2rem, 7vw, 4rem); line-height:1.05; font-weight:760; letter-spacing:0; }
+    .slot { position:relative; display:inline-block; min-width:6.2ch; height:1.1em; overflow:hidden; color:var(--accent); vertical-align:baseline; }
+    .word { position:absolute; inset:0; white-space:nowrap; animation:swap 4s cubic-bezier(.7,0,.3,1) infinite; }
+    .word:nth-child(2) { animation-delay:2s; transform:translateY(100%); opacity:0; }
+    @keyframes swap {
+      0%, 35% { transform:translateY(0); opacity:1; }
+      50%, 85% { transform:translateY(-100%); opacity:0; }
+      100% { transform:translateY(-100%); opacity:0; }
+    }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:14px; margin:18px 0; }
+    .card, .quiz { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:17px; }
+    .card strong { display:block; margin-bottom:8px; color:var(--ink); }
+    .timeline { display:grid; gap:12px; counter-reset:step; margin:18px 0; }
+    .timeline .card { counter-increment:step; position:relative; padding-left:58px; }
+    .timeline .card::before { content:counter(step); position:absolute; left:17px; top:17px; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--wash); color:var(--accent); font-weight:800; }
+    .table { width:100%; border-collapse:collapse; margin:18px 0; background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+    .table th, .table td { padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    .table th { color:var(--accent); background:var(--wash); }
+    .table tr:last-child td { border-bottom:0; }
+    button { appearance:none; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; padding:10px 12px; cursor:pointer; text-align:left; }
+    button:hover { border-color:var(--accent); }
+    .answers { display:grid; gap:8px; margin-top:12px; }
+    .feedback { margin-top:12px; font-weight:750; min-height:1.5rem; }
+    .feedback.good { color:var(--good); }
+    .feedback.bad { color:var(--bad); }
+    .callout { border-left:4px solid var(--accent); background:var(--wash); padding:14px 16px; border-radius:0 8px 8px 0; }
+    ul { padding-left:1.2rem; color:var(--muted); }
+    li { margin:.4rem 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .word { animation:none; }
+      .word:nth-child(2) { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="lesson-nav">
+      <a href="0013-motion-or-css-for-component-effects.html">Previous</a>
+      <span>/</span>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <span>/</span>
+      <a href="0015-shiny-underlines-are-mostly-css.html">Next</a>
+    </nav>
+
+    <h1>Rotating Words Need Lifecycle State</h1>
+    <p class="lead">Skill: build a word-rotating component by separating three jobs: choose the current word, preserve the exiting word, and size the slot.</p>
+
+    <h2>The problem it solves</h2>
+    <p>A headline that swaps one word sounds like a CSS keyframe. For a fixed two-word demo, it can be. But a reusable React component receives arbitrary words, changes on a timer, and should let the old word slide out while the new word slides in.</p>
+    <p>React normally removes the previous keyed child immediately. CSS never gets a chance to animate it out, because the node is already gone. Motion's <code>AnimatePresence</code> fills that lifecycle gap: it lets a leaving child remain long enough to run its <code>exit</code> animation.</p>
+
+    <h2>The idea</h2>
+    <div class="grid">
+      <section class="card">
+        <strong>1. The timer chooses.</strong>
+        <p>React state owns the current index: <code>setIndex((i) =&gt; (i + 1) % words.length)</code>.</p>
+      </section>
+      <section class="card">
+        <strong>2. The key tells Motion what changed.</strong>
+        <p>The visible word is keyed by text, so Motion can tell "this child is leaving, this one is entering."</p>
+      </section>
+      <section class="card">
+        <strong>3. The invisible spacer sizes the slot.</strong>
+        <p>An invisible normal-flow span gives the line a baseline and a measurable width. The visible word can then be absolutely positioned and clipped.</p>
+      </section>
+    </div>
+
+    <h2>What React normally does</h2>
+    <p>React uses a child element's <code>key</code> to decide whether it is looking at the same child as before or a new child. If the key changes from <code>"build"</code> to <code>"create"</code>, React treats that as "remove the old child, mount a new child."</p>
+    <p>That is correct for rendering, but bad for exit animation. A removed element cannot animate because it is no longer in the DOM. <code>AnimatePresence</code> is Motion's answer: it watches its direct children, notices when a keyed child is leaving, and keeps it mounted long enough for its <code>exit</code> prop to run.</p>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Piece</th>
+          <th>What it means in plain React</th>
+          <th>What Motion adds</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>key={word}</code></td>
+          <td>"This rendered child represents this exact word."</td>
+          <td>Motion can tell which word is entering and which word is exiting.</td>
+        </tr>
+        <tr>
+          <td><code>initial</code></td>
+          <td>No React equivalent. It is not state; it is an animation start style.</td>
+          <td>The entering word starts below the slot at <code>y: "100%"</code>.</td>
+        </tr>
+        <tr>
+          <td><code>animate</code></td>
+          <td>The target visual state for the currently rendered child.</td>
+          <td>The current word settles at <code>y: "0%"</code> and opacity <code>1</code>.</td>
+        </tr>
+        <tr>
+          <td><code>exit</code></td>
+          <td>React has already removed the child, so there is no place to put this.</td>
+          <td>The leaving word moves upward to <code>y: "-100%"</code> before removal.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Could CSS do it?</h2>
+    <div class="demo">
+      <div class="headline">CSS can <span class="slot"><span class="word">loop</span><span class="word">fake it</span></span></div>
+    </div>
+    <p>Plain CSS can animate a known list if you hard-code the words in markup and write a timeline for their positions. That is useful for decorative, fixed copy. It breaks down for a component whose <code>words</code> prop can be any length, whose width should resize to each word, and whose reduced-motion behavior should branch inside React.</p>
+
+    <h2>Practice</h2>
+    <div class="quiz">
+      <p><strong>Scenario:</strong> the word changes from <code>build</code> to <code>create</code>, but <code>build</code> disappears instantly instead of sliding out. Which missing piece explains it?</p>
+      <div class="answers">
+        <button data-correct="false">The shimmer keyframe is too short.</button>
+        <button data-correct="true">There is no presence layer preserving the exiting keyed child.</button>
+        <button data-correct="false">The slot should use <code>display:grid</code> instead of absolute positioning.</button>
+      </div>
+      <div class="feedback" aria-live="polite"></div>
+    </div>
+
+    <h2>Code pattern</h2>
+    <pre><code>&lt;span className="relative inline-block"&gt;
+  &lt;span ref={measureRef} aria-hidden className="invisible whitespace-nowrap"&gt;
+    {word}
+  &lt;/span&gt;
+
+  &lt;span className="absolute inset-0 overflow-hidden"&gt;
+    &lt;AnimatePresence mode="popLayout" initial={false}&gt;
+      &lt;motion.span
+        key={word}
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: "0%", opacity: 1 }}
+        exit={{ y: "-100%", opacity: 0 }}
+      &gt;
+        {word}
+      &lt;/motion.span&gt;
+    &lt;/AnimatePresence&gt;
+  &lt;/span&gt;
+&lt;/span&gt;</code></pre>
+
+    <h2>How the component runs</h2>
+    <div class="timeline">
+      <section class="card">
+        <strong>The state chooses a word.</strong>
+        <p><code>index</code> starts at <code>0</code>, so <code>word = words[0]</code>. The timer later calls <code>setIndex</code>, which causes React to render with a different word.</p>
+      </section>
+      <section class="card">
+        <strong>The invisible span creates the real line box.</strong>
+        <p>The spacer is normal text in normal flow, just invisible. That means it gives the slot a baseline and measurable width. The visible animated word is absolutely positioned on top of that stable space.</p>
+      </section>
+      <section class="card">
+        <strong>The measured width animates the container.</strong>
+        <p>When the word changes, <code>measureRef.current.offsetWidth</code> reads the new spacer width. The wrapper's inline <code>width</code> changes, and CSS transitions that width so the underline and word slot resize smoothly.</p>
+      </section>
+      <section class="card">
+        <strong>The key changes, so presence starts.</strong>
+        <p>When <code>key={word}</code> changes, <code>AnimatePresence</code> keeps the old word alive for its <code>exit</code> animation while the new keyed word enters.</p>
+      </section>
+      <section class="card">
+        <strong>The overflow clip hides the travel.</strong>
+        <p>The visible word moves from below to center, and the old word moves from center to above. The wrapper uses <code>overflow:hidden</code> so you only see the word while it is inside the slot.</p>
+      </section>
+      <section class="card">
+        <strong>Reduced motion removes the timer.</strong>
+        <p>If the user prefers reduced motion, the component does not start the interval and the Motion props skip sliding. This is calmer than merely making the slide faster.</p>
+      </section>
+    </div>
+
+    <h2>Boundaries</h2>
+    <ul>
+      <li>Use CSS keyframes for fixed marketing copy with known words and no runtime measurement.</li>
+      <li>Use Motion for reusable React word rotators, because React owns the list, timer, keys, and reduced-motion branch.</li>
+      <li>Measure only the thing CSS cannot know. The invisible spacer is enough; the rest can stay declarative.</li>
+      <li>Respect reduced motion by disabling the timer or rendering the settled word. Motion's <code>useReducedMotion()</code> belongs close to the component that starts the motion.</li>
+    </ul>
+
+    <h2>Mission tie-in</h2>
+    <p>The portfolio headline now has a reusable <code>RotateWord</code> piece. This lesson gives you the debug model: if a word swap looks wrong, ask whether the bug is in the timer, the keyed presence layer, or the measured slot.</p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://motion.dev/docs/react-animate-presence">Motion: AnimatePresence</a></li>
+      <li><a href="https://motion.dev/docs/react-animation">Motion: React animation</a></li>
+      <li><a href="https://motion.dev/docs/react-use-reduced-motion">Motion: useReducedMotion</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations">MDN: Using CSS animations</a></li>
+    </ul>
+    <p class="callout">Ask the agent next: "Which part of this word rotator owns the bug: timer, key, presence, or measurement?"</p>
+  </main>
+  <script>
+    document.querySelector(".quiz").addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const feedback = document.querySelector(".feedback");
+      const ok = button.dataset.correct === "true";
+      feedback.className = `feedback ${ok ? "good" : "bad"}`;
+      feedback.textContent = ok
+        ? "Correct. Exit animation needs the old keyed child to remain present briefly."
+        : "Not quite. The failure happens before CSS can animate: the old child is gone.";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Motion or CSS for Component Effects</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --good:#0f7a49; --bad:#b42318; --wash:#eef3ff; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(980px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    nav { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; color:var(--muted); }
+    nav a, a { color:var(--accent); font-weight:750; text-decoration:none; }
+    h1 { max-width:12ch; margin:0 0 14px; font-size:clamp(2.2rem, 7vw, 5rem); line-height:.96; letter-spacing:0; }
+    h2 { margin:34px 0 12px; font-size:1.12rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); }
+    p { margin:0 0 14px; color:var(--muted); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    code { background:var(--code); border-radius:5px; padding:.08rem .3rem; color:#201b13; }
+    pre { overflow:auto; border:1px solid var(--line); border-radius:8px; background:#15181f; color:#f7f4ec; padding:16px; line-height:1.5; }
+    .lead { max-width:780px; font-size:1.08rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px; margin:18px 0; }
+    .card, .quiz, .choice { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:17px; }
+    .card strong { display:block; margin-bottom:8px; color:var(--ink); }
+    .matrix { width:100%; border-collapse:collapse; margin:18px 0; background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+    .matrix th, .matrix td { padding:12px 14px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+    .matrix th { color:var(--accent); background:var(--wash); }
+    .matrix tr:last-child td { border-bottom:0; }
+    .flow { display:grid; gap:12px; margin:18px 0; }
+    .flow .choice { position:relative; padding-left:58px; }
+    .badge { position:absolute; left:17px; top:17px; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--wash); color:var(--accent); font-weight:800; }
+    button { appearance:none; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; padding:10px 12px; cursor:pointer; text-align:left; }
+    button:hover { border-color:var(--accent); }
+    .answers { display:grid; gap:8px; margin-top:12px; }
+    .feedback { margin-top:12px; font-weight:750; min-height:1.5rem; }
+    .feedback.good { color:var(--good); }
+    .feedback.bad { color:var(--bad); }
+    .callout { border-left:4px solid var(--accent); background:var(--wash); padding:14px 16px; border-radius:0 8px 8px 0; }
+    ul { padding-left:1.2rem; color:var(--muted); }
+    li { margin:.4rem 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="lesson-nav">
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <span>/</span>
+      <a href="../reference/0002-css-animation-field-guide.html">CSS field guide</a>
+    </nav>
+
+    <h1>Motion or CSS?</h1>
+    <p class="lead">Skill: decide whether a reusable React animation component belongs in plain CSS or in Motion before writing the component.</p>
+
+    <h2>The problem it solves</h2>
+    <p>CSS is excellent when the browser already knows the trigger: hover, focus, a class change, a scroll timeline, or a named keyframe loop. The trouble starts when the animation depends on React state, keyed children, measured layout, or elements that are about to leave the tree.</p>
+    <p>Without a decision rule, animated components drift into an awkward middle: CSS handles some timing, JavaScript timers handle other timing, refs measure widths, and exit states are patched in later. The component works, but nobody can tell which layer owns the effect.</p>
+
+    <h2>The idea</h2>
+    <p>Use CSS when the stylesheet can answer the whole question. Use Motion when the component needs React information to describe animation state. Motion's React docs describe <code>motion</code> elements as standard elements extended with animation props, and <code>AnimatePresence</code> exists specifically for exit animations when elements are removed from the React tree.</p>
+    <p>A helpful way to phrase it: <strong>CSS is great at reacting to the document; Motion is great at reacting to the component.</strong> CSS can see selectors, pseudo-classes, media queries, and scroll timelines. React can see props, state, keys, timers, refs, and whether a child is being mounted or removed. Motion sits in that React layer and turns those values into animation instructions.</p>
+
+    <h2>The decision flow</h2>
+    <div class="flow">
+      <section class="choice">
+        <span class="badge">1</span>
+        <strong>Can CSS observe the trigger?</strong>
+        <p>If the trigger is <code>:hover</code>, <code>[data-state=open]</code>, <code>@media</code>, a class, or scroll position, start with CSS. If the trigger is React state, a prop, a key change, or a timer inside the component, keep reading.</p>
+      </section>
+      <section class="choice">
+        <span class="badge">2</span>
+        <strong>Does anything need to exit after React removes it?</strong>
+        <p>If yes, CSS alone is fighting React. Once React removes a node, CSS cannot animate it. Use Motion's <code>AnimatePresence</code> so the exiting element remains present until its <code>exit</code> animation finishes.</p>
+      </section>
+      <section class="choice">
+        <span class="badge">3</span>
+        <strong>Does the target value come from runtime measurement?</strong>
+        <p>If the animation target depends on <code>offsetWidth</code>, a ref, a computed layout value, or arbitrary prop data, React is already involved. Motion or React plus CSS is usually clearer than pretending the stylesheet knows those values.</p>
+      </section>
+      <section class="choice">
+        <span class="badge">4</span>
+        <strong>Is the visual texture independent of React?</strong>
+        <p>If the effect is just a repeating shimmer, pulse, gradient sweep, or transform loop, keep that part in CSS even inside a Motion component. Let React trigger it; do not make React draw it.</p>
+      </section>
+    </div>
+
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Plain CSS is enough when...</th>
+          <th>Reach for Motion when...</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>What starts it?</td>
+          <td>A selector, media query, class, scroll timeline, or keyframe clock.</td>
+          <td>React state, keyed children, route state, gesture state, or conditional rendering.</td>
+        </tr>
+        <tr>
+          <td>What must be known?</td>
+          <td>The start and end styles are static or selector-derived.</td>
+          <td>The effect needs measured width, dynamic variants, or values computed from props.</td>
+        </tr>
+        <tr>
+          <td>What is leaving?</td>
+          <td>Nothing leaves, or hiding with CSS is acceptable.</td>
+          <td>A React child is unmounted but still needs an exit animation.</td>
+        </tr>
+        <tr>
+          <td>Reduced motion?</td>
+          <td><code>@media (prefers-reduced-motion: reduce)</code> can swap or remove the animation.</td>
+          <td>A component must branch at runtime with <code>useReducedMotion()</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Practice</h2>
+    <p>Classify each effect. The feedback explains the ownership boundary.</p>
+    <div class="grid">
+      <section class="quiz">
+        <p><strong>Effect:</strong> a button lifts by 2px on hover.</p>
+        <div class="answers">
+          <button data-correct="true">CSS</button>
+          <button data-correct="false">Motion</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </section>
+      <section class="quiz">
+        <p><strong>Effect:</strong> a rotating headline word exits upward before the next word enters.</p>
+        <div class="answers">
+          <button data-correct="false">CSS</button>
+          <button data-correct="true">Motion</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </section>
+      <section class="quiz">
+        <p><strong>Effect:</strong> an underline sends one gradient shimmer across a fixed-width word.</p>
+        <div class="answers">
+          <button data-correct="true">CSS</button>
+          <button data-correct="false">Motion</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </section>
+      <section class="quiz">
+        <p><strong>Effect:</strong> a word slot smoothly resizes to whatever string React renders next.</p>
+        <div class="answers">
+          <button data-correct="false">CSS only</button>
+          <button data-correct="true">Motion or React plus CSS</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <h2>Code shape</h2>
+    <p>The split headline component follows the rule: CSS owns the reusable shimmer keyframe; Motion owns the React-aware reveal and keyed word swap.</p>
+    <pre><code>export function AnimatedHeadline(props) {
+  return (
+    &lt;motion.h2 style={{ perspective: 1200 }}&gt;
+      &lt;RotateAppearance&gt;Frontier&lt;/RotateAppearance&gt;
+      &lt;RotateWord words={["build", "create"]} /&gt;
+    &lt;/motion.h2&gt;
+  );
+}</code></pre>
+
+    <h2>How this maps to the headline</h2>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Effect</th>
+          <th>Why not just CSS?</th>
+          <th>Chosen owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Word-by-word flip-up reveal</td>
+          <td>CSS can do the visual reveal, but the composed React component already calculates delay from props.</td>
+          <td><code>RotateAppearance</code> uses Motion with a <code>delayMs</code> prop.</td>
+        </tr>
+        <tr>
+          <td>Rotating word swap</td>
+          <td>The word list, timer, key changes, exit animation, and measured width all live in React.</td>
+          <td><code>RotateWord</code> uses React state, refs, and Motion presence.</td>
+        </tr>
+        <tr>
+          <td>Shiny underline sweep</td>
+          <td>CSS can fully draw the gradient and move its background position.</td>
+          <td><code>ShinyUnderline</code> keeps the shimmer keyframe in CSS; React only replays it with a key.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Boundaries</h2>
+    <ul>
+      <li>Do not use Motion because a thing moves. Use it because React owns information CSS cannot see cleanly.</li>
+      <li>Do not force CSS to simulate unmounting. CSS cannot animate a node after React has removed it; Motion's <code>AnimatePresence</code> keeps it around for the exit animation.</li>
+      <li>Do not put every visual detail into Motion props. Static repeated effects like a shimmer keyframe remain clearer in CSS.</li>
+      <li>Reduced motion is not optional polish. CSS has <code>prefers-reduced-motion</code>; Motion has <code>useReducedMotion()</code>. Pick the one that matches where the effect lives.</li>
+    </ul>
+
+    <h2>Mission tie-in</h2>
+    <p>Your portfolio now has animated UI primitives that are not purely CSS primitives. The mission becomes sharper: keep simple animation in CSS, but when a component's state, measurement, or lifecycle owns the animation, use Motion deliberately and leave a CSS comparison in the lesson.</p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://motion.dev/docs/react-motion-component">Motion: React motion component</a></li>
+      <li><a href="https://motion.dev/docs/react-animate-presence">Motion: AnimatePresence</a></li>
+      <li><a href="https://motion.dev/docs/react-use-reduced-motion">Motion: useReducedMotion</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using_for_accessibility">MDN: media queries for accessibility</a></li>
+    </ul>
+    <p class="callout">Ask the agent next: "Which layer should own this specific animation?" Bring the component code, not just the visual description.</p>
+  </main>
+  <script>
+    const messages = [
+      "Correct. CSS already owns that trigger and can interpolate the two states.",
+      "Correct. The word is a keyed React child with an exit state, so Motion owns the lifecycle animation.",
+      "Correct. A named CSS keyframe is a clean fit when the shimmer path is fixed.",
+      "Correct. CSS can animate width, but React still has to know or measure the target width."
+    ];
+    document.querySelectorAll(".quiz").forEach((quiz, index) => {
+      const feedback = quiz.querySelector(".feedback");
+      quiz.addEventListener("click", (event) => {
+        const button = event.target.closest("button");
+        if (!button) return;
+        const ok = button.dataset.correct === "true";
+        feedback.className = `feedback ${ok ? "good" : "bad"}`;
+        feedback.textContent = ok ? messages[index] : "Not quite. Ask which layer can observe the trigger and the needed state.";
+      });
+    });
+  </script>
+</body>
+</html>

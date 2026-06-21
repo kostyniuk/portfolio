@@ -43,15 +43,79 @@
       "type": "registry:component",
       "title": "Animated Headline",
       "description": "A headline that reveals word-by-word with a 3D flip-up, rotates its last word on a timer, and draws a gradient shimmer underline that resizes to each word and replays on every swap. A recreation of the x.ai hero effect.",
-      "dependencies": ["motion"],
       "files": [
         {
           "path": "components/animated-headline.tsx",
           "type": "registry:component",
           "target": "components/animated-headline.tsx"
+        },
+        {
+          "path": "components/animated-headline/constants.ts",
+          "type": "registry:file",
+          "target": "components/animated-headline/constants.ts"
+        },
+        {
+          "path": "components/animated-headline/use-prefers-reduced-motion.ts",
+          "type": "registry:file",
+          "target": "components/animated-headline/use-prefers-reduced-motion.ts"
+        },
+        {
+          "path": "components/animated-headline/rotate-appearance.tsx",
+          "type": "registry:component",
+          "target": "components/animated-headline/rotate-appearance.tsx"
+        },
+        {
+          "path": "components/animated-headline/rotate-word.tsx",
+          "type": "registry:component",
+          "target": "components/animated-headline/rotate-word.tsx"
+        },
+        {
+          "path": "components/animated-headline/shiny-underline.tsx",
+          "type": "registry:component",
+          "target": "components/animated-headline/shiny-underline.tsx"
         }
       ],
       "css": {
+        "@keyframes hero-word-reveal": {
+          "from": {
+            "opacity": "0",
+            "transform": "translateY(45%) rotateX(-40deg)"
+          },
+          "to": {
+            "opacity": "1",
+            "transform": "translateY(0) rotateX(0)"
+          }
+        },
+        "@keyframes hero-word-enter": {
+          "from": {
+            "opacity": "0",
+            "transform": "translateY(100%)"
+          },
+          "to": {
+            "opacity": "1",
+            "transform": "translateY(0)"
+          }
+        },
+        "@keyframes hero-word-exit": {
+          "from": {
+            "opacity": "1",
+            "transform": "translateY(0)"
+          },
+          "to": {
+            "opacity": "0",
+            "transform": "translateY(-100%)"
+          }
+        },
+        "@keyframes hero-underline-reveal": {
+          "from": {
+            "opacity": "0",
+            "transform": "scaleX(0)"
+          },
+          "to": {
+            "opacity": "1",
+            "transform": "scaleX(1)"
+          }
+        },
         "@keyframes hero-underline-shimmer": {
           "from": {
             "background-position": "100% 50%"
@@ -61,7 +125,7 @@
           }
         }
       },
-      "docs": "Render <AnimatedHeadline prefix=\"Engineering things people love to\" words={[\"build\", \"design\", \"ship\", \"use\"]} />. The prefix words flip up in sequence on mount; the last word cycles through `words` on a ~2s beat with a gradient shimmer underline that resizes to each word. Honours prefers-reduced-motion by rendering the settled state. Requires the hero-underline-shimmer keyframe (installed automatically via the css field)."
+      "docs": "Render <AnimatedHeadline prefix=\"Engineering things people love to\" words={[\"build\", \"design\", \"ship\", \"use\"]} /> for the composed effect, or import the named pieces <RotateAppearance />, <RotateWord />, and <ShinyUnderline /> separately. All animation is CSS-owned: prefix words flip up with keyframes, the rotating word uses CSS enter/exit keyframes while React briefly keeps the exiting word rendered, and the underline uses CSS reveal/shimmer keyframes. Honours prefers-reduced-motion by rendering the settled state. Requires the hero-word and hero-underline keyframes (installed automatically via the css field)."
     }
   ]
 }

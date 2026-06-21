@@ -82,6 +82,23 @@
   animation-duration: 420ms;
 }</code></pre>
       </section>
+      <section class="card">
+        <h2>Motion Component</h2>
+        <p>Use when animation state belongs to React: keyed children, exit animations, measured layout, or prop-driven timing.</p>
+        <pre><code>&lt;motion.span
+  initial={{ y: "100%", opacity: 0 }}
+  animate={{ y: "0%", opacity: 1 }}
+  exit={{ y: "-100%", opacity: 0 }}
+/&gt;</code></pre>
+      </section>
+      <section class="card">
+        <h2>CSS vs Motion Rule</h2>
+        <p>CSS owns selectors, keyframes, media queries, and scroll timelines. Motion owns React lifecycle, presence, and runtime values.</p>
+        <pre><code>// Good split:
+CSS: @keyframes shimmer
+React: key={wordIndex}
+Motion: initial/animate/exit</code></pre>
+      </section>
     </div>
     <h2 style="margin-top: 28px;">Sources</h2>
     <ul>
@@ -89,6 +106,8 @@
       <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transitions/Using_CSS_transitions">MDN: Using CSS transitions</a></li>
       <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations">MDN: CSS scroll-driven animations</a></li>
       <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API">MDN: View Transition API</a></li>
+      <li><a href="https://motion.dev/docs/react-motion-component">Motion: React motion component</a></li>
+      <li><a href="https://motion.dev/docs/react-animate-presence">Motion: AnimatePresence</a></li>
     </ul>
   </main>
 </body>

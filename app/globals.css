@@ -361,6 +361,8 @@
   }
 }
 
+/* AnimatedHeadline: CSS owns all motion. React only splits words, rotates state,
+   measures the current word width, and briefly keeps the exiting word rendered. */
 @keyframes hero-word-reveal {
   from {
     opacity: 0;
@@ -372,10 +374,39 @@
   }
 }
 
-/* AnimatedHeadline: a single "shot" of colour slipping across the grey underline.
-   The gradient is 4x the bar width (background-size:400%), so most of the bar shows
-   grey; moving background-position sweeps the rainbow band through once. Re-triggered
-   by remounting the element (React key) on each word change. */
+@keyframes hero-word-enter {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-word-exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes hero-underline-reveal {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
 @keyframes hero-underline-shimmer {
   from {
     background-position: 100% 50%;
@@ -408,6 +439,10 @@
 
 @media (prefers-reduced-motion: reduce) {
   [data-slot="rotate-appearance"],
+  [data-slot="rotate-word"],
+  [data-slot="rotate-word"] *,
+  [data-slot="shiny-underline"],
+  [data-slot="shiny-underline"] *,
   .lovable-portrait {
     animation: none !important;
     transition: none !important;
