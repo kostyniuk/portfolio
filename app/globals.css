@@ -361,6 +361,17 @@
   }
 }
 
+@keyframes hero-word-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(45%) rotateX(-40deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
 /* AnimatedHeadline: a single "shot" of colour slipping across the grey underline.
    The gradient is 4x the bar width (background-size:400%), so most of the bar shows
    grey; moving background-position sweeps the rainbow band through once. Re-triggered
@@ -371,6 +382,13 @@
   }
   to {
     background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="rotate-appearance"] {
+    animation: none !important;
+    transition: none !important;
   }
 }
 

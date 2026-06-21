@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rotate Appearance as a Reusable Reveal</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --good:#0f7a49; --bad:#b42318; --wash:#eef3ff; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(980px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    nav { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; color:var(--muted); }
+    nav a, a { color:var(--accent); font-weight:750; text-decoration:none; }
+    h1 { max-width:12ch; margin:0 0 14px; font-size:clamp(2.2rem, 7vw, 5rem); line-height:.96; letter-spacing:0; }
+    h2 { margin:34px 0 12px; font-size:1.12rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); }
+    p { margin:0 0 14px; color:var(--muted); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    code { background:var(--code); border-radius:5px; padding:.08rem .3rem; color:#201b13; }
+    pre { overflow:auto; border:1px solid var(--line); border-radius:8px; background:#15181f; color:#f7f4ec; padding:16px; line-height:1.5; }
+    .lead { max-width:780px; font-size:1.08rem; }
+    .demo { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:24px; margin:18px 0; perspective:900px; }
+    .words { display:flex; flex-wrap:wrap; gap:.28em; font-size:clamp(2.1rem, 8vw, 4.6rem); line-height:1.05; font-weight:780; letter-spacing:0; }
+    .words span { display:inline-block; transform-origin:50% 100%; animation:flip .72s cubic-bezier(.2,.72,.2,1) both; animation-delay:calc((sibling-index() - 1) * 110ms); }
+    @keyframes flip { from { opacity:0; transform:translateY(45%) rotateX(-40deg); } to { opacity:1; transform:translateY(0) rotateX(0); } }
+    @media (prefers-reduced-motion: reduce) { .words span { animation:none; } }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:14px; margin:18px 0; }
+    .card, .quiz { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:17px; }
+    .card strong { display:block; margin-bottom:8px; color:var(--ink); }
+    .walkthrough { display:grid; gap:12px; counter-reset:step; margin:18px 0; }
+    .walkthrough .card { counter-increment:step; position:relative; padding-left:58px; }
+    .walkthrough .card::before { content:counter(step); position:absolute; left:17px; top:17px; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--wash); color:var(--accent); font-weight:800; }
+    .compare { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:18px 0; }
+    @media (max-width:760px) { .compare { grid-template-columns:1fr; } }
+    button { appearance:none; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; padding:10px 12px; cursor:pointer; text-align:left; }
+    button:hover { border-color:var(--accent); }
+    .answers { display:grid; gap:8px; margin-top:12px; }
+    .feedback { margin-top:12px; font-weight:750; min-height:1.5rem; }
+    .feedback.good { color:var(--good); }
+    .feedback.bad { color:var(--bad); }
+    .callout { border-left:4px solid var(--accent); background:var(--wash); padding:14px 16px; border-radius:0 8px 8px 0; }
+    ul { padding-left:1.2rem; color:var(--muted); }
+    li { margin:.4rem 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="lesson-nav">
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <span>/</span>
+      <a href="../reference/0002-css-animation-field-guide.html">Reference</a>
+    </nav>
+
+    <h1>Rotate Appearance Is a Wrapper</h1>
+    <p class="lead">Skill: package a 3D flip-up entrance as a reusable wrapper while keeping the stagger decision outside the child content.</p>
+
+    <h2>The problem it solves</h2>
+    <p>A headline reveal is made of repeated entrance animations. If every word owns its own timing, the code becomes a pile of almost-identical spans. If the parent owns all timing, the child can become too magical to reuse elsewhere.</p>
+    <p>The important discovery: this particular effect does not need Motion. CSS can do the reveal cleanly once every word is wrapped in its own element. <code>RotateAppearance</code> is useful only if you want a React component API for that wrapper.</p>
+
+    <h2>The idea</h2>
+    <p>The effect has two jobs. First, make each word into a transformable box. Second, run the same flip-up keyframe on every word, with a delay derived from each word's sibling position.</p>
+    <p>CSS can own both jobs if the markup is shaped correctly. The browser already knows the DOM order, and <code>sibling-index()</code> can read that order for direct element siblings. No React state, measurement, or exit lifecycle is needed for this entrance reveal.</p>
+    <div class="demo">
+      <div class="words" aria-label="A CSS version of the same reveal">
+        <span>Frontier</span>
+        <span>models</span>
+        <span>for</span>
+        <span>builders</span>
+      </div>
+    </div>
+
+    <h2>The required markup</h2>
+    <p>CSS cannot animate raw words separately inside a plain text node. This does <strong>not</strong> give CSS four things to count:</p>
+    <pre><code>&lt;h1 class="headline"&gt;Frontier models for builders&lt;/h1&gt;</code></pre>
+    <p>This does, because each word is now an element sibling:</p>
+    <pre><code>&lt;h1 class="headline"&gt;
+  &lt;span class="word"&gt;Frontier&lt;/span&gt;
+  &lt;span class="word"&gt;models&lt;/span&gt;
+  &lt;span class="word"&gt;for&lt;/span&gt;
+  &lt;span class="word"&gt;builders&lt;/span&gt;
+&lt;/h1&gt;</code></pre>
+    <p><code>sibling-index()</code> counts those <code>.word</code> spans because they share the same parent. It does not count human-language words. So the lesson's first rule is: <strong>split the text into word elements before trying to stagger it</strong>.</p>
+
+    <h2>Style by style</h2>
+    <div class="walkthrough">
+      <section class="card">
+        <strong><code>.headline { perspective: 1200px; }</code></strong>
+        <p><code>rotateX()</code> is a 3D transform. Perspective is the camera distance that makes the rotation read as depth instead of a flat squash. Put it on the parent so all words share the same camera.</p>
+      </section>
+      <section class="card">
+        <strong><code>.word { display: inline-block; }</code></strong>
+        <p>A plain inline text run is not a reliable transform target. <code>inline-block</code> keeps the word flowing like text, but gives it its own box so <code>translateY</code> and <code>rotateX</code> can move it.</p>
+      </section>
+      <section class="card">
+        <strong><code>transform-origin: 50% 100%;</code></strong>
+        <p>The first value is horizontal center. The second is vertical bottom. This makes each word flip up from its baseline area instead of rotating around its center.</p>
+      </section>
+      <section class="card">
+        <strong><code>animation: flip .72s cubic-bezier(...) both;</code></strong>
+        <p><code>flip</code> names the keyframes. <code>.72s</code> is the duration. The easing starts quickly and settles softly. <code>both</code> applies the first keyframe before the animation starts and keeps the last keyframe after it ends, avoiding a flash of the final style before delayed words animate.</p>
+      </section>
+      <section class="card">
+        <strong><code>animation-delay: calc((sibling-index() - 1) * 110ms);</code></strong>
+        <p><code>sibling-index()</code> is 1-based: first word is <code>1</code>, second is <code>2</code>. Subtracting <code>1</code> makes the first delay <code>0ms</code>. Then every next word starts <code>110ms</code> later.</p>
+      </section>
+    </div>
+
+    <h2>The complete CSS</h2>
+    <pre><code>.headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.28em;
+  perspective: 1200px;
+}
+
+.word {
+  display: inline-block;
+  transform-origin: 50% 100%;
+  animation: flip 0.72s cubic-bezier(0.2, 0.72, 0.2, 1) both;
+  animation-delay: calc((sibling-index() - 1) * 110ms);
+}
+
+@keyframes flip {
+  from {
+    opacity: 0;
+    transform: translateY(45%) rotateX(-40deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    animation: none;
+  }
+}</code></pre>
+
+    <h2>What each keyframe value does</h2>
+    <div class="walkthrough">
+      <section class="card">
+        <strong><code>opacity: 0</code> to <code>1</code></strong>
+        <p>The word fades in while it travels. Without opacity, the rotated word can be readable too early and look like it is sliding from nowhere.</p>
+      </section>
+      <section class="card">
+        <strong><code>translateY(45%)</code> to <code>0</code></strong>
+        <p>The word begins 45% of its own height below its final position. Percentages in transforms are based on the transformed element's own size, so this scales with the text size.</p>
+      </section>
+      <section class="card">
+        <strong><code>rotateX(-40deg)</code> to <code>0</code></strong>
+        <p>The word starts tilted backward around the X axis and settles flat. The parent perspective makes that tilt visible as a flip rather than a flat distortion.</p>
+      </section>
+    </div>
+
+    <h2>How React can generate the same markup</h2>
+    <p>If the headline text comes from a string prop, React can still split it into spans. That does not require Motion:</p>
+    <pre><code>const prefixWords = prefix.trim().split(/\s+/).filter(Boolean);</code></pre>
+    <p>Then render one <code>.word</code> span per word and let CSS handle the delay:</p>
+    <pre><code>{prefixWords.map((word, index) =&gt; (
+  &lt;span
+    key={`${word}-${index}`}
+    className="word"
+  &gt;
+    {word}
+  &lt;/span&gt;
+))}</code></pre>
+    <p>This is the best version when the reveal is just an entrance animation. React creates the word elements; CSS animates them.</p>
+
+    <h2>If <code>sibling-index()</code> support is too new</h2>
+    <p>The fallback is still CSS animation. React only provides the number as a CSS custom property:</p>
+    <pre><code>{prefixWords.map((word, index) =&gt; (
+  &lt;span
+    key={`${word}-${index}`}
+    className="word"
+    style={{ "--i": index + 1 }}
+  &gt;
+    {word}
+  &lt;/span&gt;
+))}</code></pre>
+    <p>Then replace the delay line with:</p>
+    <pre><code>.word {
+  animation-delay: calc((var(--i) - 1) * 110ms);
+}</code></pre>
+    <p>The animation remains CSS-owned. The only difference is where the index comes from: the browser's sibling tree, or React's array index.</p>
+
+    <h2>Optional Motion translation</h2>
+    <p>If you already use Motion in the component, the same styles translate into Motion values. This is not necessary for this reveal; it is just the equivalent API shape:</p>
+    <pre><code>&lt;motion.span
+  className="word"
+  style={{ transformOrigin: "50% 100%" }}
+  initial={{ opacity: 0, y: "45%", rotateX: -40 }}
+  animate={{ opacity: 1, y: "0%", rotateX: 0 }}
+  transition={{
+    duration: 0.72,
+    ease: [0.2, 0.72, 0.2, 1],
+    delay: index * 0.11,
+  }}
+&gt;
+  {word}
+&lt;/motion.span&gt;</code></pre>
+    <p>Notice that Motion still does not split the words. React still maps over <code>prefixWords</code>. The only difference is where the animation declarations live: CSS keyframes and <code>sibling-index()</code>, or Motion props and <code>index * 0.11</code>.</p>
+
+    <h2>Practice</h2>
+    <div class="quiz">
+      <p><strong>Scenario:</strong> the reveal is applied to <code>&lt;h1&gt;Frontier models for builders&lt;/h1&gt;</code>, but every word moves as one block. What is missing?</p>
+      <div class="answers">
+        <button data-correct="true">Each word must be wrapped in its own sibling element, like <code>&lt;span class="word"&gt;Frontier&lt;/span&gt;</code>.</button>
+        <button data-correct="false">The headline needs a larger <code>gap</code>.</button>
+        <button data-correct="false">The keyframe needs more percentage stops.</button>
+      </div>
+      <div class="feedback" aria-live="polite"></div>
+    </div>
+
+    <h2>How the CSS runs</h2>
+    <div class="walkthrough">
+      <section class="card">
+        <strong>The browser parses the word spans.</strong>
+        <p>Each <code>.word</code> is a direct child of <code>.headline</code>, so each one has its own <code>sibling-index()</code> value.</p>
+      </section>
+      <section class="card">
+        <strong>The animation delay is calculated per word.</strong>
+        <p>The first word gets <code>(1 - 1) * 110ms = 0ms</code>. The second gets <code>(2 - 1) * 110ms = 110ms</code>. The third gets <code>220ms</code>.</p>
+      </section>
+      <section class="card">
+        <strong><code>both</code> prevents the delayed flash.</strong>
+        <p>Before a delayed word starts, it holds the <code>from</code> keyframe: hidden, lowered, and rotated. After it finishes, it keeps the <code>to</code> keyframe.</p>
+      </section>
+      <section class="card">
+        <strong>The parent perspective makes the 3D feel shared.</strong>
+        <p>All words rotate within the same parent camera, so the headline feels like one choreographed reveal rather than disconnected spins.</p>
+      </section>
+      <section class="card">
+        <strong>Reduced motion skips the journey.</strong>
+        <p>The media query removes the animation entirely. The words render in their normal settled positions.</p>
+      </section>
+    </div>
+
+    <h2>Boundaries</h2>
+    <ul>
+      <li>Use CSS for this reveal when each word can be rendered as a direct sibling element.</li>
+      <li>Use a fallback delay variable, like <code>style={{ "--i": index + 1 }}</code>, if <code>sibling-index()</code> support is not acceptable for the audience.</li>
+      <li>Use Motion only if this reveal needs to participate in a larger Motion choreography. The reveal itself does not require it.</li>
+      <li>Keep perspective on the parent when multiple children should share the same 3D space.</li>
+    </ul>
+
+    <h2>Mission tie-in</h2>
+    <p>This is the component version of your first CSS lessons. The old lesson taught "derive stagger from structure"; this one applies that directly to a real headline effect. The practical rule for this portfolio: use CSS for this word reveal, and only add component logic when the effect needs state, measurement, or lifecycle timing.</p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations">MDN: Using CSS animations</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/sibling-index">MDN: sibling-index()</a></li>
+      <li><a href="https://motion.dev/docs/react-motion-component">Motion: React motion component</a></li>
+    </ul>
+    <p class="callout">Ask the agent next: "Can this animated component be reduced to markup plus CSS?" This reveal is a good example where the answer is yes.</p>
+  </main>
+  <script>
+    document.querySelector(".quiz").addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const feedback = document.querySelector(".feedback");
+      const ok = button.dataset.correct === "true";
+      feedback.className = `feedback ${ok ? "good" : "bad"}`;
+      feedback.textContent = ok
+        ? "Correct. CSS needs one transformable sibling element per word."
+        : "Not quite. The key issue is that raw text does not give CSS separate word elements to stagger.";
+    });
+  </script>
+</body>
+</html>
