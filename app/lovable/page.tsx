@@ -5,6 +5,7 @@ import { RotateAppearance } from "@/components/animated-headline/rotate-appearan
 import { ShinyUnderline } from "@/components/animated-headline/shiny-underline";
 import { cn } from "@/lib/utils";
 import { Header } from "@/app/header";
+import { SpriteField } from "@/components/sprite-field";
 
 export const metadata: Metadata = {
   title: "Lovable Application",
@@ -97,7 +98,17 @@ export default function LovablePage() {
             staggerMs={10}
           />
         </section>
-        <section className="h-dvh snap-start bg-black" />
+        <section className="relative h-dvh snap-start overflow-hidden bg-black">
+          <SpriteField
+            src="/lovable/lovable-logo-icon.svg"
+            size={42}
+            density={0.85}
+            speed={0.2}
+            background="#000000"
+            pushRadius={170}
+            pushForce={5000}
+          />
+        </section>
       </main>
     </>
   );
