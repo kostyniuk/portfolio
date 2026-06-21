@@ -10,3 +10,4 @@
 - Keep the interactive demos and quizzes; the prose wraps them, it doesn't replace them.
 - Lessons carry prev/next/index navigation in a footer (`nav.lesson-nav`).
 - Shared visual language: paper background `#faf8f2`, accent `#255fd7`, bordered white panels, big clamp() headline.
+- For component animation lessons, especially components using Motion, compare against plain CSS explicitly. Teach the ownership split: CSS for selector/keyframe/media-query/scroll effects; Motion for React lifecycle, keyed exits, measured values, prop-driven timing, and runtime reduced-motion decisions.

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shiny Underlines Are Mostly CSS</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --good:#0f7a49; --bad:#b42318; --wash:#eef3ff; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(980px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    nav { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; color:var(--muted); }
+    nav a, a { color:var(--accent); font-weight:750; text-decoration:none; }
+    h1 { max-width:12ch; margin:0 0 14px; font-size:clamp(2.2rem, 7vw, 5rem); line-height:.96; letter-spacing:0; }
+    h2 { margin:34px 0 12px; font-size:1.12rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); }
+    p { margin:0 0 14px; color:var(--muted); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    code { background:var(--code); border-radius:5px; padding:.08rem .3rem; color:#201b13; }
+    pre { overflow:auto; border:1px solid var(--line); border-radius:8px; background:#15181f; color:#f7f4ec; padding:16px; line-height:1.5; }
+    .lead { max-width:780px; font-size:1.08rem; }
+    .demo { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:24px; margin:18px 0; }
+    .sample { position:relative; display:inline-block; font-size:clamp(2.3rem, 9vw, 5rem); line-height:1.05; font-weight:780; letter-spacing:0; }
+    .sample::after { content:""; position:absolute; left:0; right:0; bottom:-.08em; height:4px; border-radius:999px; background-image:linear-gradient(90deg, color-mix(in oklch, currentColor 28%, transparent) 0%, color-mix(in oklch, currentColor 28%, transparent) 35%, #6366f1 40%, #a855f7 45%, #ec4899 50%, #f97316 55%, #eab308 60%, color-mix(in oklch, currentColor 28%, transparent) 65%, color-mix(in oklch, currentColor 28%, transparent) 100%); background-size:400% 100%; animation:shine 1.5s linear infinite; }
+    @keyframes shine { from { background-position:100% 50%; } to { background-position:0% 50%; } }
+    @media (prefers-reduced-motion: reduce) { .sample::after { animation:none; background-position:0% 50%; } }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:14px; margin:18px 0; }
+    .card, .quiz { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:17px; }
+    .card strong { display:block; margin-bottom:8px; color:var(--ink); }
+    .walkthrough { display:grid; gap:12px; counter-reset:step; margin:18px 0; }
+    .walkthrough .card { counter-increment:step; position:relative; padding-left:58px; }
+    .walkthrough .card::before { content:counter(step); position:absolute; left:17px; top:17px; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--wash); color:var(--accent); font-weight:800; }
+    button { appearance:none; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; padding:10px 12px; cursor:pointer; text-align:left; }
+    button:hover { border-color:var(--accent); }
+    .answers { display:grid; gap:8px; margin-top:12px; }
+    .feedback { margin-top:12px; font-weight:750; min-height:1.5rem; }
+    .feedback.good { color:var(--good); }
+    .feedback.bad { color:var(--bad); }
+    .callout { border-left:4px solid var(--accent); background:var(--wash); padding:14px 16px; border-radius:0 8px 8px 0; }
+    ul { padding-left:1.2rem; color:var(--muted); }
+    li { margin:.4rem 0; }
+    .debug-stack { display:grid; gap:18px; margin:18px 0; }
+    .debug-row { display:grid; gap:8px; }
+    .debug-label { color:var(--ink); font-weight:800; }
+    .debug-note { color:var(--muted); font-size:.94rem; }
+    .gradient-debug {
+      --shine:linear-gradient(90deg, color-mix(in oklch, currentColor 28%, transparent) 0%, color-mix(in oklch, currentColor 28%, transparent) 35%, #6366f1 40%, #a855f7 45%, #ec4899 50%, #f97316 55%, #eab308 60%, color-mix(in oklch, currentColor 28%, transparent) 65%, color-mix(in oklch, currentColor 28%, transparent) 100%);
+      color:#404654;
+    }
+    .debug-full {
+      width:min(100%, 760px);
+      height:26px;
+      border-radius:999px;
+      border:1px dashed #a8a29e;
+      background-image:var(--shine);
+      background-size:100% 100%;
+    }
+    .debug-windows { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:12px; }
+    .debug-window {
+      display:grid;
+      gap:8px;
+      color:var(--muted);
+      font-size:.92rem;
+    }
+    .debug-window::before {
+      content:"";
+      display:block;
+      height:22px;
+      border-radius:999px;
+      border:1px solid #a8a29e;
+      background-image:var(--shine);
+      background-size:400% 100%;
+      background-position:var(--pos) 50%;
+    }
+    .debug-window[data-pos="100"] { --pos:100%; }
+    .debug-window[data-pos="50"] { --pos:50%; }
+    .debug-window[data-pos="0"] { --pos:0%; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="lesson-nav">
+      <a href="0014-rotating-words-need-lifecycle-state.html">Previous</a>
+      <span>/</span>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <span>/</span>
+      <a href="0016-rotate-appearance-as-a-reusable-reveal.html">Next</a>
+      <span>/</span>
+      <a href="../reference/0002-css-animation-field-guide.html">Reference</a>
+    </nav>
+
+    <h1>Shiny Underlines Are Mostly CSS</h1>
+    <p class="lead">Skill: keep decorative shimmer motion in CSS, and use React or Motion only to replay or mount it at the right time.</p>
+
+    <h2>The problem it solves</h2>
+    <p>It is tempting to put every animated detail of a Motion component into Motion props. That makes simple decorative effects harder to read. A gradient underline shimmer is not really a React lifecycle problem: it is a background image moving across a bar.</p>
+    <p>The only React-shaped requirement is replaying the shimmer when the word changes. CSS can draw and animate the bar. React can remount the inner span with a new <code>key</code>. Motion can optionally animate the underline growing in on first appearance.</p>
+
+    <h2>The idea</h2>
+    <p>A shimmer underline has two layers of ownership:</p>
+    <div class="grid">
+      <section class="card">
+        <strong>CSS owns the texture.</strong>
+        <p>The underline is one wide linear gradient. Most of it is grey; the colored band sits in the middle. Moving <code>background-position</code> sends the band across the visible bar.</p>
+      </section>
+      <section class="card">
+        <strong>React owns the replay.</strong>
+        <p>Changing a React <code>key</code> remounts the inner element, so the CSS animation starts again without manual timer code.</p>
+      </section>
+      <section class="card">
+        <strong>Motion owns the entrance.</strong>
+        <p>If the underline should grow from zero on mount, a tiny <code>scaleX</code> animation is appropriate because it belongs to the component's first render.</p>
+      </section>
+    </div>
+
+    <h2>Could CSS do it?</h2>
+    <div class="demo">
+      <span class="sample">discover</span>
+    </div>
+    <p>Yes. The shimmer itself is a perfect CSS keyframe. CSS becomes awkward only when the replay must line up with a React word index. That is why the component keeps <code>@keyframes hero-underline-shimmer</code> in global CSS but passes <code>replayKey={index}</code> from the word rotator.</p>
+
+    <h2>How the shimmer is built</h2>
+    <div class="walkthrough">
+      <section class="card">
+        <strong>The underline is a clipped bar.</strong>
+        <p>The outer element is absolutely positioned under the word with <code>left: 0</code> and <code>right: 0</code>. It inherits the word slot width, so when the rotating word gets wider or narrower, the underline follows.</p>
+      </section>
+      <section class="card">
+        <strong>The gradient is wider than the bar.</strong>
+        <p><code>background-size: 400% 100%</code> means the full gradient image is four times wider than the visible underline. The bar is only a window looking at part of that gradient.</p>
+      </section>
+      <section class="card">
+        <strong>Most of the gradient is grey.</strong>
+        <p>The colored stops occupy only the middle of the gradient. The start and end are grey, so the underline reads as a calm grey rule except while the colored band passes through.</p>
+      </section>
+      <section class="card">
+        <strong>The animation moves the window.</strong>
+        <p>The keyframe changes <code>background-position</code> from <code>100% 50%</code> to <code>0% 50%</code>. Nothing in the DOM moves. Only the visible slice of the oversized background changes.</p>
+      </section>
+      <section class="card">
+        <strong>The React key restarts the CSS clock.</strong>
+        <p>CSS animations start when an element is created. When React renders <code>&lt;span key={index} /&gt;</code> with a new key, React replaces that inner span, so the CSS animation starts from the beginning again.</p>
+      </section>
+      <section class="card">
+        <strong>Motion only grows the container.</strong>
+        <p>The outer <code>motion.span</code> can animate <code>scaleX</code> from <code>0</code> to <code>1</code> on first mount. It does not need to know anything about gradient stops or background position.</p>
+      </section>
+    </div>
+
+    <h2>Debug the width</h2>
+    <p>When this effect feels mysterious, make the hidden width visible. First remove the oversized background trick and draw the whole gradient at normal size:</p>
+    <div class="demo gradient-debug">
+      <div class="debug-stack">
+        <div class="debug-row">
+          <span class="debug-label">Full gradient image</span>
+          <div class="debug-full"></div>
+          <span class="debug-note">The colored shine is not a separate element. It is just the middle of one long gradient.</span>
+        </div>
+        <div class="debug-row">
+          <span class="debug-label">The underline only sees one window at a time</span>
+          <div class="debug-windows">
+            <span class="debug-window" data-pos="100"><code>background-position: 100% 50%</code></span>
+            <span class="debug-window" data-pos="50"><code>background-position: 50% 50%</code></span>
+            <span class="debug-window" data-pos="0"><code>background-position: 0% 50%</code></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p>The production underline uses <code>background-size: 400% 100%</code>, so the gradient image is four underline-widths wide. The element clips that huge image to one visible bar. Animating <code>background-position</code> from <code>100% 50%</code> to <code>0% 50%</code> slides which part of the wide gradient sits inside the bar, which is how the colored band can enter, cross, and leave without moving the element itself.</p>
+    <pre><code>.underline::after {
+  background-image: linear-gradient(90deg, grey 0 35%, indigo 40%, pink 50%, gold 60%, grey 65% 100%);
+  background-size: 400% 100%;
+  animation: shimmer 1.5s linear;
+}
+
+@keyframes shimmer {
+  from { background-position: 100% 50%; }
+  to { background-position: 0% 50%; }
+}</code></pre>
+
+    <h2>Practice</h2>
+    <div class="quiz">
+      <p><strong>Scenario:</strong> the underline should shimmer once every time the rotating word changes. Which part should trigger the replay?</p>
+      <div class="answers">
+        <button data-correct="false">A second CSS animation with a guessed delay for each word.</button>
+        <button data-correct="true">A React key tied to the current word index.</button>
+        <button data-correct="false">A new global keyframe for every possible word.</button>
+      </div>
+      <div class="feedback" aria-live="polite"></div>
+    </div>
+
+    <h2>Code pattern</h2>
+    <pre><code>@keyframes hero-underline-shimmer {
+  from { background-position: 100% 50%; }
+  to { background-position: 0% 50%; }
+}
+
+function ShinyUnderline({ replayKey }) {
+  return (
+    &lt;motion.span animate={{ scaleX: 1, opacity: 1 }}&gt;
+      &lt;span
+        key={replayKey}
+        style={{ animation: "hero-underline-shimmer 1.5s linear" }}
+      /&gt;
+    &lt;/motion.span&gt;
+  );
+}</code></pre>
+
+    <h2>Boundaries</h2>
+    <ul>
+      <li>Use CSS for the gradient and background-position animation. It is shorter, portable, and easy to disable with <code>prefers-reduced-motion</code>.</li>
+      <li>Use React keys when an animation should replay because component data changed.</li>
+      <li>Use Motion for the underline's mount reveal only if it is part of the component choreography.</li>
+      <li>Do not hard-code shimmer delays to match a word timer. That couples two separate clocks and will drift when props change.</li>
+    </ul>
+
+    <h2>Mission tie-in</h2>
+    <p>The portfolio's <code>ShinyUnderline</code> is now a separate component because this effect is reusable beyond headlines. The lesson is the ownership rule: CSS paints and moves the shine; React decides when the shine should replay.</p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations">MDN: Using CSS animations</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using_for_accessibility">MDN: media queries for accessibility</a></li>
+      <li><a href="https://motion.dev/docs/react-motion-component">Motion: React motion component</a></li>
+      <li><a href="https://motion.dev/docs/react-use-reduced-motion">Motion: useReducedMotion</a></li>
+    </ul>
+    <p class="callout">Ask the agent next: "Can this decorative effect stay in CSS, with React only triggering it?" That question keeps components pleasantly boring.</p>
+  </main>
+  <script>
+    document.querySelector(".quiz").addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const feedback = document.querySelector(".feedback");
+      const ok = button.dataset.correct === "true";
+      feedback.className = `feedback ${ok ? "good" : "bad"}`;
+      feedback.textContent = ok
+        ? "Correct. The CSS animation restarts because React remounts the keyed element."
+        : "Not quite. Avoid syncing two guessed clocks; tie the replay to the data change.";
+    });
+  </script>
+</body>
+</html>

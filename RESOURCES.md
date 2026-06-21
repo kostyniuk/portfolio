@@ -24,6 +24,16 @@
   Explains browser-managed transitions between document or app states. Use for: page/state transitions where the browser captures old and new snapshots.
 - [MDN: CSS view transitions](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/View_transitions)
   CSS-side guide for styling view-transition pseudo-elements. Use for: customizing view transition animations.
+- [MDN: Using media queries for accessibility](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Media_queries/Using_for_accessibility)
+  Explains `prefers-reduced-motion` as an accessibility media feature. Use for: CSS-first reduced-motion fallbacks and deciding when motion should be reduced rather than merely shortened.
+- [Motion Docs: React motion component](https://motion.dev/docs/react-motion-component)
+  Official Motion reference for `motion.*` elements and animation props. Use for: React components whose animation state belongs in component props rather than selectors alone.
+- [Motion Docs: React animation](https://motion.dev/docs/react-animation)
+  Official Motion guide to `initial`, `animate`, keyframes, transitions, and exit animations. Use for: mapping CSS animation concepts onto Motion APIs.
+- [Motion Docs: AnimatePresence](https://motion.dev/docs/react-animate-presence)
+  Official Motion guide for animating elements as they leave the React tree. Use for: keyed word swaps, conditional UI, and exit animations that CSS cannot observe cleanly by itself.
+- [Motion Docs: useReducedMotion](https://motion.dev/docs/react-use-reduced-motion)
+  Official Motion hook for responding to the user's reduced-motion setting in React. Use for: reusable client components that need runtime motion decisions.
 - [CSS Values and Units Module Level 5 draft: Tree counting functions](https://drafts.csswg.org/css-values-5/#tree-counting)
   Specification home for `sibling-index()` and `sibling-count()`. Use for: precise behavior and future-facing details.
 - [Next.js Docs: `rewrites` in `next.config.js`](https://nextjs.org/docs/app/api-reference/config/next-config-js/rewrites)
