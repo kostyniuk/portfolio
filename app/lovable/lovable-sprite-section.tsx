@@ -1,4 +1,5 @@
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { GlassCard } from "@/components/ui/glasscn/glass-card";
 import { SpriteField } from "@/components/sprite-field";
 
 const REASONS = [
@@ -32,12 +33,12 @@ export function LovableSpriteSection() {
         </h2>
         <div className="mx-auto max-w-5xl">
           {REASONS.map(({ title, description }) => (
-            <Card key={title} className="border-white/10 bg-white/5 text-white backdrop-blur-sm">
+            <GlassCard key={title} className="text-white">
               <CardHeader>
                 <CardTitle className="text-base font-semibold">{title}</CardTitle>
                 <CardDescription className="text-sm text-white/60">{description}</CardDescription>
               </CardHeader>
-            </Card>
+            </GlassCard>
           ))}
         </div>
       </div>

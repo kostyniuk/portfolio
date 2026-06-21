@@ -75,6 +75,17 @@
   );
   --inset-shadow-lg: inset 0 10px 8px color-mix(in oklch, var(--background) 7%, transparent);
   --font-mono: var(--font-mono);
+  @keyframes liquid-drift {
+  0% {
+    background-position: 0% 0%, 100% 100%, 0% 0%;
+    }
+  50% {
+    background-position: 30% 20%, 70% 80%, 0% 0%;
+    }
+  100% {
+    background-position: 0% 0%, 100% 100%, 0% 0%;
+    }
+  }
 }
 
 :root {
