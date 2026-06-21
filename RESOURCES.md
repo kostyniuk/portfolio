@@ -47,6 +47,23 @@
 - [Vercel Docs: Troubleshooting domains](https://vercel.com/docs/domains/troubleshooting)
   Official troubleshooting guide for domain setup, including absolute CNAME values with a trailing dot. Use for: diagnosing why Vercel still recommends DNS changes.
 
+### React Server Components & hydration
+
+- [React: Hydration mismatch (react.dev/link/hydration-mismatch)](https://react.dev/link/hydration-mismatch)
+  Canonical explanation of why server and client renders must match. Use for: diagnosing "server rendered HTML didn't match the client" errors.
+- [React: Handling different client and server content](https://react.dev/reference/react-dom/client/hydrateRoot#handling-different-client-and-server-content)
+  Official guidance on intentionally different renders, including the two-pass `useEffect` pattern and `suppressHydrationWarning`. Use for: client-only values (time, locale, media queries) that can't be known on the server.
+- [React: `useSyncExternalStore`](https://react.dev/reference/react/useSyncExternalStore)
+  The purpose-built hook for reading external/browser state with an explicit `getServerSnapshot`. Use for: lint-clean, hydration-safe client-only values instead of `useState` + `useEffect`.
+- [React: `useEffect`](https://react.dev/reference/react/useEffect)
+  Establishes that effects never run on the server. Use for: explaining why deferring a value to an effect avoids the hydration mismatch.
+- [Next.js: Server Components](https://nextjs.org/docs/app/building-your-application/rendering/server-components)
+  Explains the default server-rendering model in the App Router. Use for: why a page renders once on the server.
+- [Next.js: Client Components and the `"use client"` boundary](https://nextjs.org/docs/app/building-your-application/rendering/client-components)
+  Explains when and how to opt a subtree into client rendering. Use for: isolating interactive/browser-dependent logic in a thin client child.
+- [MDN: `Date.prototype.getHours()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getHours)
+  Returns the hour in the runtime's local timezone. Use for: reading the visitor's local time of day in the browser.
+
 ## Wisdom (Communities)
 
 - [CSS-Tricks Forums](https://css-tricks.com/forums/)

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Client-Only Values Without Breaking Hydration</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --good:#0f7a49; --bad:#b42318; --wash:#eef3ff; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.58 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width:min(980px, calc(100% - 32px)); margin:0 auto; padding:42px 0 60px; }
+    nav { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; color:var(--muted); }
+    nav a, a { color:var(--accent); font-weight:750; text-decoration:none; }
+    h1 { max-width:16ch; margin:0 0 14px; font-size:clamp(2.2rem, 7vw, 5rem); line-height:.96; letter-spacing:0; }
+    h2 { margin:34px 0 12px; font-size:1.12rem; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); }
+    p { margin:0 0 14px; color:var(--muted); }
+    code, pre { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    code { background:var(--code); border-radius:5px; padding:.08rem .3rem; color:#201b13; }
+    pre { overflow:auto; border:1px solid var(--line); border-radius:8px; background:#15181f; color:#f7f4ec; padding:16px; line-height:1.5; }
+    pre code { background:none; color:inherit; padding:0; }
+    .lead { max-width:780px; font-size:1.08rem; }
+    .demo { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:24px; margin:18px 0; }
+    .stage { display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; margin:6px 0 14px; }
+    @media (max-width:760px) { .stage { grid-template-columns:1fr; } }
+    .pane { padding:18px; background:var(--panel); }
+    .pane + .pane { border-left:1px solid var(--line); }
+    @media (max-width:760px) { .pane + .pane { border-left:none; border-top:1px solid var(--line); } }
+    .pane h4 { margin:0 0 10px; font-size:.78rem; text-transform:uppercase; letter-spacing:.09em; color:var(--muted); }
+    .render { font-size:1.5rem; font-weight:760; min-height:2.4rem; color:var(--ink); }
+    .render .swap { color:var(--accent); }
+    .render .ghost { visibility:hidden; }
+    .render .reserve-note { display:block; margin-top:.25rem; color:var(--muted); font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+    .tag { display:inline-block; font-size:.72rem; font-weight:750; padding:.1rem .5rem; border-radius:99px; margin-left:.4rem; vertical-align:middle; }
+    .tag.ok { background:#e6f4ec; color:var(--good); }
+    .tag.warn { background:#fbeae8; color:var(--bad); }
+    .timeline { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; font-size:.82rem; color:var(--muted); }
+    .timeline b { color:var(--ink); }
+    .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:14px; margin:18px 0; }
+    .card, .quiz { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:17px; }
+    .card strong { display:block; margin-bottom:8px; color:var(--ink); }
+    .walkthrough { display:grid; gap:12px; counter-reset:step; margin:18px 0; }
+    .walkthrough .card { counter-increment:step; position:relative; padding-left:58px; }
+    .walkthrough .card::before { content:counter(step); position:absolute; left:17px; top:17px; display:grid; place-items:center; width:28px; height:28px; border-radius:8px; background:var(--wash); color:var(--accent); font-weight:800; }
+    button { appearance:none; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; padding:10px 12px; cursor:pointer; text-align:left; }
+    button:hover { border-color:var(--accent); }
+    .answers { display:grid; gap:8px; margin-top:12px; }
+    .feedback { margin-top:12px; font-weight:750; min-height:1.5rem; }
+    .feedback.good { color:var(--good); }
+    .feedback.bad { color:var(--bad); }
+    .callout { border-left:4px solid var(--accent); background:var(--wash); padding:14px 16px; border-radius:0 8px 8px 0; }
+    ul { padding-left:1.2rem; color:var(--muted); }
+    li { margin:.4rem 0; }
+    table { border-collapse:collapse; width:100%; margin:14px 0; font-size:.95rem; }
+    th, td { border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top; }
+    th { background:var(--wash); color:var(--ink); }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="lesson-nav">
+      <a href="0016-rotate-appearance-as-a-reusable-reveal.html">&larr; Prev (Rotate Appearance)</a>
+      <span>/</span>
+      <a href="0011-css-animation-series-index.html">Series index</a>
+      <span>/</span>
+      <a href="0013-motion-or-css-for-component-effects.html">Motion or CSS</a>
+    </nav>
+
+    <h1>The Server Has No Clock</h1>
+    <p class="lead">Skill: render a value that only exists in the visitor's browser &mdash; their local time, timezone, viewport, or stored preference &mdash; without triggering a React hydration mismatch or starting an entrance animation with placeholder content.</p>
+
+    <h2>The problem it solves</h2>
+    <p>You want the hero to greet visitors with <em>&ldquo;Good morning&rdquo;</em>, <em>&ldquo;Good afternoon&rdquo;</em>, <em>&ldquo;Good evening&rdquo;</em>, or <em>&ldquo;Good night&rdquo;</em> depending on the time of day. The obvious move is to call <code>new Date()</code> in the component and branch on the hour.</p>
+    <p>The exact failure depends on where that code runs. A pure <strong>React Server Component</strong> runs on the server and is not re-run in the browser during hydration, so it can ship <em>server time</em> without a hydration mismatch. That is still wrong for a visitor-local greeting: the browser never gets a chance to correct it unless you introduce a Client Component.</p>
+    <p>A <strong>Client Component</strong> has the sharper trap. Next.js renders it once on the server to produce HTML, then the browser downloads React and <strong>hydrates</strong> it by running the component again on the client. Hydration is an assertion: <em>&ldquo;the first client render equals the server render.&rdquo;</em></p>
+    <p>A clock can break either goal:</p>
+    <ul>
+      <li><strong>Different machines.</strong> In an RSC or server pre-render, <code>new Date()</code> reads the <em>server's</em> wall-clock and timezone (often UTC, in some datacenter). The visitor in Kyiv could be six hours off. The server literally cannot know the visitor's local time.</li>
+      <li><strong>Different renders.</strong> In a Client Component, the server render might produce one greeting, while the first browser render reads the visitor's clock and produces another. Then the hydration assertion fails.</li>
+    </ul>
+    <p>When a Client Component's texts disagree, React logs <code>Hydration failed because the server rendered HTML didn't match the client</code>, throws away the server markup for that subtree, and re-renders it on the client. Before React 19 that could silently corrupt the DOM; today it is a loud error. Either way the thing you wanted &mdash; fast, correct first paint &mdash; is gone.</p>
+
+    <h2>The idea: render twice on purpose</h2>
+    <p>The fix is to stop pretending the server knows. Split rendering into two passes:</p>
+    <p><strong>Pass 1 &mdash; the agreed render.</strong> Produce a value the server <em>and</em> the first client render can both compute identically: a neutral placeholder, or a deterministic default. Hydration compares <em>this</em> render to the server HTML, so they match and React stays happy.</p>
+    <p><strong>Pass 2 &mdash; the truth.</strong> <code>useEffect</code> runs <strong>only in the browser, only after hydration has already succeeded</strong>. There you read the real client-only value and <code>setState</code>. React re-renders &mdash; now safely, on the client alone &mdash; and the correct text appears.</p>
+    <p class="callout">The mental model: <strong>hydration is a handshake, not a render.</strong> You must show the server's answer first so the handshake completes, then quietly swap in the browser's answer once you're allowed to disagree.</p>
+    <p>You have already shipped this exact pattern. <a href="0013-motion-or-css-for-component-effects.html"><code>usePrefersReducedMotion</code></a> in this repo defaults to <code>false</code> (the agreed render), then reads <code>matchMedia</code> in an effect (the truth). <code>prefers-reduced-motion</code> is a client-only value for the same reason the clock is &mdash; the server can't read the visitor's OS setting.</p>
+
+    <h2>Practice</h2>
+    <p>Below, the left pane is what the server shipped; the right is what the browser shows over time. Toggle between the naive approach and the gated two-pass hook, and step through hydration.</p>
+    <div class="demo">
+      <div class="stage">
+        <div class="pane">
+          <h4>Server HTML (shipped once)</h4>
+          <div class="render" id="server-render">&mdash;</div>
+        </div>
+        <div class="pane">
+          <h4>Browser <span id="phase-label">(before hydration)</span></h4>
+          <div class="render" id="client-render">&mdash;</div>
+        </div>
+      </div>
+      <div id="verdict" class="feedback" aria-live="polite"></div>
+      <div class="timeline" id="timeline"></div>
+      <div class="controls">
+        <button type="button" id="mode-toggle">Mode: <b>gated two-pass hook</b></button>
+        <button type="button" id="step">Advance &rarr;</button>
+        <button type="button" id="reset">Reset</button>
+      </div>
+    </div>
+    <p>Watch the difference. In <b>naive</b> mode the server guesses a greeting from its own clock and the first client render disagrees &mdash; the verdict turns red the instant React hydrates. In <b>gated two-pass</b> mode both sides render the same invisible reserved line (the handshake passes, green), and only <em>after</em> hydration does the animated greeting mount with the visitor's real time of day.</p>
+
+    <h2>The hook, in its clearest form</h2>
+    <p>The two-pass idea is easiest to read written by hand &mdash; this is exactly the shape of your existing <code>usePrefersReducedMotion</code>:</p>
+    <pre><code>// The mental-model version — same shape as usePrefersReducedMotion
+export function useDayTime(): DayTime | null {
+  const [dayTime, setDayTime] = useState&lt;DayTime | null&gt;(null); // pass 1: agreed render
+
+  useEffect(() =&gt; {
+    setDayTime(getDayTime(new Date())); // pass 2: the truth, browser-only, after hydration
+  }, []);
+
+  return dayTime;
+}</code></pre>
+    <p><code>null</code> is the <em>agreed render</em> &mdash; the one value the server and the first client render share. <code>new Date()</code> lives inside <code>useEffect</code>, which never runs on the server and never runs during the hydration render, so the only code that touches the clock is the only code allowed to disagree with the server. And because the effect runs in the browser, <code>getHours()</code> reads the <em>visitor's</em> timezone for free &mdash; no timezone library, no header parsing.</p>
+
+    <h2>The hook, as this repo actually ships it</h2>
+    <p>Reading a browser value into state inside an effect is common enough that React built a primitive for it: <code>useSyncExternalStore</code>. It takes the two passes as explicit arguments &mdash; a <em>server snapshot</em> and a <em>client snapshot</em> &mdash; so React, not your effect, owns the swap. This repo's newer <code>react-hooks</code> lint rule (<code>set-state-in-effect</code>) flags the hand-written form, which is the nudge toward this one:</p>
+    <pre><code>"use client";
+
+import { useSyncExternalStore } from "react";
+
+export type DayTime = "morning" | "afternoon" | "evening" | "night";
+
+function getDayTime(date: Date): DayTime {
+  const hour = date.getHours();
+  if (hour &lt; 5) return "night";
+  if (hour &lt; 12) return "morning";
+  if (hour &lt; 18) return "afternoon";
+  if (hour &lt; 22) return "evening";
+  return "night";
+}
+
+const subscribe = () =&gt; () =&gt; {};            // we read once, never subscribe
+const getServerSnapshot = (): DayTime | null =&gt; null; // pass 1: the agreed render
+
+export function useDayTime(): DayTime | null {
+  return useSyncExternalStore(
+    subscribe,
+    () =&gt; getDayTime(new Date()),            // pass 2: the truth, client only
+    getServerSnapshot,
+  );
+}</code></pre>
+    <div class="walkthrough">
+      <section class="card">
+        <strong><code>"use client"</code></strong>
+        <p>Hooks only run in Client Components. This directive marks the module's exports as the client boundary. The Server Component page stays a server component; it just renders a client child.</p>
+      </section>
+      <section class="card">
+        <strong><code>getServerSnapshot =&gt; null</code></strong>
+        <p>This is the <em>agreed render</em>, named outright. React uses it on the server and on the first hydration render, so both sides produce <code>null</code> and the handshake passes. Picking a real default like <code>"morning"</code> would be a guess that is often wrong.</p>
+      </section>
+      <section class="card">
+        <strong><code>() =&gt; getDayTime(new Date())</code></strong>
+        <p>The client snapshot. React calls it in the browser <em>after</em> hydration and swaps the result in safely. It returns a primitive string, so React's <code>Object.is</code> check stays stable between calls and never loops.</p>
+      </section>
+      <section class="card">
+        <strong><code>subscribe</code> is a no-op</strong>
+        <p>We only want the value once, at mount &mdash; we are not tracking the clock minute by minute. The empty subscribe means React reads the snapshot once and never re-runs. (If you wanted a live ticking greeting, this is where a timer subscription would go.)</p>
+      </section>
+    </div>
+    <p>Both versions are the <em>same two-pass pattern</em>. The hand-written one shows the mechanism; <code>useSyncExternalStore</code> is the primitive React built for exactly this, and the one to reach for when the lint rule (rightly) objects to reading a browser value into state inside an effect.</p>
+
+    <h2>Wiring it into the hero</h2>
+    <p>The page stays a Server Component. A thin client component owns the dynamic text and hands it to the existing animated headline. The important detail is that the animated component does <em>not</em> mount until the clock has resolved:</p>
+    <pre><code>"use client";
+
+import { LovableAnimatedText } from "./lovable-animated-text";
+import { useDayTime } from "./use-day-time";
+
+export function LovableGreeting({ className }: { className: string }) {
+  const dayTime = useDayTime();
+
+  // null on the server and first client render -> invisible placeholder
+  // on both sides. Hydration succeeds, and no reveal animation has started.
+  if (!dayTime) {
+    return (
+      &lt;h2 className={className} aria-hidden="true" style={{ perspective: 1200 }}&gt;
+        &lt;span className="invisible flex flex-wrap items-baseline justify-center gap-x-[0.28em] gap-y-2 text-white/85"&gt;
+          Good afternoon Lovable team, I&amp;apos;m Alex
+        &lt;/span&gt;
+      &lt;/h2&gt;
+    );
+  }
+
+  const text = `Good ${dayTime} Lovable team, I'm Alex`;
+
+  return &lt;LovableAnimatedText className={className} text={text} /&gt;;
+}</code></pre>
+    <p>Server and first client render both produce the same hidden placeholder. Hydration passes. Then the snapshot resolves, <code>LovableAnimatedText</code> mounts for the first time, and the line reveals as <code>&ldquo;Good morning Lovable team, I'm Alex&rdquo;</code>.</p>
+
+    <h2>The animation bug hiding inside the hydration fix</h2>
+    <p>The two-pass pattern solves the React error, but it does not automatically solve the animation. Your first version used a visible fallback:</p>
+    <pre><code>const text = `Good ${dayTime ?? "day"} Lovable team, I'm Alex`;</code></pre>
+    <p>That is hydration-safe: server and first client render both say <code>&ldquo;Good day&rdquo;</code>. But the headline reveal starts immediately with the fallback word. A moment later <code>dayTime</code> resolves and <code>&ldquo;day&rdquo;</code> becomes <code>&ldquo;morning&rdquo;</code>, which means the visitor sees a text correction in the middle of a carefully timed entrance.</p>
+    <p>The first repair was to stop remounting animated wrappers on text changes:</p>
+    <pre><code>// Better identity for a fixed sentence: the second slot stays the second slot.
+{words.map((word, index) =&gt; (
+  &lt;RotateAppearance key={index} delayMs={startDelayMs + index * staggerMs}&gt;
+    {word}
+  &lt;/RotateAppearance&gt;
+))}</code></pre>
+    <p>That prevents the reveal from replaying when the word changes, but it still allows the word to change <em>during</em> the reveal. The final repair is the gate above: reserve layout with invisible content, then mount the animated text only once the client-only value is real.</p>
+    <p>The useful distinction is: <strong>hydration correctness is about markup equality; animation correctness is about lifecycle timing.</strong> You often need both.</p>
+    <table>
+      <tr><th>Approach</th><th>What the visitor sees</th><th>Cost</th></tr>
+      <tr><td><b>Visible fallback</b> (<code>"Good day"</code> &rarr; <code>"Good morning"</code>)</td><td>A greeting immediately, then a correction during or after the reveal</td><td>Hydration-safe, but visually noisy for entrance animations</td></tr>
+      <tr><td><b>Stable positional keys</b></td><td>The same animated DOM nodes survive text updates</td><td>Prevents remount/replay, but not mid-animation text correction</td></tr>
+      <tr><td><b>Gate the reveal</b> &mdash; shipped here</td><td>A reserved blank where the headline will be, then one correct reveal</td><td>Headline appears a frame late; reserve its space to avoid layout shift</td></tr>
+      <tr><td><b><code>suppressHydrationWarning</code></b> on a single text node</td><td>Server's guess, silently corrected on the client</td><td>Only silences the warning for <em>one</em> element; still a swap, and easy to over-apply</td></tr>
+    </table>
+    <p>For a hero whose entrance animation is the whole point, gating the reveal is the cleanest version. The user does not see a wrong word, React does not see mismatched markup, and the animation does not have to pretend a placeholder was real content.</p>
+
+    <h2>Boundaries &mdash; when two-pass is the wrong tool</h2>
+    <ul>
+      <li><strong>When server time is acceptable, keep it in an RSC.</strong> There is no hydration mismatch because the browser does not re-run that Server Component. But it is server-local time, not visitor-local time.</li>
+      <li><strong>When you can know the visitor value on the server, do that instead.</strong> If you only need the timezone (not the exact instant), you can read a hint server-side and skip the swap entirely &mdash; no flash, correct first paint. That is a different technique; ask about reading request headers or a cookie.</li>
+      <li><strong>When the value is a media query or device capability,</strong> reach for the same shape as <a href="0013-motion-or-css-for-component-effects.html"><code>usePrefersReducedMotion</code></a> rather than writing a clock-specific hook each time.</li>
+      <li><strong>When CSS can do it without knowing the value at all,</strong> prefer CSS. A purely decorative time-of-day tint could be a media feature; a greeting <em>word</em> is real content, so it needs the hook. This is the same CSS-vs-React ownership split from <a href="0013-motion-or-css-for-component-effects.html">the Motion lesson</a>.</li>
+      <li><strong>Never reach for <code>typeof window !== "undefined"</code> inside render to branch.</strong> It produces exactly the mismatch you're trying to avoid &mdash; the server takes one branch, the client's first render takes the other. The branch belongs in an effect, not in render.</li>
+    </ul>
+
+    <h2>Quiz</h2>
+    <div class="quiz">
+      <p><strong>Scenario:</strong> a teammate writes <code>const t = new Date().getHours() &lt; 12 ? "morning" : "afternoon"</code> directly in a Client Component's render and ships it. The server pre-renders one timezone; a visitor in another timezone hydrates the page. What happens?</p>
+      <div class="answers">
+        <button data-correct="true">The server render uses the server's clock, the browser's first client render uses the visitor's clock, and React throws a hydration mismatch &mdash; the subtree is re-rendered on the client.</button>
+        <button data-correct="false">It works fine, because <code>new Date()</code> automatically uses the visitor's timezone on the server.</button>
+        <button data-correct="false">Nothing renders, because <code>new Date()</code> is not allowed in Client Components.</button>
+        <button data-correct="false">There is no mismatch because Client Components are never pre-rendered on the server.</button>
+      </div>
+      <div class="feedback" aria-live="polite"></div>
+    </div>
+
+    <h2>Mission tie-in</h2>
+    <p>This is the first lesson in your workspace about a value that lives <em>only</em> in the browser and must survive the server&rarr;hydrate round trip &mdash; the substrate every interactive animation in this portfolio sits on. The <a href="app/lovable/page.tsx">Lovable hero</a> is the concrete target: it turns a static greeting into a time-aware reveal while staying a Server Component, reusing the exact two-pass shape your <code>usePrefersReducedMotion</code> hook already proves out. Once this pattern is reflexive, &ldquo;does this depend on something only the browser knows, and will it disturb an animation if it changes later?&rdquo; becomes the first question you ask before any client effect.</p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li><a href="https://react.dev/link/hydration-mismatch">React: Text content does not match server-rendered HTML (hydration mismatch)</a></li>
+      <li><a href="https://react.dev/reference/react-dom/client/hydrateRoot#handling-different-client-and-server-content">React: Handling different client and server content</a></li>
+      <li><a href="https://react.dev/reference/react/useEffect#fetching-data-with-effects">React: <code>useEffect</code> runs only on the client, after render</a></li>
+      <li><a href="https://nextjs.org/docs/app/building-your-application/rendering/server-components">Next.js: Server Components</a></li>
+      <li><a href="https://nextjs.org/docs/app/building-your-application/rendering/client-components">Next.js: Client Components and the <code>"use client"</code> boundary</a></li>
+      <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getHours">MDN: <code>Date.prototype.getHours()</code> (local time)</a></li>
+    </ul>
+    <p class="callout">Ask the agent next: &ldquo;Show me the no-flash version that reads the timezone on the server instead.&rdquo; That is the same problem solved from the other side of the boundary.</p>
+  </main>
+  <script>
+    document.querySelector(".quiz").addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      const feedback = document.querySelector(".quiz .feedback");
+      const ok = button.dataset.correct === "true";
+      feedback.className = `feedback ${ok ? "good" : "bad"}`;
+      feedback.textContent = ok
+        ? "Correct. In a Client Component, the server pre-render and the browser's first render can read different clocks, so hydration sees different text."
+        : "Not quite. Client Components can be pre-rendered on the server, then rendered again in the browser for hydration. Reading the clock during render can make those two renders disagree.";
+    });
+
+    // --- Interactive hydration demo ---
+    const serverEl = document.getElementById("server-render");
+    const clientEl = document.getElementById("client-render");
+    const phaseEl = document.getElementById("phase-label");
+    const verdictEl = document.getElementById("verdict");
+    const timelineEl = document.getElementById("timeline");
+    const modeBtn = document.getElementById("mode-toggle");
+
+    let twoPass = true;
+    let step = 0; // 0 = shipped, 1 = hydrating, 2 = client snapshot read
+
+    const SERVER_GUESS = "Good afternoon"; // server is in a different zone than our pretend visitor
+    const VISITOR_TRUTH = "Good morning";  // visitor's actual local time
+    const PLACEHOLDER = "Good afternoon";
+
+    function greetingMarkup(text, reserved = false) {
+      return `${reserved ? '<span class="ghost">' : ""}${text} <span class="swap">Lovable team</span>${reserved ? '</span><span class="reserve-note">space reserved; animation not mounted</span>' : ""}`;
+    }
+
+    function render() {
+      // Server HTML never changes after it ships.
+      const serverText = twoPass ? PLACEHOLDER : SERVER_GUESS;
+      serverEl.innerHTML = greetingMarkup(serverText, twoPass);
+
+      if (step === 0) {
+        phaseEl.textContent = "(before hydration — server HTML painted)";
+        clientEl.innerHTML = greetingMarkup(serverText, twoPass);
+        verdictEl.className = "feedback";
+        verdictEl.textContent = "Browser painted the server HTML. React not attached yet.";
+      } else if (step === 1) {
+        phaseEl.textContent = "(hydrating — React checks the first client render)";
+        const firstClient = twoPass ? PLACEHOLDER : VISITOR_TRUTH; // naive render reads the real clock during render
+        clientEl.innerHTML = greetingMarkup(firstClient, twoPass);
+        const matches = firstClient === serverText;
+        verdictEl.className = `feedback ${matches ? "good" : "bad"}`;
+        verdictEl.innerHTML = matches
+          ? 'Handshake OK <span class="tag ok">match</span> — first client render equals server HTML.'
+          : 'Hydration mismatch <span class="tag warn">error</span> — server said “' + serverText + '”, client rendered “' + firstClient + '”. React discards the server subtree.';
+      } else {
+        phaseEl.textContent = "(after hydration — client snapshot read)";
+        const finalText = twoPass ? VISITOR_TRUTH : VISITOR_TRUTH;
+        clientEl.innerHTML = greetingMarkup(finalText);
+        if (twoPass) {
+          verdictEl.className = "feedback good";
+          verdictEl.innerHTML = 'Snapshot resolved <span class="tag ok">safe</span> — animated text mounts once with the visitor’s real time. No mismatch, no mid-reveal correction.';
+        } else {
+          verdictEl.className = "feedback bad";
+          verdictEl.innerHTML = 'The mismatch already happened at hydration; the correct text only appears after a forced client re-render and a console error.';
+        }
+      }
+
+      timelineEl.innerHTML = [
+        (step >= 0 ? "<b>1. ship HTML</b>" : "1. ship HTML"),
+        (step >= 1 ? "<b>2. hydrate</b>" : "2. hydrate"),
+        (step >= 2 ? "<b>3. client snapshot</b>" : "3. client snapshot"),
+      ].join("&nbsp;&rarr;&nbsp;");
+    }
+
+    document.getElementById("step").addEventListener("click", () => { step = Math.min(2, step + 1); render(); });
+    document.getElementById("reset").addEventListener("click", () => { step = 0; render(); });
+    modeBtn.addEventListener("click", () => {
+      twoPass = !twoPass;
+      modeBtn.innerHTML = `Mode: <b>${twoPass ? "gated two-pass hook" : "naive (reads clock in render)"}</b>`;
+      step = 0; render();
+    });
+    render();
+  </script>
+</body>
+</html>
