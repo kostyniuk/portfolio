@@ -76,14 +76,23 @@
   --inset-shadow-lg: inset 0 10px 8px color-mix(in oklch, var(--background) 7%, transparent);
   --font-mono: var(--font-mono);
   @keyframes liquid-drift {
-  0% {
-    background-position: 0% 0%, 100% 100%, 0% 0%;
+    0% {
+      background-position:
+        0% 0%,
+        100% 100%,
+        0% 0%;
     }
-  50% {
-    background-position: 30% 20%, 70% 80%, 0% 0%;
+    50% {
+      background-position:
+        30% 20%,
+        70% 80%,
+        0% 0%;
     }
-  100% {
-    background-position: 0% 0%, 100% 100%, 0% 0%;
+    100% {
+      background-position:
+        0% 0%,
+        100% 100%,
+        0% 0%;
     }
   }
 }
@@ -448,15 +457,72 @@
   animation: lovable-portrait-reveal 0.82s cubic-bezier(0.2, 0.72, 0.2, 1) 240ms both;
 }
 
+.lovable-header-hint-font,
+.lovable-header-hint-label {
+  font-family: var(--font-lovable-hint);
+}
+
+@keyframes lovable-header-hint-draw {
+  from {
+    stroke-dashoffset: 1500;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes lovable-header-hint-label-tilt {
+  from {
+    opacity: 0;
+    transform: translateY(10px) rotate(-4deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-4deg);
+  }
+}
+
+.lovable-header-hint-path {
+  stroke-dasharray: 1500;
+  animation: lovable-header-hint-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.lovable-header-hint-path-delayed {
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
+}
+
+.lovable-header-hint-label {
+  opacity: 0;
+  animation: lovable-header-hint-label-tilt 0.55s ease forwards;
+}
+
+.lovable-header-hint-label-portfolio {
+  animation-delay: 1.3s;
+}
+
+.lovable-header-hint-label-cv {
+  animation-delay: 1.7s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-slot="rotate-appearance"],
   [data-slot="rotate-word"],
   [data-slot="rotate-word"] *,
   [data-slot="shiny-underline"],
   [data-slot="shiny-underline"] *,
-  .lovable-portrait {
+  .lovable-portrait,
+  .lovable-header-hint-path,
+  .lovable-header-hint-label {
     animation: none !important;
     transition: none !important;
+  }
+
+  .lovable-header-hint-label {
+    opacity: 1 !important;
+    transform: rotate(-4deg);
   }
 }
 

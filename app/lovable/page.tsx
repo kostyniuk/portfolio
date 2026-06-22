@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Header } from "@/app/header";
 import { LovableHeroSection } from "./lovable-hero-section";
 import { LovableSpriteSection } from "./lovable-sprite-section";
+import { LovableHeaderHints } from "./lovable-header-hints";
 
 export const metadata: Metadata = {
   title: "Lovable Application",
