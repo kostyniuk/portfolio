@@ -1,11 +1,9 @@
 import { LovableAnimatedText } from "./lovable-animated-text";
 import { LovableGreeting } from "./lovable-greeting";
-import { LovableHeaderHints } from "./lovable-header-hints";
 
 export function LovableHeroSection() {
   return (
     <section className="relative h-dvh snap-start overflow-hidden bg-[#1c1c1c]" aria-label="Lovable Application">
-      <LovableHeaderHints />
       <div
         aria-hidden="true"
         className="absolute"

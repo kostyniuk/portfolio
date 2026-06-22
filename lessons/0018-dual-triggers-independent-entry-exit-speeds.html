@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lesson 0018: Dual Triggers — Independent Entry and Exit Speeds</title>
+  <style>
+    :root { --ink:#181818; --muted:#62666f; --paper:#faf8f2; --panel:#fff; --line:#ded8cc; --accent:#255fd7; --code:#f0ece4; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.55 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { width:min(920px,calc(100% - 32px)); margin:0 auto; padding:42px 0 58px; }
+    h1 { margin:0 0 12px; font-size:clamp(2.2rem,6vw,4.4rem); line-height:.98; }
+    h2 { margin:0 0 10px; font-size:1.15rem; }
+    p { margin:0 0 14px; color:var(--muted); }
+    p strong { color:var(--ink); }
+    code { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--code); padding:1px 4px; border-radius:3px; font-size:.9em; }
+    pre { overflow:auto; margin:12px 0 18px; padding:14px 16px; border:1px solid var(--line); border-radius:8px; background:var(--code); font:0.85rem/1.55 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+    .panel { border:1px solid var(--line); border-radius:8px; background:var(--panel); padding:22px 24px; margin-top:18px; }
+    .panel + .panel { margin-top:14px; }
+    a { color:var(--accent); }
+    .tag { display:inline-block; font-size:.75rem; font-family:ui-monospace,monospace; background:var(--code); border:1px solid var(--line); border-radius:4px; padding:1px 7px; color:var(--muted); vertical-align:middle; }
+    nav.lesson-nav { display:flex; justify-content:space-between; gap:12px; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); font-size:.9rem; }
+
+    /* ── Demo ──────────────────────────────────────────── */
+    .demo-wrap { margin-top:18px; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+    .demo-bar { padding:7px 14px; background:var(--code); border-bottom:1px solid var(--line); font:.78rem/1 ui-monospace,monospace; color:var(--muted); display:flex; justify-content:space-between; align-items:center; }
+    .demo-bar .badge { background:#e8f0fe; color:#255fd7; border-radius:4px; padding:2px 8px; font-size:.72rem; }
+
+    .scroller {
+      height: 260px;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      background: #1c1c1c;
+    }
+    .snap-slide {
+      height: 260px;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: .9rem;
+      letter-spacing: .04em;
+    }
+
+    /* ── Trigger element (the second slide) ────────────── */
+    .demo-trigger {
+      position: relative;
+      timeline-trigger:
+        --demo-in  view() entry 50% exit 50%,
+        --demo-out view() exit 20% exit 100%;
+    }
+
+    /* Overlay wrapper: fast opacity fade on exit */
+    .demo-overlay {
+      position: absolute;
+      inset: 0;
+      animation: demo-fade 0.25s ease both;
+      animation-trigger: --demo-out play-forwards play-backwards;
+    }
+    @keyframes demo-fade {
+      from { opacity: 1; }
+      to   { opacity: 0; }
+    }
+
+    /* SVG paths: slow draw on entry, slow reverse underneath the fade */
+    .demo-path {
+      stroke-dasharray: 600;
+      animation: demo-draw 1.2s cubic-bezier(0.65,0,0.35,1) both;
+      animation-trigger: --demo-in play-forwards play-backwards;
+    }
+    .demo-path-b {
+      animation-delay: 0.4s;
+      animation-fill-mode: both;
+    }
+    @keyframes demo-draw {
+      from { stroke-dashoffset: 600; }
+      to   { stroke-dashoffset: 0; }
+    }
+
+    /* Labels */
+    .demo-hint-label {
+      position: absolute;
+      color: #fff;
+      font-weight: 700;
+      font-size: .8rem;
+      white-space: nowrap;
+      opacity: 0;
+      animation: demo-label 0.45s ease both;
+      animation-trigger: --demo-in play-forwards play-backwards;
+    }
+    .demo-hint-label.left  { top: 55%; left: 8%;  animation-delay: 1s;   transform: rotate(-3deg); }
+    .demo-hint-label.right { top: 55%; right: 8%; animation-delay: 1.3s; transform: rotate(-3deg); }
+    @keyframes demo-label {
+      from { opacity:0; translate:0 6px; }
+      to   { opacity:1; translate:0 0; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Dual Triggers —<br>Independent Entry and Exit Speeds</h1>
+  <p>Skill: define two named <code>timeline-trigger</code>s on one element to give entry and exit animations different durations — without any JavaScript.</p>
+
+  <section class="panel">
+    <h2>The Problem This Solves</h2>
+    <p>Once you wire <code>animation-trigger: --t play-backwards</code>, the reverse plays at the <strong>same duration</strong> as the forward. A slow, satisfying draw-on (1.4 s) followed by a 1.4 s slow erase feels sluggish on the way out.</p>
+    <p>The common JS workaround is to conditionally unmount the element — which makes the exit <em>instant</em> (abrupt), not fast. You trade slow for jarring, plus you pay the cost of <code>useState</code>, an <code>IntersectionObserver</code>, and <code>"use client"</code>.</p>
+    <p><strong>The real goal:</strong> slow draw-in, fast fade-out, zero JavaScript.</p>
+  </section>
+
+  <!-- ── Practice ── -->
+  <div class="demo-wrap">
+    <div class="demo-bar">
+      <span>live demo — scroll inside the dark box</span>
+      <span class="badge">Chrome 130+ · animation-trigger</span>
+    </div>
+    <div class="scroller">
+      <div class="snap-slide">Scroll down ↓</div>
+
+      <div class="snap-slide demo-trigger">
+        <div class="demo-overlay">
+          <!-- Arrows pointing toward a simulated header at the top of the scroller -->
+          <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 600 260" preserveAspectRatio="none" fill="none">
+            <path d="M 80 160 C 30 120, 60 60, 180 20" stroke="#fff" stroke-width="2" stroke-linecap="round" class="demo-path" />
+            <path d="M 520 160 C 570 100, 430 40, 360 20" stroke="#fff" stroke-width="2" stroke-linecap="round" class="demo-path demo-path-b" />
+          </svg>
+          <div class="demo-hint-label left">Click to open Portfolio</div>
+          <div class="demo-hint-label right">Download CV</div>
+        </div>
+        <span style="color:#444;font-size:.8rem;letter-spacing:.04em">hints section</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="margin-top:12px">Scroll down to the hints slide: paths draw slowly (1.2 s). Scroll back up: the whole overlay fades out in 0.25 s. The draw-reversal is still running underneath — you just don't see it because the overlay is already transparent.</p>
+
+  <section class="panel">
+    <h2>The Idea: Two Names, Two Ranges</h2>
+    <p>A <code>timeline-trigger</code> is a named trigger derived from an element's view progress. One element can carry multiple named triggers, each covering a different slice of its viewport journey:</p>
+    <pre><code>.section {
+  timeline-trigger:
+    --hints     view() entry 50% exit 50%,   /* active while section is "on screen" */
+    --hints-out view() exit 20% exit 100%;   /* active only while leaving            */
+}</code></pre>
+    <p>Read the range as two waypoints: <em>activate at this point, deactivate at that point</em>. <code>entry 50%</code> means "halfway through the entering phase"; <code>exit 20%</code> means "20 % into the exiting phase". Each animation subscribes to whichever trigger name controls it:</p>
+    <pre><code>/* Slow draw — plays in on --hints, reverses (invisibly) on --hints deactivation */
+.path {
+  stroke-dasharray: 1500;
+  animation: draw 1.4s cubic-bezier(.65,0,.35,1) both;
+  animation-trigger: --hints play-forwards play-backwards;
+}
+
+/* Fast exit — fades the whole overlay out the moment --hints-out activates */
+.overlay {
+  animation: fade-out 0.25s ease both;
+  animation-trigger: --hints-out play-forwards play-backwards;
+}
+@keyframes fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}</code></pre>
+  </section>
+
+  <section class="panel">
+    <h2>Why Two Animations Can Coexist: Different Properties</h2>
+    <p>This is the crux of the technique. When the section exits:</p>
+    <ul style="color:var(--muted);padding-left:1.4em;margin:0 0 14px">
+      <li><code>--hints</code> deactivates → <code>draw</code> plays backwards on <strong><code>stroke-dashoffset</code></strong> (1.4 s)</li>
+      <li><code>--hints-out</code> activates → <code>fade-out</code> plays forwards on <strong><code>opacity</code></strong> (0.25 s)</li>
+    </ul>
+    <p>Because they animate <strong>completely different CSS properties</strong>, there is no conflict. Both run simultaneously with no precedence fight. The 0.25 s opacity fade is what the user sees; the 1.4 s draw-reversal runs silently underneath an already-transparent overlay.</p>
+    <p>Contrast this with the case where you need <em>the draw itself</em> to erase faster — that would require two animations both competing for <code>stroke-dashoffset</code>. In CSS, when multiple animations target the same property, the <strong>last one in the <code>animation</code> list wins</strong>. You can exploit that ordering deliberately, but it's significantly more fragile: you have to sequence them so the erase animation is declared last, and manage what happens to both fill states on re-entry. The different-property approach sidesteps that entirely.</p>
+    <pre><code>/* Entry animates stroke-dashoffset (the draw) */
+/* Exit animates opacity (the fade)             */
+/* → no property conflict, no ordering tricks needed */</code></pre>
+    <p>On re-entry: <code>--hints-out</code> deactivates → <code>fade-out</code> plays <em>backwards</em> (opacity 0 → 1, 0.25 s). <code>--hints</code> activates → <code>draw</code> plays forwards again (stroke-dashoffset 1500 → 0, 1.4 s). The overlay is visible again just as the paths start drawing.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Why fixed children still inherit the trigger</h2>
+    <p>In the real portfolio the overlay is <code>position: fixed</code>, which breaks it out of the layout flow — but <strong>not out of the DOM tree</strong>. CSS cascade (including named triggers) is DOM-based, not layout-based. A <code>fixed</code> child still inherits <code>--hints</code> and <code>--hints-out</code> from its ancestor section, for the same reason CSS custom properties work inside portals and fixed dialogs.</p>
+    <p>This means the section element can stay as the single point of truth for scroll detection, even though the animated overlay appears to cover the whole viewport.</p>
+  </section>
+
+  <section class="panel">
+    <h2>No JavaScript Required</h2>
+    <p>The final component is a plain server component — no <code>"use client"</code>, no <code>useState</code>, no <code>IntersectionObserver</code>, no timer cleanup. The scroll-awareness, entry animation, and fast exit are entirely owned by CSS. React renders static HTML; the browser does the rest.</p>
+    <pre><code>// Before: 50+ lines with hooks, IntersectionObserver, animKey state
+// After: pure server component, no hooks at all
+export function LovableHintsSection() {
+  return (
+    &lt;section className="lovable-hints-trigger ..."&gt;
+      &lt;div className="lovable-hints-overlay pointer-events-none fixed inset-0 z-50"&gt;
+        &lt;svg&gt;...paths...&lt;/svg&gt;
+        &lt;div className="lovable-header-hint-label ..."&gt;Click to open Portfolio&lt;/div&gt;
+        &lt;div className="lovable-header-hint-label ..."&gt;Click to Download CV&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre>
+  </section>
+
+  <section class="panel">
+    <h2>Boundaries: When This Doesn't Fit</h2>
+    <p><strong>Browser support:</strong> <code>animation-trigger</code> is Chrome 130+ only at time of writing. Firefox and Safari don't support it yet. Appropriate for a portfolio or demo page; not yet for production with broad browser reach. Verify at <a href="https://caniuse.com/mdn-css_properties_animation-trigger" target="_blank">caniuse.com</a>.</p>
+    <p><strong>True per-direction duration:</strong> <code>play-backwards</code> always uses the same <code>animation-duration</code>. The overlay-fade trick covers the exit visually — but if you need the <em>draw</em> itself to erase at a different speed, you need a second keyframe animation (<code>erase</code>) on a second trigger, ordered last in the <code>animation</code> list so it wins the property conflict. That's a more complex setup.</p>
+    <p><strong>When to stay on IntersectionObserver:</strong> if the exit requires different <em>content</em> — conditional rendering, data fetching, state changes — that belongs to the component layer. <code>animation-trigger</code> is purely for CSS-controlled visual timing.</p>
+    <p>Related: <a href="0013-motion-or-css-for-component-effects.html">Lesson 13: Motion or CSS for component effects</a> · <a href="0009-scroll-triggered-animation-ranges.html">Lesson 9: Scroll-triggered ranges</a>.</p>
+  </section>
+
+  <section class="panel">
+    <h2>On Your Portfolio</h2>
+    <p>This is exactly the pattern powering the <strong>header hints section</strong> on the Lovable page (<code>app/lovable/lovable-header-hints.tsx</code>). The section carries two triggers in <code>globals.css</code>: <code>--hints</code> for the full on-screen range, <code>--hints-out</code> for the exit-only range. The overlay wrapper carries the fast fade; the SVG paths carry the slow draw. Visiting the section draws the arrows; scrolling away fades them in 0.25 s.</p>
+    <p>The prior version used <code>useState</code> + <code>IntersectionObserver</code> to mount/unmount the overlay — which gave correct scroll-awareness but an abrupt exit. This pattern replaced all of that with two CSS properties and a 10-line keyframe.</p>
+  </section>
+
+  <p>Ask the agent: "What happens to <code>animation-fill-mode: both</code> when <code>animation-trigger</code> hasn't fired yet?" · Source: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/animation-trigger" target="_blank">MDN: animation-trigger</a> · <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/timeline-trigger" target="_blank">MDN: timeline-trigger</a>.</p>
+
+  <nav class="lesson-nav">
+    <a href="0017-client-only-values-without-hydration-mismatch.html">← Lesson 17: Hydration-safe values</a>
+    <a href="0011-css-animation-series-index.html">Series index</a>
+  </nav>
+</main>
+</body>
+</html>

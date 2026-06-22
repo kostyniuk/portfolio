@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Header } from "@/app/header";
 import { LovableHeroSection } from "./lovable-hero-section";
 import { LovableSpriteSection } from "./lovable-sprite-section";
-import { LovableHeaderHints } from "./lovable-header-hints";
+import { LovableHintsSection } from "./lovable-header-hints";
 
 export const metadata: Metadata = {
   title: "Lovable Application",
@@ -20,6 +20,7 @@ export default function LovablePage() {
       <main className="h-dvh overflow-y-auto scroll-smooth snap-y snap-mandatory">
         <LovableHeroSection />
         <LovableSpriteSection />
+        <LovableHintsSection />
       </main>
     </>
   );

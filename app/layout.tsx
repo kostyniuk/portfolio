@@ -1,4 +1,4 @@
-import { Arvo, Caveat, Geist, Geist_Mono } from "next/font/google";
+import { Arvo, Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-title" });
 
-const caveat = Caveat({ subsets: ["latin"], weight: "700", variable: "--font-lovable-hint" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.a13x.space"),
@@ -74,7 +73,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("antialiased", geistMono.variable, "font-mono", geist.variable, arvo.variable, caveat.variable)} // Rewrite default css font for the block/whole page
+      className={cn("antialiased", geistMono.variable, "font-mono", geist.variable, arvo.variable)}
     >
       <body>
         <ThemeProvider>

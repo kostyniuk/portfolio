@@ -76,23 +76,14 @@
   --inset-shadow-lg: inset 0 10px 8px color-mix(in oklch, var(--background) 7%, transparent);
   --font-mono: var(--font-mono);
   @keyframes liquid-drift {
-    0% {
-      background-position:
-        0% 0%,
-        100% 100%,
-        0% 0%;
+  0% {
+    background-position: 0% 0%, 100% 100%, 0% 0%;
     }
-    50% {
-      background-position:
-        30% 20%,
-        70% 80%,
-        0% 0%;
+  50% {
+    background-position: 30% 20%, 70% 80%, 0% 0%;
     }
-    100% {
-      background-position:
-        0% 0%,
-        100% 100%,
-        0% 0%;
+  100% {
+    background-position: 0% 0%, 100% 100%, 0% 0%;
     }
   }
 }
@@ -457,10 +448,6 @@
   animation: lovable-portrait-reveal 0.82s cubic-bezier(0.2, 0.72, 0.2, 1) 240ms both;
 }
 
-.lovable-header-hint-font,
-.lovable-header-hint-label {
-  font-family: var(--font-lovable-hint);
-}
 
 @keyframes lovable-header-hint-draw {
   from {
@@ -484,9 +471,26 @@
   }
 }
 
+.lovable-hints-trigger {
+  timeline-trigger:
+    --hints view() entry 50% exit 50%,
+    --hints-out view() exit 20% exit 100%;
+}
+
+.lovable-hints-overlay {
+  animation: lovable-hints-overlay-fade 0.25s ease both;
+  animation-trigger: --hints-out play-forwards play-backwards;
+}
+
+@keyframes lovable-hints-overlay-fade {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 .lovable-header-hint-path {
   stroke-dasharray: 1500;
-  animation: lovable-header-hint-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: lovable-header-hint-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
+  animation-trigger: --hints play-forwards play-backwards;
 }
 
 .lovable-header-hint-path-delayed {
@@ -496,7 +500,8 @@
 
 .lovable-header-hint-label {
   opacity: 0;
-  animation: lovable-header-hint-label-tilt 0.55s ease forwards;
+  animation: lovable-header-hint-label-tilt 0.55s ease both;
+  animation-trigger: --hints play-forwards play-backwards;
 }
 
 .lovable-header-hint-label-portfolio {
