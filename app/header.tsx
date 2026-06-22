@@ -23,7 +23,7 @@ async function Header() {
   return (
     <div className="fixed z-1 w-full flex justify-center">
       <div className="mt-2 w-[calc(100%-2rem)] sm:w-[calc(50%-10px)] rounded-4xl overflow-hidden">
-        <LiquidGlass className="rounded-4xl" shadow={false}>
+        <LiquidGlass className="rounded-4xl">
           <div className="h-12 flex items-center justify-between px-5">
             <Link href="/" className="flex items-center">
               <AKLogo size={24} className="text-foreground" />
