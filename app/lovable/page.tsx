@@ -21,7 +21,7 @@ export default function LovablePage() {
       <main className="h-dvh overflow-y-auto scroll-smooth snap-y snap-mandatory">
         <LovableHeroSection />
         <LovableSpriteSection />
-        <LovableHintsSection />
+        <LovableHintsSection portfolioHref={MAIN_SITE_URL} />
       </main>
     </>
   );

@@ -485,7 +485,13 @@
 }
 
 @supports (animation-trigger: --hints play-forwards play-backwards) {
-  .lovable-hints-trigger {
+  @supports (animation-trigger: --x play-forwards) {
+  .lovable-hints-fallback {
+    display: none;
+  }
+}
+
+.lovable-hints-trigger {
     timeline-trigger:
       --hints view() entry 50% exit 50%,
       --hints-out view() exit 20% exit 100%;

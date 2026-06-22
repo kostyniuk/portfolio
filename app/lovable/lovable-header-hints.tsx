@@ -1,4 +1,6 @@
-export function LovableHintsSection() {
+import { GlassBadge } from "@/components/ui/glasscn/glass-badge";
+
+export function LovableHintsSection({ portfolioHref = "/" }: { portfolioHref?: string }) {
   return (
     <section
       className="lovable-hints-trigger relative flex h-dvh snap-start items-center justify-center overflow-hidden bg-[#1c1c1c]"
@@ -22,6 +24,20 @@ export function LovableHintsSection() {
           className="absolute inset-0 h-full w-full object-contain"
           style={{ filter: "blur(4px)" }}
         />
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center gap-4 text-center">
+        <p className="w-[min(90vw,40rem)] text-center text-xl font-normal tracking-normal text-white sm:text-4xl">
+          Let&apos;s build something{" "}
+          <GlassBadge className="text-white text-xl sm:text-3xl font-bold px-4 py-4">Lovable</GlassBadge>{" "}
+          <span className="font-bold">together!</span>
+        </p>
+        <p className="lovable-hints-fallback text-white/60">
+          Go to{" "}
+          <a href={portfolioHref} className="text-white underline underline-offset-4 hover:text-white/80">
+            Portfolio
+          </a>
+        </p>
       </div>
 
       <div className="lovable-hints-overlay pointer-events-none fixed inset-0 z-50">
