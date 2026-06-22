@@ -471,45 +471,56 @@
   }
 }
 
-.lovable-hints-trigger {
-  timeline-trigger:
-    --hints view() entry 50% exit 50%,
-    --hints-out view() exit 20% exit 100%;
-}
-
-.lovable-hints-overlay {
-  animation: lovable-hints-overlay-fade 0.25s ease both;
-  animation-trigger: --hints-out play-forwards play-backwards;
-}
-
 @keyframes lovable-hints-overlay-fade {
   from { opacity: 1; }
   to { opacity: 0; }
 }
 
-.lovable-header-hint-path {
-  stroke-dasharray: 1500;
-  animation: lovable-header-hint-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
-  animation-trigger: --hints play-forwards play-backwards;
+/* Scroll-triggered hints rely on timeline-trigger/animation-trigger, which are
+   only available in very recent engines. Without support the *-trigger props
+   are ignored and the animations would otherwise fire on load, so the whole
+   fixed overlay is hidden unless the trigger syntax actually parses. */
+.lovable-hints-overlay {
+  display: none;
 }
 
-.lovable-header-hint-path-delayed {
-  animation-delay: 0.5s;
-  animation-fill-mode: both;
-}
+@supports (animation-trigger: --hints play-forwards play-backwards) {
+  .lovable-hints-trigger {
+    timeline-trigger:
+      --hints view() entry 50% exit 50%,
+      --hints-out view() exit 20% exit 100%;
+  }
 
-.lovable-header-hint-label {
-  opacity: 0;
-  animation: lovable-header-hint-label-tilt 0.55s ease both;
-  animation-trigger: --hints play-forwards play-backwards;
-}
+  .lovable-hints-overlay {
+    display: block;
+    animation: lovable-hints-overlay-fade 0.25s ease both;
+    animation-trigger: --hints-out play-forwards play-backwards;
+  }
 
-.lovable-header-hint-label-portfolio {
-  animation-delay: 1.3s;
-}
+  .lovable-header-hint-path {
+    stroke-dasharray: 1500;
+    animation: lovable-header-hint-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
+    animation-trigger: --hints play-forwards play-backwards;
+  }
 
-.lovable-header-hint-label-cv {
-  animation-delay: 1.7s;
+  .lovable-header-hint-path-delayed {
+    animation-delay: 0.5s;
+    animation-fill-mode: both;
+  }
+
+  .lovable-header-hint-label {
+    opacity: 0;
+    animation: lovable-header-hint-label-tilt 0.55s ease both;
+    animation-trigger: --hints play-forwards play-backwards;
+  }
+
+  .lovable-header-hint-label-portfolio {
+    animation-delay: 1.3s;
+  }
+
+  .lovable-header-hint-label-cv {
+    animation-delay: 1.7s;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
