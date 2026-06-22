@@ -31,9 +31,6 @@ async function Header() {
             <Link href="/my-components">
               <Button variant="ghost">Components</Button>
             </Link>
-            <SocialItemMotion>
-              <DownloadButton icon={<FileDown className="size-5" />} tooltipText="Download CV" pathToPdf="/cv.pdf" />
-            </SocialItemMotion>
             <Link href="https://github.com/kostyniuk/portfolio">
               <SocialItemMotion>
                 <Button variant={"ghost"} className="flex flex-row gap-2 items-center cursor-pointer">
@@ -42,6 +39,9 @@ async function Header() {
                 </Button>
               </SocialItemMotion>
             </Link>
+            <SocialItemMotion>
+              <DownloadButton icon={<FileDown className="size-5" />} tooltipText="Download CV" pathToPdf="/cv.pdf" />
+            </SocialItemMotion>
             <ThemeToggle />
           </div>
         </LiquidGlass>

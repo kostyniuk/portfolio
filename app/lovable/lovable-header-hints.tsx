@@ -34,7 +34,7 @@ export function LovableHintsSection() {
             className="lovable-header-hint-path"
           />
           <path
-            d="M 1200 370 C 1330 200, 1030 80, 890 50"
+            d="M 1200 370 C 1330 200, 1030 80, 900 50"
             stroke="#ffffff"
             strokeWidth="2.8"
             strokeLinecap="round"
