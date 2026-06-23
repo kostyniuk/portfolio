@@ -85,7 +85,12 @@ export function LovableSpriteSection() {
               </h3>
               <div className="grid gap-4 sm:grid-cols-2">
                 {reasons.map(({ title, description }) => (
-                  <GlassCard key={title} className="h-full text-white" surfaceClassName="h-full bg-amber-400/10">
+                  <GlassCard
+                    key={title}
+                    className="h-full text-white"
+                    surfaceClassName="h-full bg-amber-400/10"
+                    liquidProps={{ blur: 3, refraction: 10 }}
+                  >
                     <CardHeader>
                       <CardTitle className="text-base font-semibold">{title}</CardTitle>
                       <CardDescription className="text-sm text-white/60">{description}</CardDescription>
