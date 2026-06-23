@@ -54,7 +54,7 @@ export function LovableSpriteSection() {
         </h2>
         <div className="mx-auto max-w-5xl grid grid-cols-3 gap-4">
           {REASONS.map(({ title, description }) => (
-            <GlassCard key={title} className="text-white bg-amber-400/5">
+            <GlassCard key={title} className="text-white" surfaceClassName="bg-amber-400/10">
               <CardHeader>
                 <CardTitle className="text-base font-semibold">{title}</CardTitle>
                 <CardDescription className="text-sm text-white/60">{description}</CardDescription>
