@@ -4,44 +4,35 @@ import { SpriteField } from "@/components/sprite-field";
 
 const REASONS = [
   {
-    title: "Full-stack fluency",
-    description: "Comfortable across the entire stack — from database schema to polished UI animations.",
+    title: "Shipping",
+    description: "I can build things",
   },
   {
-    title: "Ship velocity",
-    description: "Iterates fast without cutting corners. Features land complete, tested, and clean.",
+    title: "Unique approaches",
+    description:
+      "I try to be unique in a lot of things, experimenting with designs and not-fully supported features before most people know about them",
   },
   {
-    title: "Design sensibility",
-    description: "Cares about pixels. Translates vague mockups into interfaces that feel intentional.",
+    title: "Team",
+    description:
+      "I care about the people I work with. I'm currently leading a team and finding more happiness in helping others achieve our common goals, rather than personal ones",
   },
   {
-    title: "AI-native thinking",
-    description: "Integrates LLMs as tools, not toys — prompt design, evals, and cost-awareness included.",
+    title: "AI thinking",
+    description:
+      "I care deeply about AI, and I moved my current company into agentic workflows when no one was using it there",
   },
   {
-    title: "Async by default",
-    description: "Writes clear PRs and docs. Teammates always know what's happening and why.",
+    title: "Learning",
+    description: "I learn something new every day, whether it's through videos, posts or my open source work",
   },
   {
-    title: "Ownership mindset",
-    description: "Treats the product like it's theirs. Bugs get fixed before someone else notices.",
+    title: "Experience",
+    description: "I have experience leading teams and impacting development and business decisions",
   },
   {
-    title: "Feedback hunger",
-    description: "Actively solicits critique and turns it into better work within the same sprint.",
-  },
-  {
-    title: "Tooling instinct",
-    description: "Reaches for the right abstraction — not the flashiest library or the most familiar one.",
-  },
-  {
-    title: "Cross-team empathy",
-    description: "Has worked alongside designers, PMs, and data teams. Speaks all three languages.",
-  },
-  {
-    title: "Compound growth",
-    description: "Every project leaves the codebase cleaner than it was found. Progress accumulates.",
+    title: "Versatility",
+    description: "Can go really deep in both databases and UX",
   },
 ];
 
