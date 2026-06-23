@@ -6,12 +6,12 @@ import { cn } from "@/lib/utils";
 import { Badge } from "../badge";
 import { LiquidGlass } from "./liquid-glass";
 
-type GlassBadgeProps = React.ComponentProps<typeof Badge> & FrostGlassVariantProp;
+type GlassBadgeProps = React.ComponentProps<typeof Badge> & FrostGlassVariantProp & { surfaceClassName?: string };
 
-function GlassBadge({ className, glassVariant = "liquid-refract", ...props }: GlassBadgeProps) {
+function GlassBadge({ className, glassVariant = "liquid-refract", surfaceClassName, ...props }: GlassBadgeProps) {
   if (glassVariant === "liquid-refract") {
     return (
-      <LiquidGlass className={cn("inline-flex rounded-full", className)}>
+      <LiquidGlass className={cn("inline-flex rounded-full", surfaceClassName)}>
         <Badge
           data-slot="glass-badge"
           data-glass-variant={glassVariant}
