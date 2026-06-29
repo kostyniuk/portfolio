@@ -14,7 +14,7 @@ import { GlassBadge } from "@/components/ui/glasscn/glass-badge";
 type Idea = {
   title: string;
   description: string;
-  tweetUrl: string;
+  tweetUrl?: string | null;
   videoSrc?: string;
 };
 
@@ -27,9 +27,11 @@ const IDEAS: Idea[] = [
     videoSrc: "/lovable/lovable-presets.mp4",
   },
   {
-    title: "Another bridge, coming soon",
-    description: "One more little product gap I'm sketching out — I'll drop the tweet and a clip once it's ready.",
-    tweetUrl: "https://x.com/kostyniuk00/status/2070905264253940093",
+    title: "Small change to date logic",
+    description:
+      "One more enhancement we can bring: don’t rely on the model’s perception of the current time. Instead, update the system prompt to always use the actual client date, or create a small skill that teaches the model to never use perceived time in code - only the real time.",
+    tweetUrl: null,
+    videoSrc: "/lovable/lovable-date.mp4",
   },
 ];
 
@@ -44,7 +46,10 @@ function XIcon({ className }: { className?: string }) {
 function IdeaAttachment({ idea }: { idea: Idea }) {
   return (
     <Attachment orientation="horizontal" className="w-full gap-5 p-3 sm:gap-7 sm:p-4">
-      <AttachmentMedia variant="image" className="aspect-auto w-80 self-stretch rounded-xl bg-white sm:w-[28rem]">
+      <AttachmentMedia
+        variant="image"
+        className="relative aspect-auto w-80 min-h-56 self-stretch overflow-hidden rounded-xl bg-white sm:w-[34rem]"
+      >
         {idea.videoSrc ? (
           <video
             src={idea.videoSrc}
@@ -53,10 +58,10 @@ function IdeaAttachment({ idea }: { idea: Idea }) {
             loop
             playsInline
             preload="metadata"
-            className="h-full w-full object-contain"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-white text-stone-400">
+          <div className="absolute inset-0 flex items-center justify-center bg-white text-stone-400">
             <Play className="size-8" />
           </div>
         )}
@@ -69,18 +74,20 @@ function IdeaAttachment({ idea }: { idea: Idea }) {
         </AttachmentDescription>
       </AttachmentContent>
 
-      <AttachmentActions className="self-center pr-1">
-        <AttachmentAction
-          size="default"
-          aria-label="View this idea on X"
-          render={
-            <a href={idea.tweetUrl} target="_blank" rel="noreferrer">
-              <XIcon className="size-4" />
-              View on X
-            </a>
-          }
-        />
-      </AttachmentActions>
+      {idea.tweetUrl ? (
+        <AttachmentActions className="self-center pr-1">
+          <AttachmentAction
+            size="default"
+            aria-label="View this idea on X"
+            render={
+              <a href={idea.tweetUrl} target="_blank" rel="noreferrer">
+                <XIcon className="size-4" />
+                View on X
+              </a>
+            }
+          />
+        </AttachmentActions>
+      ) : null}
     </Attachment>
   );
 }
