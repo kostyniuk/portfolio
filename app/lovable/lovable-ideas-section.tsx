@@ -20,9 +20,9 @@ type Idea = {
 
 const IDEAS: Idea[] = [
   {
-    title: "Make DESIGN.md easy for users",
+    title: "Make designing easy for users",
     description:
-      "Companies like @Lovable can greatly benefit if they make 𝙳𝙴𝚂𝙸𝙶𝙽.𝚖𝚍 easy for users.\n\nWhen users see something they like, they continue interacting with the product — but most non-technical users don’t know this format exists. You can already supply a DESIGN.md file and AI will match the styles to it, yet that’s mostly for technical users.\n\nFor less technical users it would be fun to have either/both:\n\n• Before starting a project, learn what designs the user likes — like how @netflix asks you to pick movies or genres, then adapt new projects to their taste.\n• Alongside a project, create real presets (not just dark/light), similar to @shadcn. You already use shadcn, so it should be easy.\n\nA win-win: the user gets something they already visually like from one prompt, and Lovable keeps them engaged and building.",
+      "@Lovable can greatly benefit if you make 𝙳𝙴𝚂𝙸𝙶𝙽.𝚖𝚍 easy for users.\n\nWhen users see something they like, they continue interacting with the product — but most non-technical users don’t know this format exists. You can already supply a DESIGN.md file and AI will match the styles to it, yet that’s mostly for technical users.\n\nFor less technical users it would be fun to have either/both:\n\n• Before starting a project, learn what designs the user likes — like how @netflix asks you to pick movies or genres, then adapt new projects to their taste.\n• Alongside a project, create real presets (not just dark/light), similar to @shadcn. You already use shadcn, so it should be easy.\n\nA win-win: the user gets something they already visually like from one prompt, and Lovable keeps them engaged and building.",
     tweetUrl: "https://x.com/kostyniuk00/status/2070905264253940093",
     videoSrc: "/lovable/lovable-presets.mp4",
   },
@@ -44,10 +44,7 @@ function XIcon({ className }: { className?: string }) {
 function IdeaAttachment({ idea }: { idea: Idea }) {
   return (
     <Attachment orientation="horizontal" className="w-full gap-5 p-3 sm:gap-7 sm:p-4">
-      <AttachmentMedia
-        variant="image"
-        className="aspect-auto w-80 self-stretch rounded-xl bg-white sm:w-[28rem]"
-      >
+      <AttachmentMedia variant="image" className="aspect-auto w-80 self-stretch rounded-xl bg-white sm:w-[28rem]">
         {idea.videoSrc ? (
           <video
             src={idea.videoSrc}
