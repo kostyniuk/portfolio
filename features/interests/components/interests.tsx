@@ -67,12 +67,14 @@ const INTERESTS = [
   {
     name: "PostgreSQL",
     src: "https://github.com/postgres.png",
+    className: "after:hidden !ring-0",
     variant: "square",
   },
   {
     name: "MySQL",
     src: "https://www.mysql.com/common/logos/logo-mysql-170x115.png",
     Icon: <MySQL />,
+    className: "after:hidden !ring-0",
     variant: "square",
   },
   {
