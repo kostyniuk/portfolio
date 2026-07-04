@@ -12,7 +12,7 @@ function Socials() {
   return (
     <section className="page-section scroll-mt-28 sm:scroll-mt-32">
       <p className="page-section-title">Socials</p>
-      <div className="page-section-body grid grid-cols-4 gap-2">
+      <div className="page-section-body grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
         {Object.entries(SOCIAL_NETWORKS).map(([id, social]) => {
           return <LinkItem key={id} className="glance glance-color-black dark:glance-color-white" {...social} />;
         })}

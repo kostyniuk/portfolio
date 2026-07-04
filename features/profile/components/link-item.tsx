@@ -14,10 +14,10 @@ interface LinkItemProps {
 function LinkItem({ label, link, description, Icon, className }: LinkItemProps) {
   return (
     <LinkItemMotion>
-      <a href={link} target="_blank" rel="noopener noreferrer" className="block w-fit">
+      <a href={link} target="_blank" rel="noopener noreferrer" className="block w-full">
         <div
           className={cn(
-            "flex items-center gap-3.5 px-4 py-3.5 transition-colors duration-300 hover:bg-foreground/3 dark:hover:bg-foreground/4.5",
+            "flex w-full items-center gap-3.5 px-4 py-3.5 transition-colors duration-300 hover:bg-foreground/3 dark:hover:bg-foreground/4.5",
             className,
           )}
         >

@@ -31,7 +31,7 @@ const legendLevelClassNames = graphLevelClassNames.replace("stroke-contribution-
 
 const ContributionsGraph = ({ contributions, total, range }: ContributionsGraphProps) => (
   <TooltipProvider>
-    <ContributionGraph blockRadius={999} data={contributions} totalCount={total}>
+    <ContributionGraph blockRadius={999} className="w-full" data={contributions} totalCount={total}>
       <ContributionGraphCalendar className="overflow-y-visible pb-1">
         {({ activity, dayIndex, weekIndex }) => (
           <Tooltip>
@@ -50,12 +50,12 @@ const ContributionsGraph = ({ contributions, total, range }: ContributionsGraphP
           </Tooltip>
         )}
       </ContributionGraphCalendar>
-      <ContributionGraphFooter>
+      <ContributionGraphFooter className="max-w-full items-center whitespace-normal">
         <ContributionGraphTotalCount>
           {({ totalCount }) => (
-            <span className="text-muted-foreground">
-              {totalCount.toLocaleString("en-US")} contributions in the last year
-              {range ? <span className="text-muted-foreground/60"> ({range})</span> : null}
+            <span className="flex min-w-0 flex-wrap gap-x-1 text-muted-foreground">
+              <span>{totalCount.toLocaleString("en-US")} contributions in the last year</span>
+              {range ? <span className="text-muted-foreground/60">({range})</span> : null}
             </span>
           )}
         </ContributionGraphTotalCount>

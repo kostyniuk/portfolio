@@ -17,9 +17,13 @@ function BioRow({ icon, title, canBeCopied }: BioItem) {
   return (
     <Item className="p-1">
       <ItemMedia variant="icon">{icon}</ItemMedia>
-      <ItemContent className="flex flex-row gap-2">
-        <ItemTitle>{title}</ItemTitle>
-        {canBeCopied && <CopyButton text={title} onClick={() => play()} />}
+      <ItemContent className="flex min-w-0 flex-row items-center gap-2">
+        <ItemTitle className="min-w-0 max-w-full truncate">{title}</ItemTitle>
+        {canBeCopied && (
+          <span className="hidden shrink-0 sm:block">
+            <CopyButton text={title} onClick={() => play()} />
+          </span>
+        )}
       </ItemContent>
     </Item>
   );

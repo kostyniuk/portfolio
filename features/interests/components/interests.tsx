@@ -104,30 +104,43 @@ const INTERESTS = [
   },
 ] satisfies Interest[];
 
+const INTEREST_GLANCE_CLASS = "glance glance-color-black dark:glance-color-white";
+
 function Interests() {
   return (
     <section className="page-section scroll-mt-28 sm:scroll-mt-32">
       <p className="page-section-title">Interests</p>
       <div className="page-section-body">
         <AvatarGroup className="flex-wrap gap-4 sm:gap-6">
-          {INTERESTS.map(({ name, className, src, Icon, variant }) => (
-            <Tooltip key={name}>
-              <TooltipTrigger>
-                <Avatar size="lg" variant={variant === "square" ? "square" : "ghost"} className={className}>
-                  {!Icon ? (
-                    <AvatarImage src={src} alt={name} variant={variant} />
-                  ) : (
-                    <div
-                      className={cn("size-full", "[&>svg]:block", "[&>svg]:size-full", variant === "square" && "p-1 ")}
-                    >
-                      {Icon}
+          {INTERESTS.map(({ name, className, src, Icon, variant }) => {
+            const isSquare = variant === "square" || name === "TypeScript" || name === "JavaScript";
+
+            return (
+              <Tooltip key={name}>
+                <TooltipTrigger>
+                  <Avatar size="lg" variant={variant === "square" ? "square" : "ghost"} className={className}>
+                    <div className={cn(INTEREST_GLANCE_CLASS, "size-full", isSquare ? "rounded-md" : "rounded-full")}>
+                      {!Icon ? (
+                        <AvatarImage src={src} alt={name} variant={variant} />
+                      ) : (
+                        <div
+                          className={cn(
+                            "size-full",
+                            "[&>svg]:block",
+                            "[&>svg]:size-full",
+                            variant === "square" && "p-1 ",
+                          )}
+                        >
+                          {Icon}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </Avatar>
-              </TooltipTrigger>
-              <TooltipContent>{name}</TooltipContent>
-            </Tooltip>
-          ))}
+                  </Avatar>
+                </TooltipTrigger>
+                <TooltipContent>{name}</TooltipContent>
+              </Tooltip>
+            );
+          })}
         </AvatarGroup>
       </div>
     </section>
