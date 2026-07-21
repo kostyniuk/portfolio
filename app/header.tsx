@@ -11,8 +11,9 @@ import { Button } from "@/components/ui/button";
 import { DownloadButton } from "@/components/ui/download-button";
 import { FileDown } from "lucide-react";
 import { AKLogo } from "@/components/icons/ak-logo";
+import { cn } from "@/lib/utils";
 
-async function Header({ logoHref = "/" }: { logoHref?: string }) {
+async function Header({ logoHref = "/", surfaceClassName }: { logoHref?: string; surfaceClassName?: string }) {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
   const { data: repo } = await octokit.rest.repos.get({
@@ -23,7 +24,7 @@ async function Header({ logoHref = "/" }: { logoHref?: string }) {
   return (
     <div className="fixed z-1 w-full flex justify-center">
       <div className="mt-2 w-[calc(100%-2rem)] sm:w-[calc(50%-10px)] rounded-4xl overflow-hidden">
-        <LiquidGlass className="rounded-4xl">
+        <LiquidGlass className={cn("rounded-4xl", surfaceClassName)}>
           <div className="h-12 flex items-center justify-between px-5">
             <Link href={logoHref} className="flex items-center">
               <AKLogo size={24} className="text-foreground" />
