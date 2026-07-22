@@ -53,8 +53,9 @@ const REASON_GROUPS = [
           "Small teams, high ownership, and a culture where the best idea wins are exactly how I do my strongest work.",
       },
       {
-        title: "A global mission",
-        description: "Making technology speak across languages can expand who gets to create, learn, and participate.",
+        title: "Great features",
+        description:
+          "I love that company not only concentrates on text-to-speech, but expands it features, for example, I'm a big fan of Avatars.",
       },
     ],
   },
@@ -62,10 +63,7 @@ const REASON_GROUPS = [
 
 export function ElevenLabsFitSection() {
   return (
-    <section
-      className="relative h-dvh snap-start overflow-hidden bg-[#fdfcfc] text-black"
-      aria-labelledby="fit-title"
-    >
+    <section className="relative h-dvh snap-start overflow-hidden bg-[#fdfcfc] text-black" aria-labelledby="fit-title">
       <SpriteField
         src="/elevenlabs/elevenlabs-symbol.svg"
         size={40}
