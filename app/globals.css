@@ -501,26 +501,102 @@
   animation: elevenlabs-wave-pulse 720ms ease-in-out infinite;
 }
 
-.elevenlabs-process-signal {
-  width: 0;
-  transition: width 1.25s cubic-bezier(0.65, 0, 0.35, 1) 120ms;
-}
-
-.elevenlabs-process-signal.is-active {
+.application-process-signal {
   width: 100%;
 }
 
-.elevenlabs-process-step {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 500ms ease,
-    transform 600ms cubic-bezier(0.2, 0.72, 0.2, 1);
+.application-process-step {
+  opacity: 1;
+  transform: none;
 }
 
-.elevenlabs-process-step.is-active {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes application-process-signal-in {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes application-process-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@supports (animation-trigger: --application-process play-forwards reset) {
+  .application-how-i-work-section {
+    timeline-trigger: --application-process view() entry 48% exit 48%;
+    trigger-scope: --application-process;
+  }
+
+  .application-process-signal {
+    width: 0;
+    animation: application-process-signal-in 1.25s cubic-bezier(0.65, 0, 0.35, 1) 120ms both;
+    animation-trigger: --application-process play-forwards reset;
+  }
+
+  .application-process-step {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: application-process-step-in 600ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+    animation-delay: calc(220ms + (sibling-index() - 1) * 180ms);
+    animation-trigger: --application-process play-forwards reset;
+  }
+}
+
+@keyframes legora-orb-breathe {
+  0%,
+  100% {
+    transform: scale(0.96) rotate(-3deg);
+  }
+  50% {
+    transform: scale(1.04) rotate(3deg);
+  }
+}
+
+.legora-orb {
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(3px) saturate(0.92);
+  animation: legora-orb-breathe 14s ease-in-out infinite;
+}
+
+.legora-orb-green {
+  background:
+    radial-gradient(circle at 34% 28%, rgb(220 234 223 / 0.94), transparent 27%),
+    radial-gradient(circle at 67% 58%, rgb(42 105 74 / 0.63), transparent 46%),
+    radial-gradient(circle at 42% 72%, rgb(137 179 151 / 0.65), transparent 68%);
+  box-shadow: inset 0 0 90px rgb(255 255 255 / 0.7);
+}
+
+.legora-orb-gold {
+  background:
+    radial-gradient(circle at 36% 27%, rgb(255 244 196 / 0.94), transparent 28%),
+    radial-gradient(circle at 66% 52%, rgb(207 170 83 / 0.58), transparent 48%),
+    radial-gradient(circle at 38% 72%, rgb(231 215 165 / 0.68), transparent 68%);
+  box-shadow: inset 0 0 90px rgb(255 255 255 / 0.7);
+  animation-delay: -7s;
+}
+
+.legora-fit-pattern {
+  background-image:
+    linear-gradient(45deg, transparent 48%, rgb(23 74 52 / 0.13) 49%, rgb(23 74 52 / 0.13) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgb(23 74 52 / 0.13) 49%, rgb(23 74 52 / 0.13) 51%, transparent 52%);
+  background-size: 4rem 4rem;
+  mask-image: radial-gradient(circle at center, black, transparent 78%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legora-orb {
+    animation: none;
+  }
 }
 
 @keyframes elevenlabs-header-hint-draw {
@@ -701,19 +777,19 @@
 
   .elevenlabs-orb,
   .elevenlabs-waveform span,
-  .elevenlabs-process-signal,
-  .elevenlabs-process-step,
+  .application-process-signal,
+  .application-process-step,
   .elevenlabs-header-hint-path,
   .elevenlabs-header-hint-label {
     animation: none !important;
     transition: none !important;
   }
 
-  .elevenlabs-process-signal {
+  .application-process-signal {
     width: 100%;
   }
 
-  .elevenlabs-process-step,
+  .application-process-step,
   .elevenlabs-header-hint-label {
     opacity: 1 !important;
     transform: none !important;

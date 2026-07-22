@@ -4,9 +4,9 @@ import { ApplicationAnimatedText } from "@/components/application-animated-text"
 import { useDayTime } from "@/hooks/use-day-time";
 
 const greetingClassName =
-  "text-balance text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.94] font-medium tracking-[-0.06em]";
+  "text-balance text-[clamp(2.35rem,5.4vw,5rem)] leading-[0.92] font-medium tracking-[-0.065em]";
 
-export function ElevenLabsGreeting() {
+export function LegoraGreeting() {
   const dayTime = useDayTime();
 
   if (!dayTime) {
@@ -15,7 +15,7 @@ export function ElevenLabsGreeting() {
         <span className="invisible">
           Good afternoon,
           <br />
-          ElevenLabs.
+          Legora.
         </span>
       </h1>
     );
@@ -26,10 +26,10 @@ export function ElevenLabsGreeting() {
       as="h1"
       className={greetingClassName}
       contentClassName="text-black"
-      text={`Good ${dayTime}, ElevenLabs.`}
-      emphasizedWords={["ElevenLabs"]}
-      underlineWord="ElevenLabs"
-      lineBreakBefore="ElevenLabs"
+      text={`Good ${dayTime}, Legora.`}
+      emphasizedWords={["Legora"]}
+      underlineWord="Legora"
+      lineBreakBefore="Legora"
     />
   );
 }

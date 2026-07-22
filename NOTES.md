@@ -1,5 +1,12 @@
 # Teaching Notes
 
+## Application page preferences
+
+- Legora should reuse the full-viewport pacing and section structure of the ElevenLabs application.
+- Reuse the global `/application-profile.jpeg` for application-page portraits; do not place shared portraits inside a company-specific folder or substitute `/profile.jpg`.
+- Keep user-authored motivation copy as placeholders when requested instead of inventing final reasons.
+- Application-page viewport animations should use CSS view timelines or timeline triggers, not React state and `IntersectionObserver`; keep client JavaScript only for behavior CSS cannot provide.
+
 ## Lesson design preferences
 
 - **Explain the "why" before the "how" (user feedback, 2026-06-09).** The first batch of series lessons (0003-0010) were demo-plus-code only and the user found them not informative enough. Every lesson must explain:

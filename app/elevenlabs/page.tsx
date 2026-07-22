@@ -3,11 +3,11 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 
 import { Header } from "@/app/header";
+import { ApplicationHowIWorkSection } from "@/components/application-how-i-work-section";
 import { MAIN_SITE_URL } from "@/lib/site";
 import { ElevenLabsClosingSection } from "./elevenlabs-closing-section";
 import { ElevenLabsFitSection } from "./elevenlabs-fit-section";
 import { ElevenLabsHeroSection } from "./elevenlabs-hero-section";
-import { ElevenLabsHowIWorkSection } from "./elevenlabs-how-i-work-section";
 
 export const metadata: Metadata = {
   title: "ElevenLabs Application",
@@ -31,7 +31,7 @@ export default function ElevenLabsPage() {
       <main className="h-dvh snap-y snap-mandatory overflow-y-auto scroll-smooth bg-[#fdfcfc]">
         <ElevenLabsHeroSection audioSrc={hasIntroAudio ? introAudioPath : undefined} />
         <ElevenLabsFitSection />
-        <ElevenLabsHowIWorkSection />
+        <ApplicationHowIWorkSection />
         <ElevenLabsClosingSection portfolioHref={MAIN_SITE_URL} />
       </main>
     </>

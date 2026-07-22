@@ -21,7 +21,7 @@ export function ElevenLabsHeroSection({ audioSrc }: { audioSrc?: string }) {
 
         <div className="relative my-3 size-[min(42vw,13rem)] overflow-hidden rounded-full border border-black/10 bg-[#efeeeb] shadow-[0_28px_70px_rgba(50,42,34,0.15)] sm:my-4 sm:size-[14rem]">
           <Image
-            src="/elevenlabs/profile.jpeg"
+            src="/application-profile.jpeg"
             alt="Alex Kostyniuk"
             fill
             loading="eager"

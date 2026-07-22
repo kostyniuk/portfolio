@@ -24,6 +24,16 @@ const nextConfig = {
           ],
           destination: "/elevenlabs",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "legora\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/legora",
+        },
       ],
     };
   },

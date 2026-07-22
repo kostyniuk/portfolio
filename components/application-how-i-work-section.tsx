@@ -1,9 +1,3 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
-import { cn } from "@/lib/utils";
-
 const STEPS = [
   {
     verb: "Plan with AI",
@@ -39,24 +33,11 @@ const STEPS = [
   },
 ];
 
-export function ElevenLabsHowIWorkSection() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(false);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const observer = new IntersectionObserver(([entry]) => setActive(entry.isIntersecting), { threshold: 0.48 });
-    observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
-
+export function ApplicationHowIWorkSection() {
   return (
     <section
-      ref={sectionRef}
-      className="relative flex h-dvh snap-start items-start overflow-y-auto bg-[#080808] px-5 py-20 text-[#fdfcfc] sm:px-8 lg:items-center lg:overflow-hidden"
-      aria-labelledby="how-i-work-title"
+      className="application-how-i-work-section relative flex h-dvh snap-start items-start overflow-y-auto bg-[#080808] px-5 py-20 text-[#fdfcfc] sm:px-8 lg:items-center lg:overflow-hidden"
+      aria-labelledby="application-how-i-work-title"
     >
       <div className="absolute inset-0 opacity-70 [background-image:linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px)] [background-size:100%_9vh]" />
       <div className="absolute -top-36 left-[8%] size-96 rounded-full bg-[#ff6a3d]/10 blur-[110px]" />
@@ -65,7 +46,7 @@ export function ElevenLabsHowIWorkSection() {
       <div className="relative z-10 mx-auto w-full max-w-6xl lg:translate-y-[4vh]">
         <p className="mb-3 hidden text-xs tracking-[0.2em] text-white/42 uppercase sm:block">A continuous loop</p>
         <h2
-          id="how-i-work-title"
+          id="application-how-i-work-title"
           className="max-w-3xl text-[clamp(2.6rem,7vw,6.5rem)] leading-[0.92] font-medium tracking-[-0.065em]"
         >
           How I work.
@@ -82,19 +63,10 @@ export function ElevenLabsHowIWorkSection() {
 
           <div className="relative mt-5">
             <div className="absolute top-3.5 left-0 hidden h-px w-full bg-white/12 lg:block" />
-            <div
-              className={cn(
-                "elevenlabs-process-signal absolute top-3.5 left-0 hidden h-px bg-[#ff6a3d] lg:block",
-                active && "is-active",
-              )}
-            />
+            <div className="application-process-signal absolute top-3.5 left-0 hidden h-px bg-[#ff6a3d] lg:block" />
             <ol className="relative grid grid-cols-1 gap-4 sm:grid-cols-4 sm:gap-x-4 sm:gap-y-8 lg:grid-cols-8 lg:gap-3">
               {STEPS.map(({ verb, detail }, index) => (
-                <li
-                  key={verb}
-                  className={cn("elevenlabs-process-step flex gap-4 sm:block", active && "is-active")}
-                  style={{ transitionDelay: `${220 + index * 180}ms` }}
-                >
+                <li key={verb} className="application-process-step flex gap-4 sm:block">
                   <span className="relative z-10 mt-1 grid size-7 shrink-0 place-items-center rounded-full border border-white/20 bg-[#080808] text-[9px] text-white/58 sm:mt-0">
                     {String(index + 1).padStart(2, "0")}
                   </span>

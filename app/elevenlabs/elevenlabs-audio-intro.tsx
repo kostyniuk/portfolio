@@ -1,7 +1,7 @@
 "use client";
 
 import { Pause, Play } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { GlassBadge } from "@/components/ui/glasscn/glass-badge";
 import { cn } from "@/lib/utils";
@@ -14,30 +14,6 @@ export function ElevenLabsAudioIntro({ audioSrc }: { audioSrc?: string }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateTime = () => setProgress(audio.duration ? audio.currentTime / audio.duration : 0);
-    const updateDuration = () => setDuration(audio.duration || 0);
-    const stop = () => setIsPlaying(false);
-    const play = () => setIsPlaying(true);
-
-    audio.addEventListener("timeupdate", updateTime);
-    audio.addEventListener("loadedmetadata", updateDuration);
-    audio.addEventListener("ended", stop);
-    audio.addEventListener("pause", stop);
-    audio.addEventListener("play", play);
-
-    return () => {
-      audio.removeEventListener("timeupdate", updateTime);
-      audio.removeEventListener("loadedmetadata", updateDuration);
-      audio.removeEventListener("ended", stop);
-      audio.removeEventListener("pause", stop);
-      audio.removeEventListener("play", play);
-    };
-  }, []);
 
   const togglePlayback = async () => {
     const audio = audioRef.current;
@@ -56,7 +32,21 @@ export function ElevenLabsAudioIntro({ audioSrc }: { audioSrc?: string }) {
 
   return (
     <div className="flex flex-col items-center gap-5">
-      {audioSrc ? <audio ref={audioRef} src={audioSrc} preload="metadata" /> : null}
+      {audioSrc ? (
+        <audio
+          ref={audioRef}
+          src={audioSrc}
+          preload="metadata"
+          onTimeUpdate={(event) => {
+            const audio = event.currentTarget;
+            setProgress(audio.duration ? audio.currentTime / audio.duration : 0);
+          }}
+          onLoadedMetadata={(event) => setDuration(event.currentTarget.duration || 0)}
+          onEnded={() => setIsPlaying(false)}
+          onPause={() => setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
+        />
+      ) : null}
 
       <button
         type="button"

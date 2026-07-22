@@ -1,9 +1,12 @@
-import { LovableAnimatedText } from "./lovable-animated-text";
 import { LovableGreeting } from "./lovable-greeting";
+import { ApplicationAnimatedText } from "@/components/application-animated-text";
 
 export function LovableHeroSection() {
   return (
-    <section className="relative h-dvh snap-start overflow-hidden bg-[#1c1c1c]" aria-label="Lovable Application">
+    <section
+      className="relative h-dvh snap-start overflow-hidden bg-[#1c1c1c]"
+      aria-label="Lovable Application"
+    >
       <div
         aria-hidden="true"
         className="absolute"
@@ -30,8 +33,9 @@ export function LovableHeroSection() {
         data-slot="lovable-portrait"
         className="lovable-portrait absolute h-100 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 object-contain"
       />
-      <LovableAnimatedText
+      <ApplicationAnimatedText
         className="absolute left-1/2 top-[calc(50%_+_13.5rem)] w-[min(90vw,48rem)] -translate-x-1/2 text-center text-3xl font-normal tracking-normal text-white"
+        contentClassName="text-white/85"
         text="Scroll down to see the reasons why we're a perfect fit"
         startDelayMs={450}
         staggerMs={10}

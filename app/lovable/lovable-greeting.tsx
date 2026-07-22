@@ -1,6 +1,6 @@
 "use client";
 
-import { LovableAnimatedText } from "./lovable-animated-text";
+import { ApplicationAnimatedText } from "@/components/application-animated-text";
 import { useDayTime } from "@/hooks/use-day-time";
 
 export function LovableGreeting({ className }: { className: string }) {
@@ -22,5 +22,13 @@ export function LovableGreeting({ className }: { className: string }) {
 
   const text = `Good ${dayTime} Lovable team, I'm Alex`;
 
-  return <LovableAnimatedText className={className} text={text} />;
+  return (
+    <ApplicationAnimatedText
+      className={className}
+      contentClassName="text-white/85"
+      text={text}
+      emphasizedWords={["Alex", "Lovable"]}
+      underlineWord="Lovable"
+    />
+  );
 }
