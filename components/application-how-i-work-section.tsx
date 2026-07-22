@@ -1,35 +1,36 @@
 const STEPS = [
   {
-    verb: "Plan with AI",
-    detail: "For sufficiently large or complex work, I start by planning alongside an AI agent.",
+    verb: "Start with an agent",
+    detail:
+      "I always work with an agent. For bigger features or bugs that aren't obvious at first, I use specific skills to help it focus. For smaller tasks, I explain what needs doing and jump in.",
   },
   {
     verb: "Scope the solution",
-    detail: "Turn the approach into a complete spec with clear boundaries and acceptance criteria.",
+    detail: "When the work needs a plan, I turn it into a detailed spec, including edge cases and what done looks like.",
   },
   {
     verb: "Implement with agents",
-    detail: "One or more AI agents build the feature from the agreed plan.",
+    detail: "Once the task is clear, I let one or more agents build the feature.",
   },
   {
     verb: "Create feedback loops",
-    detail: "Browser Use, types, and tests give agents evidence to review their own work.",
+    detail: "Browser Use, types, and tests help the agents see what they built and catch their own mistakes.",
   },
   {
     verb: "Check manually",
-    detail: "I run the feature myself and inspect the implementation end to end.",
+    detail: "I still open the feature and use it myself, from start to finish.",
   },
   {
     verb: "Run an agent review",
-    detail: "Fresh agents look for gaps, inconsistencies, and violations of project rules.",
+    detail: "I ask fresh agents to review the work and catch anything the first ones missed.",
   },
   {
     verb: "Review the code",
-    detail: "I inspect the final diff manually and resolve anything automation missed.",
+    detail: "Then I read the diff myself and fix whatever is left.",
   },
   {
     verb: "Babysit the PR",
-    detail: "An agent follows CI and review comments until the pull request is ready to ship.",
+    detail: "Finally, an agent watches CI and review comments until the PR is ready to merge.",
   },
 ];
 
@@ -52,10 +53,9 @@ export function ApplicationHowIWorkSection() {
           How I work.
         </h2>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/52 sm:text-base">
-          I start with either a real problem or a business idea, then shape it around customer needs and technical
-          realities. I look for a solution that can serve many customers—not just one. Once the core is clear, I work
-          with Design on the experience, turn it into a focused story, and leave it ready for a developer—or me—to pick
-          up and build.
+          I usually start with a problem that needs solving, or an idea worth trying. I think through what customers
+          actually need, what is technically possible, and whether the solution can work for more than one customer.
+          Then I work with Design, break it into a clear story, and leave it ready for a developer—or me—to build.
         </p>
 
         <div className="mt-10 sm:mt-12">
@@ -83,8 +83,8 @@ export function ApplicationHowIWorkSection() {
         <div className="mt-10 flex items-start gap-4 border-t border-white/10 pt-5 sm:mt-12">
           <span className="shrink-0 text-xs tracking-[0.16em] text-white/32 uppercase">Outcome</span>
           <p className="max-w-2xl text-xs leading-relaxed text-white/48">
-            These feedback loops produce a well-scoped, thoroughly tested solution in a short timeframe—ready to ship to
-            customers with confidence.
+            The result is a feature that has been planned, built, checked, and reviewed from a few different
+            angles—usually in much less time.
           </p>
         </div>
       </div>
