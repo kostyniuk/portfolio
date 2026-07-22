@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import { ElevenLabsAudioIntro } from "./elevenlabs-audio-intro";
+import { ElevenLabsGreeting } from "./elevenlabs-greeting";
 
 export function ElevenLabsHeroSection({ audioSrc }: { audioSrc?: string }) {
   return (
@@ -16,11 +17,7 @@ export function ElevenLabsHeroSection({ audioSrc }: { audioSrc?: string }) {
         <p className="mb-2 text-[10px] tracking-[0.2em] text-black/50 uppercase sm:text-xs">
           Application / Alex Kostyniuk
         </p>
-        <h1 className="text-balance text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.94] font-medium tracking-[-0.06em]">
-          Good day,
-          <br />
-          ElevenLabs.
-        </h1>
+        <ElevenLabsGreeting />
 
         <div className="relative my-3 size-[min(42vw,13rem)] overflow-hidden rounded-full border border-black/10 bg-[#efeeeb] shadow-[0_28px_70px_rgba(50,42,34,0.15)] sm:my-4 sm:size-[14rem]">
           <Image
@@ -41,7 +38,6 @@ export function ElevenLabsHeroSection({ audioSrc }: { audioSrc?: string }) {
           <ElevenLabsAudioIntro audioSrc={audioSrc} />
         </div>
       </div>
-
     </section>
   );
 }

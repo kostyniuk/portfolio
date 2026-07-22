@@ -1,7 +1,7 @@
 "use client";
 
 import { LovableAnimatedText } from "./lovable-animated-text";
-import { useDayTime } from "./use-day-time";
+import { useDayTime } from "@/hooks/use-day-time";
 
 export function LovableGreeting({ className }: { className: string }) {
   const dayTime = useDayTime();
