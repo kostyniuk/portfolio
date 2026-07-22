@@ -14,6 +14,16 @@ const nextConfig = {
           ],
           destination: "/lovable",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "elevenlabs\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/elevenlabs",
+        },
       ],
     };
   },
