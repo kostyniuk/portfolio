@@ -22,7 +22,7 @@ async function Header({ logoHref = "/", surfaceClassName }: { logoHref?: string;
   });
 
   return (
-    <div className="fixed z-1 w-full flex justify-center">
+    <div className="fixed z-[100] flex w-full justify-center">
       <div className="mt-2 w-[calc(100%-2rem)] sm:w-[calc(50%-10px)] rounded-4xl overflow-hidden">
         <LiquidGlass className={cn("rounded-4xl", surfaceClassName)}>
           <div className="h-12 flex items-center justify-between px-5">
