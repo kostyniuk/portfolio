@@ -78,7 +78,7 @@ export function ElevenLabsFitSection() {
 
       <div className="absolute inset-0 overflow-x-hidden overflow-y-auto px-5 py-20 sm:px-8">
         <div className="relative z-10 mx-auto max-w-6xl">
-          <p className="mb-3 text-center text-xs tracking-[0.2em] text-black/45 uppercase">Mutual signal</p>
+          {/* <p className="mb-3 text-center text-xs tracking-[0.2em] text-black/45 uppercase">Mutual signal</p> */}
           <h2 id="fit-title" className="mb-10 text-center">
             <GlassBadge
               className="h-auto w-[calc(100vw-2.5rem)] justify-center px-4 py-4 text-center text-2xl font-medium tracking-[-0.045em] whitespace-normal text-black sm:w-auto sm:px-5 sm:text-5xl lg:text-6xl"
