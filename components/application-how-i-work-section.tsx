@@ -6,7 +6,8 @@ const STEPS = [
   },
   {
     verb: "Scope the solution",
-    detail: "When the work needs a plan, I turn it into a detailed spec, including edge cases and what done looks like.",
+    detail:
+      "When the work needs a plan, I turn it into a detailed spec, including edge cases and what done looks like.",
   },
   {
     verb: "Implement with agents",
@@ -53,9 +54,10 @@ export function ApplicationHowIWorkSection() {
           How I work.
         </h2>
         <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/52 sm:text-base">
-          I usually start with a problem that needs solving, or an idea worth trying. I think through what customers
-          actually need, what is technically possible, and whether the solution can work for more than one customer.
-          Then I work with Design, break it into a clear story, and leave it ready for a developer—or me—to build.
+          I start with either a problem to solve or a business idea. I shape it around customer needs and technical
+          realities, and look for a solution that can serve many customers instead of just one. Once the core is clear,
+          I work with Design team on the experience, break it down into a focused story, and leave it ready for a
+          developer or me to build.
         </p>
 
         <div className="mt-10 sm:mt-12">
