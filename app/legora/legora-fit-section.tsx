@@ -42,16 +42,19 @@ const REASON_GROUPS = [
     title: "Why I want to join Legora",
     reasons: [
       {
-        title: "",
-        description: "",
+        title: "AI that sharpens judgment",
+        description:
+          "I want to build AI that cuts through complexity while leaving the consequential thinking to people. Legal work is a demanding, meaningful place to make that promise real.",
       },
       {
-        title: "",
-        description: "",
+        title: "Frontier work, end to end",
+        description:
+          "The chance to take LLM features from an ambitious PoC to a secure product used by leading legal teams is exactly the breadth and responsibility I enjoy.",
       },
       {
-        title: "",
-        description: "",
+        title: "High standards, together",
+        description:
+          "Legora’s mix of ownership, direct low-ego feedback, and building together in Stockholm matches how I want to work: close to the team, moving fast, and accountable for outcomes.",
       },
     ],
   },

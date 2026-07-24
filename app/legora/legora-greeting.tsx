@@ -26,7 +26,7 @@ export function LegoraGreeting() {
       as="h1"
       className={greetingClassName}
       contentClassName="text-black"
-      text={`Good ${dayTime}, Legora.`}
+      text={`Good ${dayTime}, Legora team.`}
       emphasizedWords={["Legora"]}
       underlineWord="Legora"
       lineBreakBefore="Legora"

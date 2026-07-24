@@ -31,7 +31,8 @@ export function LegoraHeroSection() {
         </div>
 
         <p className="max-w-xl text-balance text-lg leading-snug tracking-[-0.025em] sm:text-xl">
-          I build AI products that turn ambiguity into precise, trusted outcomes.
+          I build AI features with a broad understanding of the models, tools, and engineering practices behind great
+          AI applications.
         </p>
         <p className="mt-3 text-xs tracking-[0.14em] text-black/45 uppercase sm:mt-4">
           Software Engineer · AI Focus · Stockholm
