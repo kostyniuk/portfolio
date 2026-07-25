@@ -1,5 +1,7 @@
 import { type LinkItemProps } from "@/features/profile/components/link-item";
 import { PreviewProject } from "@/features/projects/components/project-preview";
+import { ProjectVideoStack } from "@/features/projects/components/project-video-stack";
+import type { CSSProperties } from "react";
 
 interface Project extends LinkItemProps {
   description: string;
@@ -78,17 +80,35 @@ const PROJECTS = {
 } satisfies Record<string, Project>;
 
 function Projects() {
+  const entries = Object.entries(PROJECTS);
+  const timelineScope = entries.map((_, index) => `--project-${index}`).join(", ");
+
   return (
-    <section id="projects" className="page-section scroll-mt-navigation-scroll-margin">
+    <section
+      id="projects"
+      className="page-section scroll-mt-navigation-scroll-margin"
+      style={{ timelineScope } as CSSProperties}
+    >
       <p className="page-section-title">Projects</p>
-      <div className="page-rule-list mt-4 flex flex-col">
-        {Object.entries(PROJECTS).map(([id, project]) => {
-          return (
-            <div key={id}>
-              <PreviewProject {...project} />
-            </div>
-          );
-        })}
+      {/* Block layout on mobile so the video card can stick against the whole
+          wrapper — a sticky grid item can't travel beyond its own row. */}
+      {/* The video column takes the larger share, and the grid spills past the
+          page container into the empty right margin — the MacBook spends ~23%
+          of its width on bezel and base, so the screen needs the room to read.
+          The negative margin sits on the grid rather than the section so the
+          section's top rule stays aligned with every other section's.
+
+          max-w-84rem caps how big the device gets: the spill is derived from
+          the viewport, so without a ceiling the MacBook keeps growing on wide
+          monitors and swamps the text. This is the number to change to resize
+          it. */}
+      <div className="mt-4 lg:mr-[calc(50%-50vw+2rem)] lg:grid lg:max-w-[84rem] lg:grid-cols-[minmax(0,0.85fr)_minmax(20rem,1.05fr)] lg:gap-x-8">
+        <ProjectVideoStack projects={entries.map(([id, project]) => ({ id, ...project }))} />
+        <div className="page-rule-list flex flex-col lg:col-start-1 lg:row-start-1">
+          {entries.map(([id, project], index) => (
+            <PreviewProject key={id} index={index} {...project} />
+          ))}
+        </div>
       </div>
     </section>
   );

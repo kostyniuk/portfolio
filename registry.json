@@ -126,6 +126,20 @@
         }
       },
       "docs": "Render <AnimatedHeadline prefix=\"Engineering things people love to\" words={[\"build\", \"design\", \"ship\", \"use\"]} /> for the composed effect, or import the named pieces <RotateAppearance />, <RotateWord />, and <ShinyUnderline /> separately. All animation is CSS-owned: prefix words flip up with keyframes, the rotating word uses CSS enter/exit keyframes while React briefly keeps the exiting word rendered, and the underline uses CSS reveal/shimmer keyframes. Honours prefers-reduced-motion by rendering the settled state. Requires the hero-word and hero-underline keyframes (installed automatically via the css field)."
+    },
+    {
+      "name": "device",
+      "type": "registry:ui",
+      "title": "Device",
+      "description": "MacBook, iMac, iPhone, and iPad bezels whose screen is a real DOM box, so it can hold video, an iframe, or any live content rather than only a flat image.",
+      "files": [
+        {
+          "path": "components/ui/device.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/device.tsx"
+        }
+      ],
+      "docs": "Render <Device variant=\"macbook\"><video src=\"/demo.mp4\" autoPlay muted loop playsInline className=\"h-full w-full object-cover\" /></Device>, or pass src=\"/shot.png\" for a static screenshot. Variants: macbook (501x323 screen), imac (542x305, exactly 16:9), iphone (175x380), ipad (457x343). The artwork is split into a back SVG (body, bezel, screen fill) and a front SVG (the bits that overlap the glass, e.g. the MacBook notch and iPhone dynamic island), with children in an HTML box between them — so screen content sits under the notch the way it does on a real device. Screen geometry is declared in SVG user units and converted to percentages, so the device scales fluidly with its container; set a width on it via className. The screen fill uses currentColor, so text-black gives an off display behind transparent content. Adapted from the Device component in aliimam-in/templates."
     }
   ]
 }
