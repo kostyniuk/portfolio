@@ -81,6 +81,8 @@ const PROJECTS = {
 
 function Projects() {
   const entries = Object.entries(PROJECTS);
+  // Hoists every project's view-timeline into a scope both columns can see: the
+  // articles declare the timelines, the video stack in the other column uses them.
   const timelineScope = entries.map((_, index) => `--project-${index}`).join(", ");
 
   return (

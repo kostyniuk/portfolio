@@ -809,46 +809,47 @@
   }
 
   /* The project video hand-off is not disabled here — freezing it would pair
-     the wrong video with the article being read. It degrades to a cut instead;
-     see the step-end override alongside the wipe below. */
+     the wrong video with the project being read. It degrades to a cut instead;
+     see the transition override alongside the wipe below. */
 }
 
 /* Sticky project video stack (see project-video-stack.tsx): every project's
    video is stacked absolutely inside one MacBook screen and wipes in as its
-   matching text article (project-preview.tsx) scrolls through view. The
-   pairing is pure CSS — each article names a view-timeline
-   (`view-timeline-name`) and the matching video attaches to it via an inline
-   `animation-timeline`, scoped together by the `timelineScope` set on the
-   section in projects.tsx.
+   matching text article (project-preview.tsx) scrolls through view. The pairing
+   is pure CSS — each article names a view-timeline (`view-timeline-name`) and
+   the matching video attaches to it via an inline `animation-timeline`, scoped
+   together by the `timelineScope` set on the section in projects.tsx.
 
-   A video never switches itself off. The videos are painted in source order,
-   so the next one to arrive simply covers the one before it — which is why the
+   A video never switches itself off. The videos are painted in source order, so
+   the next one to arrive simply covers the one before it — which is why the
    stack can never show a gap, and why only the incoming video is ever animated.
 
    Fallback: browsers without scroll-driven animations just show the first video. */
-/* The line the video hand-off is measured against: a project's video takes over
-   as that project's heading passes this far below the top of the viewport, so
-   at any moment the screen shows the video of whichever project is sitting on
-   the line. This is the one number to tune — smaller hands off later, larger
-   sooner. It is applied as a `view-timeline-inset`, which pulls the top edge of
-   the timeline's scrollport down to the line.
 
-   Keep the line comfortably above the point where an article is taller than
-   what is left of the scrollport below it: past that, `exit 0%` starts
-   measuring the article's bottom edge instead of its top and the hand-off
-   inverts. */
+/* The line the hand-off is measured against: a project's video takes over as
+   that project's heading passes this far below the top of the viewport, so at
+   any moment the screen shows the video of whichever project is sitting on the
+   line. This is the one number to tune — smaller hands off later, larger sooner.
+   It is applied as a `view-timeline-inset`, which pulls the top edge of the
+   timeline's scrollport down to the line.
+
+   Keep the line comfortably above the point where an article is taller than what
+   is left of the scrollport below it: past that, `exit 0%` starts measuring the
+   article's bottom edge instead of its top and the hand-off inverts. */
 .project-article {
   --project-video-line: 11rem;
 
   view-timeline-inset: var(--project-video-line) 0;
 }
 
+/* Written long-hand rather than as a range query: `@media (width >= 64rem)` is
+   silently dropped by this project's CSS pipeline. */
 @media (min-width: 64rem) {
-  /* On lg the MacBook comes to rest vertically centred, so the hand-off moves
-     to the middle of the screen to match it. Anchoring it near the top instead
-     puts the video a whole project behind the one being read: three articles
-     are on screen at once at this size, and the one level with the top of the
-     screen has already been read past. */
+  /* On lg the MacBook comes to rest vertically centred, so the hand-off moves to
+     the middle of the screen to match it. Anchoring it near the top instead puts
+     the video a whole project behind the one being read: three articles are on
+     screen at once at this size, and the one level with the top of the screen
+     has already been read past. */
   .project-article {
     --project-video-line: 50vh;
   }
@@ -876,25 +877,24 @@
     animation-timing-function: ease-out;
     animation-fill-mode: both;
     /* `entry 0%` is the article's top edge level with the bottom of the
-       scrollport and `exit 0%` is that same edge level with the top, so
-       progress across this range tracks the heading's travel up the screen and
-       — unlike the whole-element `cover` range — does not shift with how tall
-       the article is. Combined with the articles' `view-timeline-inset`, the
-       end of the range is the moment the incoming heading crosses
-       `--project-video-line`. */
+       scrollport and `exit 0%` is that same edge level with the top, so progress
+       across this range tracks the heading's travel up the screen and — unlike
+       the whole-element `cover` range — does not shift with how tall the article
+       is. Combined with the articles' `view-timeline-inset`, the end of the
+       range is the moment the incoming heading crosses `--project-video-line`. */
     animation-range: entry 0% exit 0%;
   }
 
-  /* The first video owns the screen until the second one takes over, so the
-     card is never empty on the way into the section. */
+  /* The first video owns the screen until the second one takes over, so the card
+     is never empty on the way into the section. */
   .project-video-stack video:first-of-type {
     animation-name: none;
     clip-path: none;
   }
 
   /* The sweep is squeezed into the last tenth of the range — about 75px of
-     scroll — so it reads as a quick swap as the heading arrives rather than as
-     a transition being scrubbed by the scrollbar. */
+     scroll — so it reads as a quick swap as the heading arrives rather than as a
+     transition being scrubbed by the scrollbar. */
   @keyframes project-video-wipe {
     0%,
     90% {
@@ -907,8 +907,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     /* step-end holds each keyframe until the next, collapsing the sweep into a
-       cut. The hand-off still happens — pairing the right video with the
-       article being read is information, not decoration — it just stops moving. */
+       cut. The hand-off still happens — pairing the right video with the project
+       being read is information, not decoration — it just stops moving. */
     .project-video-stack video {
       animation-timing-function: step-end;
     }

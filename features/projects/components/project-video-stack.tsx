@@ -1,4 +1,5 @@
 import { Device } from "@/components/ui/device";
+import { ProjectVideoPlayback } from "@/features/projects/components/project-video-playback";
 import { type Project } from "@/features/projects/components/projects";
 import type { CSSProperties } from "react";
 
@@ -12,11 +13,15 @@ interface ProjectVideoStackProps {
  * (see project-preview.tsx) scrolls through view, driven purely by CSS
  * scroll-timelines: the article names a `view-timeline`, this stack's videos
  * attach to it via `animation-timeline`, scoped together by the `timelineScope`
- * declared on the `<section>` in projects.tsx. See globals.css for the
- * `.project-video-stack` animation.
+ * declared on the `<section>` in projects.tsx. No JavaScript is involved — see
+ * globals.css for the `.project-video-stack` animation.
  *
  * Videos are painted in source order, so a video wiping on simply covers the
  * one before it — never a gap, and only the incoming video is ever animated.
+ *
+ * The one thing CSS cannot do here is playback, so ProjectVideoPlayback adds a
+ * single effect that restarts the current project's video and pauses the rest.
+ * It follows the same `--project-video-line` and changes nothing on screen.
  *
  * On lg the device comes to rest vertically centred rather than at the shared
  * 9rem nav offset. `top: 50vh` would pin its top edge to the middle, so the
@@ -35,7 +40,10 @@ function ProjectVideoStack({ projects }: ProjectVideoStackProps) {
           drop-shadow is a filter, and putting it on the wrapper would push five
           playing videos through it on every repaint. */}
       <Device variant="macbook" className="text-black [&>svg]:drop-shadow-2xl [&>svg]:drop-shadow-black/40">
-        <div className="project-video-stack relative h-full w-full">
+        {/* The `<video>` markup stays server-rendered and is handed through as
+            children — the client boundary exists only to own the playback
+            effect, not the elements. */}
+        <ProjectVideoPlayback>
           {projects.map((project, index) => (
             <video
               key={project.id}
@@ -49,7 +57,7 @@ function ProjectVideoStack({ projects }: ProjectVideoStackProps) {
               style={{ animationTimeline: `--project-${index}` } as CSSProperties}
             />
           ))}
-        </div>
+        </ProjectVideoPlayback>
       </Device>
     </div>
   );

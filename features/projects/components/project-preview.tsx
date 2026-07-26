@@ -11,8 +11,9 @@ function PreviewProject({ label, link, Icon, description, features, source, inde
   return (
     <article
       className="project-article py-8"
-      // The matching `view-timeline-inset`, which decides when this project's
-      // video takes over, lives with the animation in globals.css.
+      // Names the scroll timeline this project's video attaches to. The
+      // `view-timeline-inset` that decides when the hand-off lands lives with
+      // the animation in globals.css.
       style={{ viewTimelineName: `--project-${index}` } as CSSProperties}
     >
       <div className="space-y-4">
