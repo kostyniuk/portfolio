@@ -8,8 +8,13 @@ import Link from "next/link";
 import { Octokit } from "octokit";
 import { ItemDescription } from "@/components/ui/item";
 import { Button } from "@/components/ui/button";
-import { DownloadButton } from "@/components/ui/download-button";
-import { FileDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { FileDown, FileText } from "lucide-react";
 import { AKLogo } from "@/components/icons/ak-logo";
 import { cn } from "@/lib/utils";
 
@@ -41,7 +46,26 @@ async function Header({ logoHref = "/", surfaceClassName }: { logoHref?: string;
               </SocialItemMotion>
             </Link>
             <SocialItemMotion>
-              <DownloadButton icon={<FileDown className="size-5" />} tooltipText="Download CV" pathToPdf="/cv.pdf" />
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  render={
+                    <Button variant="ghost" aria-label="Download CV">
+                      <FileDown />
+                      CV
+                    </Button>
+                  }
+                />
+                <DropdownMenuContent align="end" sideOffset={8}>
+                  <DropdownMenuItem render={<a href="/cv.pdf" download="CV_Alex_Kostyniuk.pdf" />}>
+                    <FileText />
+                    PDF
+                  </DropdownMenuItem>
+                  <DropdownMenuItem render={<a href="/CV_Alex_Kostyniuk.docx" download="CV_Alex_Kostyniuk.docx" />}>
+                    <FileText />
+                    DOCX
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </SocialItemMotion>
             <ThemeToggle />
           </div>
