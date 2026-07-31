@@ -7,34 +7,34 @@ const REASON_GROUPS = [
     title: "Why Legora should hire me",
     reasons: [
       {
-        title: "Applied AI, end to end",
+        title: "Frontend craft",
         description:
-          "I built a production 3D-model similarity engine with embeddings, cosine similarity, and pgvector in PostgreSQL.",
+          "I care deeply about UX and build React interfaces where interaction, responsiveness, and performance reinforce the product.",
       },
       {
-        title: "Strong product engineering",
+        title: "Full-stack ownership",
         description:
-          "I work fluently across TypeScript, React, Node.js, PostgreSQL, and AWS—and connect decisions across every layer.",
+          "I work fluently across TypeScript, React, Node.js, PostgreSQL, and AWS—and can carry a feature across every layer.",
       },
       {
-        title: "Agentic by default",
-        description:
-          "I introduced agentic workflows early, taught them across my team, and built evidence loops that improve speed without lowering quality.",
-      },
-      {
-        title: "Ownership under ambiguity",
+        title: "Architecture that performs",
         description:
           "I turned a ten-minute core workflow into a twenty-second one by challenging the architecture, not merely tuning it.",
       },
       {
-        title: "Hands-on leadership",
+        title: "Product-minded collaboration",
         description:
-          "I lead engineers, set technical direction, and still ship. I care about outcomes more than where the task boundary was drawn.",
+          "I shape features around customer and business needs, work closely with Design, and turn ambiguity into a clear path to production.",
       },
       {
-        title: "High standards, low ego",
+        title: "Hands-on technical leadership",
         description:
-          "I seek direct feedback, review my own assumptions, and want the strongest idea to win—especially when it is not mine.",
+          "I lead engineers, review code, set technical direction, and still ship—raising the bar while helping the people around me grow.",
+      },
+      {
+        title: "AI-native engineering",
+        description:
+          "I bring a broad understanding of AI models, tools, and best practices, plus the judgment to integrate them into dependable product experiences.",
       },
     ],
   },
@@ -42,14 +42,14 @@ const REASON_GROUPS = [
     title: "Why I want to join Legora",
     reasons: [
       {
-        title: "AI that sharpens judgment",
+        title: "Frontend that matters",
         description:
-          "I want to build AI that cuts through complexity while leaving the consequential thinking to people. Legal work is a demanding, meaningful place to make that promise real.",
+          "I want to shape interfaces used for high-stakes legal work, where clarity, speed, polish, and reliability meaningfully affect how professionals work.",
       },
       {
-        title: "Frontier work, end to end",
+        title: "End-to-end product ownership",
         description:
-          "The chance to take LLM features from an ambitious PoC to a secure product used by leading legal teams is exactly the breadth and responsibility I enjoy.",
+          "Owning a feature from design handoff through UI, APIs, and production is the breadth I enjoy—and the kind of responsibility I am looking for.",
       },
       {
         title: "High standards, together",

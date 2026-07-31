@@ -9,7 +9,7 @@ import { LegoraHeroSection } from "./legora-hero-section";
 
 export const metadata: Metadata = {
   title: "Legora Application",
-  description: "Alex Kostyniuk's application for Software Engineer (AI Focus) at Legora.",
+  description: "Alex Kostyniuk's application for Frontend-Leaning Fullstack Engineer at Legora.",
   robots: {
     index: false,
     follow: false,

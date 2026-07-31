@@ -31,11 +31,11 @@ export function LegoraHeroSection() {
         </div>
 
         <p className="max-w-xl text-balance text-lg leading-snug tracking-[-0.025em] sm:text-xl">
-          I build AI features with a broad understanding of the models, tools, and engineering practices behind great
-          AI applications.
+          I build polished features end to end, combining frontend craft with the full-stack judgment to make them fast,
+          reliable, and maintainable.
         </p>
         <p className="mt-3 text-xs tracking-[0.14em] text-black/45 uppercase sm:mt-4">
-          Software Engineer · AI Focus · Stockholm
+          Frontend-Leaning Fullstack Engineer · Stockholm
         </p>
       </div>
     </section>

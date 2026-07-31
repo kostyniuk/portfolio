@@ -13,7 +13,7 @@ export function LegoraClosingSection({ portfolioHref = "/" }: { portfolioHref?: 
       <div className="relative z-10 flex w-full max-w-[58rem] flex-col items-center text-center">
         <LegoraMark className="mb-8 size-14 text-[#174a34] sm:mb-10 sm:size-20" />
         <p className="w-full text-balance text-[clamp(2rem,4.75vw,4.5rem)] leading-[0.98] font-medium tracking-[-0.055em]">
-          Let&apos;s build AI worthy of the world&apos;s best legal teams.
+          Let&apos;s build fast, polished legal tools worthy of the world&apos;s best legal teams.
         </p>
         <GlassBadge
           glassVariant="liquid"
