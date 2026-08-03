@@ -467,6 +467,49 @@
   }
 }
 
+@keyframes spotify-equalizer-pulse {
+  0%,
+  100% {
+    scale: 1 0.38;
+    opacity: 0.55;
+  }
+  50% {
+    scale: 1 1;
+    opacity: 1;
+  }
+}
+
+@keyframes spotify-session-fill {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+.spotify-equalizer span {
+  transform-origin: center bottom;
+  animation: spotify-equalizer-pulse 820ms ease-in-out infinite;
+}
+
+.spotify-session-scroll {
+  scroll-timeline-name: --spotify-session;
+  scroll-timeline-axis: block;
+}
+
+.spotify-session-progress {
+  animation: spotify-session-fill linear both;
+  animation-timeline: --spotify-session;
+}
+
+.spotify-vinyl-groove {
+  box-shadow:
+    0 0 0 18px rgb(18 18 18 / 0.05),
+    0 0 0 36px rgb(18 18 18 / 0.04),
+    0 0 0 54px rgb(18 18 18 / 0.03);
+}
+
 @keyframes elevenlabs-wave-pulse {
   0%,
   100% {
@@ -790,6 +833,8 @@
 
   .elevenlabs-orb,
   .elevenlabs-waveform span,
+  .spotify-equalizer span,
+  .spotify-session-progress,
   .application-process-signal,
   .application-process-step,
   .elevenlabs-header-hint-path,
