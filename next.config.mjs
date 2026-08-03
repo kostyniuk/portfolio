@@ -39,7 +39,7 @@ const nextConfig = {
           has: [
             {
               type: "host",
-              value: "spotify\\.a13x\\.space(?::\\d+)?",
+              value: "(?:www\\.)?spotify\\.a13x\\.space(?::\\d+)?",
             },
           ],
           destination: "/spotify",
