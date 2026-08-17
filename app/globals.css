@@ -711,6 +711,115 @@
   }
 }
 
+/* Sana: the spectrum gradient as slow-drifting aurora over a near-black canvas. */
+@keyframes sana-aurora-drift {
+  0%,
+  100% {
+    transform: scale(0.94) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.06) translate3d(2%, -3%, 0);
+  }
+}
+
+.sana-aurora {
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(18px);
+  animation: sana-aurora-drift 18s ease-in-out infinite;
+}
+
+.sana-aurora-warm {
+  background:
+    radial-gradient(circle at 38% 32%, rgb(255 138 92 / 0.5), transparent 58%),
+    radial-gradient(circle at 62% 60%, rgb(192 132 252 / 0.42), transparent 62%);
+}
+
+.sana-aurora-cool {
+  background:
+    radial-gradient(circle at 40% 36%, rgb(125 211 252 / 0.4), transparent 58%),
+    radial-gradient(circle at 64% 62%, rgb(192 132 252 / 0.38), transparent 64%);
+  animation-delay: -9s;
+}
+
+.sana-mesh {
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgb(245 244 242 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(245 244 242 / 0.045) 1px, transparent 1px);
+  background-size: 6rem 6rem;
+  mask-image: radial-gradient(circle at 50% 45%, black, transparent 80%);
+}
+
+.sana-glyph {
+  background: linear-gradient(135deg, #ff8a5c, #c084fc 55%, #7dd3fc);
+}
+
+.sana-panel {
+  border: 1px solid rgb(245 244 242 / 0.1);
+  background: linear-gradient(160deg, rgb(245 244 242 / 0.08), rgb(245 244 242 / 0.02));
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.45);
+  backdrop-filter: blur(12px);
+}
+
+.sana-spectrum-wash {
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgb(255 138 92 / 0.24),
+    rgb(192 132 252 / 0.18) 45%,
+    rgb(125 211 252 / 0.1) 75%,
+    transparent
+  );
+}
+
+@keyframes sana-trace-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    scale: 0.8;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.25;
+  }
+}
+
+.sana-trace-dot {
+  animation: sana-trace-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes sana-signal-fill {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+.sana-signal-scroll {
+  scroll-timeline-name: --sana-signal;
+  scroll-timeline-axis: block;
+}
+
+.sana-signal-progress {
+  animation: sana-signal-fill linear both;
+  animation-timeline: --sana-signal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sana-aurora,
+  .sana-trace-dot,
+  .sana-signal-progress {
+    animation: none !important;
+  }
+
+  .sana-trace-dot {
+    opacity: 1;
+  }
+}
+
 @keyframes elevenlabs-header-hint-draw {
   from {
     stroke-dashoffset: 1500;

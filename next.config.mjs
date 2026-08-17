@@ -54,6 +54,16 @@ const nextConfig = {
           ],
           destination: "/hm",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?sana\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/sana",
+        },
       ],
     };
   },
