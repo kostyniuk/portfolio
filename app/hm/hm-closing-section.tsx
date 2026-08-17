@@ -1,5 +1,5 @@
 import { GlassBadge } from "@/components/ui/glasscn/glass-badge";
-import { CosWordmark, HmWordmark } from "./hm-mark";
+import { CosWordmark, HmMark } from "./hm-mark";
 
 export function HmClosingSection({ portfolioHref = "/" }: { portfolioHref?: string }) {
   return (
@@ -11,8 +11,9 @@ export function HmClosingSection({ portfolioHref = "/" }: { portfolioHref?: stri
       <div className="hm-hairlines-dark absolute inset-0" />
 
       <div className="relative z-10 flex w-full max-w-[58rem] flex-col items-center text-center">
-        <p className="mb-9 flex items-center gap-3 text-[10px] tracking-[0.22em] text-white/45 uppercase sm:mb-11">
-          <HmWordmark className="text-base text-[#e50010]" />
+        <HmMark className="mb-7 h-12 w-24 text-[#e50010] sm:mb-9 sm:h-16 sm:w-32" />
+        <p className="mb-8 flex items-center gap-3 text-[10px] tracking-[0.22em] text-white/45 uppercase sm:mb-10">
+          Portfolio Brands
           <span className="h-3 w-px bg-white/20" />
           <CosWordmark className="text-[10px]" />
         </p>

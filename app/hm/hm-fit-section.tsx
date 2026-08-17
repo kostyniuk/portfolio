@@ -1,3 +1,4 @@
+import { SpriteField } from "@/components/sprite-field";
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GlassBadge } from "@/components/ui/glasscn/glass-badge";
 import { GlassCard } from "@/components/ui/glasscn/glass-card";
@@ -66,8 +67,17 @@ export function HmFitSection() {
       className="relative h-dvh snap-start overflow-hidden bg-[#eceae4] text-[#111111]"
       aria-labelledby="hm-fit-title"
     >
-      <div className="hm-hairlines absolute inset-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(236,234,228,0.3)_0%,rgba(236,234,228,0.8)_72%)]" />
+      <SpriteField
+        src="/hm/hm-symbol.png"
+        size={40}
+        density={0.82}
+        speed={0.2}
+        background="#eceae4"
+        pushRadius={170}
+        pushForce={5000}
+        className="opacity-40"
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(236,234,228,0.34)_0%,rgba(236,234,228,0.8)_72%)]" />
 
       <div className="absolute inset-0 overflow-x-hidden overflow-y-auto px-5 py-20 pb-4 sm:px-8">
         <div className="relative z-10 mx-auto max-w-6xl">

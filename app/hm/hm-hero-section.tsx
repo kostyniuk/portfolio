@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { HmGreeting } from "./hm-greeting";
-import { CosWordmark, HmWordmark } from "./hm-mark";
+import { CosWordmark, HmMark } from "./hm-mark";
 
 const MATERIALS = [
   "Next.js",
@@ -28,7 +28,7 @@ export function HmHeroSection() {
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20">
         <div>
           <p className="mb-7 flex items-center gap-3 text-[10px] tracking-[0.22em] text-black/50 uppercase sm:text-[11px]">
-            <HmWordmark className="text-base text-[#e50010]" />
+            <HmMark className="h-4 w-8 text-[#e50010]" />
             <span className="h-3 w-px bg-black/20" />
             Portfolio Brands
             <span className="h-3 w-px bg-black/20" />
