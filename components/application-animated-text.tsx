@@ -16,6 +16,7 @@ export function ApplicationAnimatedText({
   text,
   emphasizedWords = [],
   underlineWord,
+  underlineShimmerColors,
   lineBreakBefore,
   startDelayMs = 0,
   staggerMs = 90,
@@ -26,6 +27,7 @@ export function ApplicationAnimatedText({
   text: string;
   emphasizedWords?: string[];
   underlineWord?: string;
+  underlineShimmerColors?: string[];
   lineBreakBefore?: string;
   startDelayMs?: number;
   staggerMs?: number;
@@ -60,6 +62,7 @@ export function ApplicationAnimatedText({
                   {normalizedWord === underlineWord ? (
                     <ShinyUnderline
                       replayKey={index}
+                      shimmerColors={underlineShimmerColors}
                       shimmerDurationMs={UNDERLINE_SHIMMER_MS}
                       repeat
                       className="h-[2px]"

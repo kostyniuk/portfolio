@@ -44,6 +44,16 @@ const nextConfig = {
           ],
           destination: "/spotify",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?hm\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/hm",
+        },
       ],
     };
   },

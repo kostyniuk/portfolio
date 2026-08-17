@@ -651,6 +651,66 @@
   }
 }
 
+/* H&M / COS: a hairline grid standing in for a garment cutting table. */
+.hm-hairlines,
+.hm-hairlines-dark {
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--hm-hairline) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--hm-hairline) 1px, transparent 1px);
+  background-size: 7rem 7rem;
+  mask-image: radial-gradient(circle at 50% 40%, black, transparent 82%);
+}
+
+.hm-hairlines {
+  --hm-hairline: rgb(17 17 17 / 0.07);
+}
+
+.hm-hairlines-dark {
+  --hm-hairline: rgb(244 242 237 / 0.06);
+}
+
+@keyframes hm-ticker-slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.hm-ticker-mask {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 4rem, black calc(100% - 4rem), transparent);
+}
+
+.hm-ticker {
+  animation: hm-ticker-slide 32s linear infinite;
+}
+
+@keyframes hm-seam-fill {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+.hm-lookbook-scroll {
+  scroll-timeline-name: --hm-lookbook;
+  scroll-timeline-axis: block;
+}
+
+.hm-seam-progress {
+  animation: hm-seam-fill linear both;
+  animation-timeline: --hm-lookbook;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-ticker,
+  .hm-seam-progress {
+    animation: none !important;
+  }
+}
+
 @keyframes elevenlabs-header-hint-draw {
   from {
     stroke-dashoffset: 1500;
