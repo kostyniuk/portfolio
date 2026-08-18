@@ -65,7 +65,7 @@ const REASON_GROUPS = [
       {
         title: "Planning is genuinely hard",
         description:
-          "Proximity, travel time, availability, and constant rescheduling make this a real constraint problem. I would rather work on that than on another CRUD screen.",
+          "Proximity, travel time, availability, and constant rescheduling make this a real constraint problem.",
       },
       {
         title: "Stockholm, in a scale-up",
