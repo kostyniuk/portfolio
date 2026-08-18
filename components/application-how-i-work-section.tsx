@@ -85,8 +85,8 @@ export function ApplicationHowIWorkSection() {
         <div className="mt-10 flex items-start gap-4 border-t border-white/10 pt-5 sm:mt-12">
           <span className="shrink-0 text-xs tracking-[0.16em] text-white/32 uppercase">Outcome</span>
           <p className="max-w-2xl text-xs leading-relaxed text-white/48">
-            The result is a feature that has been planned, built, checked, and reviewed from a few different
-            angles—usually in much less time.
+            The result is a feature that has been planned, built, checked, and reviewed from a few different angles,
+            usually in much less time.
           </p>
         </div>
       </div>

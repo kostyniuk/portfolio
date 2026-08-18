@@ -55,7 +55,7 @@ export function AiraHeroSection() {
           <AiraGreeting />
 
           <p className="mt-8 max-w-xl text-balance text-lg leading-relaxed tracking-[-0.02em] text-black/70 sm:text-xl">
-            I build the dense, visual interfaces that operations teams live in all day—Gantt charts, boards, and
+            I build the dense, visual interfaces that operations teams live in all day: Gantt charts, boards, and
             scheduling views where the whole job is making a hard decision look obvious.
           </p>
 

@@ -6,8 +6,8 @@ import { GlassBadge } from "@/components/ui/glasscn/glass-badge";
 import { GlassCard } from "@/components/ui/glasscn/glass-card";
 
 /**
- * The posting asks for at least two of six areas. Listing all six — including the
- * one I can only claim as adjacent — is more convincing than listing the wins alone.
+ * The posting asks for at least two of six areas. Listing all six, including the
+ * one I can only claim as adjacent, is more convincing than listing the wins alone.
  */
 const REQUESTED_AREAS = [
   { area: "Rapid growth journeys", evidence: "Building in a startup today", met: true },
@@ -25,12 +25,12 @@ const REASON_GROUPS = [
       {
         title: "Modern Next.js, in depth",
         description:
-          "React and TypeScript are my daily stack, and I work in modern Next.js closely enough to write articles about it—App Router, server components, and the rendering trade-offs behind them.",
+          "React and TypeScript are my daily stack, and I work in modern Next.js closely enough to write articles about it: App Router, server components, and the rendering trade-offs behind them.",
       },
       {
         title: "Kanban, Gantt, and Scrum, built",
         description:
-          "I have built board, Gantt, and Scrum interfaces—the exact primitives a planning tool is made of. I know where they get slow, where they get confusing, and what to do about both.",
+          "I have built board, Gantt, and Scrum interfaces, the exact primitives a planning tool is made of. I know where they get slow, where they get confusing, and what to do about both.",
       },
       {
         title: "Tooling that saves real hours",
@@ -60,7 +60,7 @@ const REASON_GROUPS = [
       {
         title: "Software with a physical result",
         description:
-          "Most frontend work ends at the screen. Here a better schedule means more heat pumps installed and less gas burned—the interface has consequences you can measure in homes.",
+          "Most frontend work ends at the screen. Here a better schedule means more heat pumps installed and less gas burned, and the interface has consequences you can measure in homes.",
       },
       {
         title: "Planning is genuinely hard",
@@ -94,7 +94,7 @@ export function AiraFitSection() {
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(246,244,239,0.32)_0%,rgba(246,244,239,0.78)_72%)]" />
 
-      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto px-5 py-20 pb-4 sm:px-8">
+      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto px-5 py-12 pb-4 sm:px-8">
         <div className="relative z-10 mx-auto max-w-6xl">
           <h2 id="aira-fit-title" className="mb-10 text-center">
             <GlassBadge
@@ -137,7 +137,7 @@ export function AiraFitSection() {
               <div key={title} className="grid content-start gap-4">
                 <h3>
                   <GlassBadge
-                    className="h-auto px-4 py-3 text-lg font-semibold tracking-[-0.02em] text-[#29292D] sm:text-xl"
+                    className="h-auto px-3.5 py-2 text-[10px] font-semibold tracking-[0.22em] text-[#29292D] uppercase"
                     surfaceClassName={
                       groupIndex === 0
                         ? "bg-[linear-gradient(130deg,rgba(255,175,81,0.55),rgba(255,175,81,0.22))]"
@@ -152,13 +152,13 @@ export function AiraFitSection() {
                   {reasons.map(({ title: reasonTitle, description }) => (
                     <GlassCard
                       key={reasonTitle}
-                      className="min-h-[9.5rem] text-[#29292D]"
+                      className="min-h-[7.5rem] text-[#29292D]"
                       surfaceClassName="h-full bg-white/70 shadow-[0_16px_50px_rgba(41,41,45,0.07)]"
                       liquidProps={{ blur: 3, refraction: 8 }}
                     >
                       <CardHeader className="gap-2">
-                        <CardTitle className="text-base font-semibold tracking-[-0.02em]">{reasonTitle}</CardTitle>
-                        <CardDescription className="text-sm leading-relaxed text-black/58">
+                        <CardTitle className="text-sm font-semibold tracking-[-0.015em]">{reasonTitle}</CardTitle>
+                        <CardDescription className="text-xs leading-relaxed text-black/55">
                           {description}
                         </CardDescription>
                       </CardHeader>

@@ -15,7 +15,7 @@ const REASON_GROUPS = [
       {
         title: "Agent-native, not agent-curious",
         description:
-          "I introduced agentic workflows at my current company and build with them daily—keeping judgment, testing, and review in the loop rather than trusting output blindly.",
+          "I introduced agentic workflows at my current company and build with them daily, keeping judgment, testing, and review in the loop rather than trusting output blindly.",
       },
       {
         title: "Comfortable at 0→1",
@@ -35,7 +35,7 @@ const REASON_GROUPS = [
       {
         title: "A force multiplier",
         description:
-          "I lead engineers today—reviewing code, setting direction, and still shipping. I get as much from raising the people around me as from my own output.",
+          "I lead engineers today, reviewing code, setting direction, and still shipping. I get as much from raising the people around me as from my own output.",
       },
     ],
   },

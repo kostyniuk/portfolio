@@ -28,8 +28,8 @@ export function SanaHeroSection() {
           <SanaGreeting />
 
           <p className="mt-8 max-w-xl text-balance text-lg leading-relaxed tracking-[-0.02em] text-white/60 sm:text-xl">
-            I ship product end to end—problem definition through UX, API, and instrumentation—and I have spent the last
-            while building with agents rather than around them.
+            I ship product end to end, from problem definition through UX, API, and instrumentation, and I have spent
+            the last while building with agents rather than around them.
           </p>
 
           <p className="mt-7 text-[10px] tracking-[0.2em] text-white/40 uppercase sm:text-[11px]">

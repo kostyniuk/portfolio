@@ -10,7 +10,7 @@ const REASON_GROUPS = [
       {
         title: "The exact stack",
         description:
-          "Next.js, React, and TypeScript with Tailwind are what I work in every day—App Router, server components, and the rendering trade-offs that decide how a storefront actually feels.",
+          "Next.js, React, and TypeScript with Tailwind are what I work in every day: App Router, server components, and the rendering trade-offs that decide how a storefront actually feels.",
       },
       {
         title: "Frontend architecture",
@@ -25,7 +25,7 @@ const REASON_GROUPS = [
       {
         title: "Full-stack range",
         description:
-          "I work fluently across TypeScript, Node.js, PostgreSQL, and AWS, and integrate REST and GraphQL services—so I can follow a feature past the UI when the feature needs it.",
+          "I work fluently across TypeScript, Node.js, PostgreSQL, and AWS, and integrate REST and GraphQL services, so I can follow a feature past the UI when the feature needs it.",
       },
       {
         title: "Technical leadership",
@@ -45,7 +45,7 @@ const REASON_GROUPS = [
       {
         title: "A brand where craft is visible",
         description:
-          "COS is built on exceptional quality and lasting design. That is the rare brief where frontend polish is not a nice-to-have—it is the product promise, rendered in a browser.",
+          "COS is built on exceptional quality and lasting design. That is the rare brief where frontend polish is not a nice-to-have, it is the product promise, rendered in a browser.",
       },
       {
         title: "Composable commerce at scale",

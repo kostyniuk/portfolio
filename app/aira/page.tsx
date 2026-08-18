@@ -22,7 +22,7 @@ export default function AiraPage() {
     <>
       <Header
         logoHref={MAIN_SITE_URL}
-        surfaceClassName="bg-[#FFAF51]/80 text-[#29292D] [&_button]:text-[#29292D] [&_svg]:!text-[#29292D]"
+        surfaceClassName="bg-[#f6f4ef]/80 text-[#29292D] [&_button]:text-[#29292D] [&_svg]:!text-[#29292D]"
       />
       <main className="aira-plan-scroll h-dvh snap-y snap-mandatory overflow-y-auto scroll-smooth bg-[#FFAF51]">
         <AiraHeroSection />
