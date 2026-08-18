@@ -74,6 +74,16 @@ const nextConfig = {
           ],
           destination: "/aira",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?grasp\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/grasp",
+        },
       ],
     };
   },

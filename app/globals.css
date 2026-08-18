@@ -1391,3 +1391,36 @@
     opacity: 1;
   }
 }
+
+/* Grasp: monochrome throughout, contrast standing in for colour. */
+.grasp-glow {
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 42% 38%, rgb(245 245 245 / 0.07), transparent 62%);
+  filter: blur(6px);
+}
+
+@keyframes grasp-run-fill {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+.grasp-run-scroll {
+  scroll-timeline-name: --grasp-run;
+  scroll-timeline-axis: block;
+}
+
+.grasp-run-progress {
+  animation: grasp-run-fill linear both;
+  animation-timeline: --grasp-run;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grasp-run-progress {
+    animation: none !important;
+  }
+}
