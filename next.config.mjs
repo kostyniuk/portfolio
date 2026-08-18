@@ -64,6 +64,16 @@ const nextConfig = {
           ],
           destination: "/sana",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?aira\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/aira",
+        },
       ],
     };
   },

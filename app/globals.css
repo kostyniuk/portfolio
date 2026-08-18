@@ -1307,3 +1307,87 @@
 @utility glance-angle-* {
   --glance-angle: calc(--value(number) * 1deg);
 }
+
+/* Aira: soft amber haloes, a planner board that fills in, and a route marker that runs the stops. */
+.aira-halo {
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 42% 38%, rgb(255 255 255 / 0.42), transparent 62%);
+  filter: blur(6px);
+}
+
+.aira-halo-dark {
+  background: radial-gradient(circle at 42% 38%, rgb(255 175 81 / 0.16), transparent 64%);
+}
+
+@keyframes aira-visit-in {
+  from {
+    opacity: 0;
+    scale: 0.6 1;
+  }
+  to {
+    opacity: 1;
+    scale: 1 1;
+  }
+}
+
+.aira-visit {
+  transform-origin: left center;
+  animation: aira-visit-in 520ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+@keyframes aira-route-run {
+  0%,
+  8% {
+    left: 8%;
+  }
+  30%,
+  38% {
+    left: 32%;
+  }
+  60%,
+  68% {
+    left: 58%;
+  }
+  90%,
+  100% {
+    left: 84%;
+  }
+}
+
+.aira-route-marker {
+  left: 8%;
+  animation: aira-route-run 7s ease-in-out infinite;
+  box-shadow: 0 0 0 4px rgb(255 175 81 / 0.2);
+}
+
+@keyframes aira-plan-fill {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+.aira-plan-scroll {
+  scroll-timeline-name: --aira-plan;
+  scroll-timeline-axis: block;
+}
+
+.aira-plan-progress {
+  animation: aira-plan-fill linear both;
+  animation-timeline: --aira-plan;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aira-visit,
+  .aira-route-marker,
+  .aira-plan-progress {
+    animation: none !important;
+  }
+
+  .aira-visit {
+    opacity: 1;
+  }
+}

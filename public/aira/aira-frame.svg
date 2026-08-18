@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Aira's corner-bracket frame device, redrawn as geometry. Monochrome ink; the CSS mask uses only the alpha. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 64" fill="none" stroke="#29292D" stroke-width="4.4" stroke-linecap="round">
+  <path d="M32 6H20a10 10 0 0 0-10 10v12" />
+  <path d="M68 6h12a10 10 0 0 1 10 10v12" />
+  <path d="M10 36v12a10 10 0 0 0 10 10h12" />
+  <path d="M90 36v12a10 10 0 0 1-10 10H68" />
+</svg>
