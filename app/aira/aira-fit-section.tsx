@@ -1,21 +1,36 @@
+import { Check, Minus } from "lucide-react";
+
 import { SpriteField } from "@/components/sprite-field";
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GlassBadge } from "@/components/ui/glasscn/glass-badge";
 import { GlassCard } from "@/components/ui/glasscn/glass-card";
+
+/**
+ * The posting asks for at least two of six areas. Listing all six — including the
+ * one I can only claim as adjacent — is more convincing than listing the wins alone.
+ */
+const REQUESTED_AREAS = [
+  { area: "Rapid growth journeys", evidence: "Building in a startup today", met: true },
+  { area: "Kanban and Scrum", evidence: "Built the interfaces, and work this way", met: true },
+  { area: "Next.js", evidence: "Daily, and I write articles about modern Next.js", met: true },
+  { area: "Data visualization", evidence: "Gantt and timeline views for real schedules", met: true },
+  { area: "Planning and scheduling UIs", evidence: "Shipped scheduling interfaces", met: true },
+  { area: "Map integration", evidence: "Adjacent, not yet Mapbox in production", met: false },
+];
 
 const REASON_GROUPS = [
   {
     title: "Why Aira should hire me",
     reasons: [
       {
-        title: "React and TypeScript daily",
+        title: "Modern Next.js, in depth",
         description:
-          "This is the stack I work in every day, including Next.js—so I can start contributing to planner tooling rather than ramping up on the basics.",
+          "React and TypeScript are my daily stack, and I work in modern Next.js closely enough to write articles about it—App Router, server components, and the rendering trade-offs behind them.",
       },
       {
-        title: "Dense interfaces made calm",
+        title: "Kanban, Gantt, and Scrum, built",
         description:
-          "Timelines, schedules, and operational tables are my favourite kind of problem: the data is unavoidably complex, so the interface has to carry the clarity.",
+          "I have built board, Gantt, and Scrum interfaces—the exact primitives a planning tool is made of. I know where they get slow, where they get confusing, and what to do about both.",
       },
       {
         title: "Tooling that saves real hours",
@@ -23,9 +38,9 @@ const REASON_GROUPS = [
           "I turned a ten-minute core workflow into a twenty-second one by challenging the architecture, not merely tuning it. That is exactly the win a planner feels.",
       },
       {
-        title: "Visualization craft",
+        title: "Scheduling interfaces already",
         description:
-          "I care about how information is drawn—what earns a pixel, what earns colour, and what should stay quiet until it matters. Maps and timelines reward that discipline.",
+          "I have worked on scheduling interfaces before, so the hard parts are familiar: overlapping constraints, dependent dates, and making the impact of a change visible before it is committed.",
       },
       {
         title: "Range behind the UI",
@@ -33,9 +48,9 @@ const REASON_GROUPS = [
           "I work fluently across TypeScript, Node.js, PostgreSQL, and AWS, so when a scheduling view needs different data I can follow it into the API instead of filing a ticket.",
       },
       {
-        title: "Scale-up pace",
+        title: "Startup pace, and agile for real",
         description:
-          "I introduced agentic workflows at my current company and use them daily with review in the loop—more shipped per week without giving up judgment.",
+          "I build in a startup today, working Kanban and Scrum rather than reading about them, and I introduced agentic workflows here to ship more per week without giving up review.",
       },
     ],
   },
@@ -89,6 +104,33 @@ export function AiraFitSection() {
               Why we&apos;re a strong match
             </GlassBadge>
           </h2>
+
+          <div className="mb-8 rounded-2xl border border-[#29292D]/10 bg-white/70 p-5 shadow-[0_16px_50px_rgba(41,41,45,0.07)] sm:p-6">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className="text-[10px] tracking-[0.22em] text-black/45 uppercase">The posting asks for two of these</p>
+              <p className="text-[10px] tracking-[0.22em] text-black/45 uppercase">Five covered</p>
+            </div>
+
+            <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {REQUESTED_AREAS.map(({ area, evidence, met }) => (
+                <li key={area} className="flex items-start gap-2.5">
+                  <span
+                    className={
+                      met
+                        ? "mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-[#FFAF51] text-[#29292D]"
+                        : "mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-[#29292D]/8 text-black/45"
+                    }
+                  >
+                    {met ? <Check className="size-3" strokeWidth={3} /> : <Minus className="size-3" strokeWidth={3} />}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold tracking-[-0.015em]">{area}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-black/55">{evidence}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div className="grid gap-8">
             {REASON_GROUPS.map(({ title, reasons }, groupIndex) => (

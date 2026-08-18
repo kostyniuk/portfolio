@@ -55,8 +55,8 @@ export function AiraHeroSection() {
           <AiraGreeting />
 
           <p className="mt-8 max-w-xl text-balance text-lg leading-relaxed tracking-[-0.02em] text-black/70 sm:text-xl">
-            I build the dense, visual interfaces that operations teams live in all day—timelines, maps, and dashboards
-            where the whole job is making a hard decision look obvious.
+            I build the dense, visual interfaces that operations teams live in all day—Gantt charts, boards, and
+            scheduling views where the whole job is making a hard decision look obvious.
           </p>
 
           <p className="mt-7 text-[10px] tracking-[0.2em] text-black/55 uppercase sm:text-[11px]">
@@ -136,7 +136,7 @@ export function AiraHeroSection() {
               <div className="min-w-0">
                 <p className="text-[9px] tracking-[0.22em] text-white/40 uppercase">Assigned</p>
                 <p className="mt-1 text-sm font-semibold tracking-[-0.02em]">Alex Kostyniuk</p>
-                <p className="text-[11px] text-white/45">React · TypeScript · Data-dense UI</p>
+                <p className="text-[11px] text-white/45">React · TypeScript · Gantt & Kanban</p>
               </div>
             </div>
           </div>
