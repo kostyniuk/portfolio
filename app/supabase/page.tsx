@@ -22,7 +22,7 @@ export default function SupabasePage() {
     <>
       <Header
         logoHref={MAIN_SITE_URL}
-        surfaceClassName="bg-[#1c1c1c]/75 text-white [&_button]:text-white [&_svg]:!text-white"
+        surfaceClassName="bg-[#0f0f0f]/35 text-white [&_button]:text-white [&_svg]:!text-white"
       />
       <main className="supabase-ci-scroll h-dvh snap-y snap-mandatory overflow-y-auto scroll-smooth bg-[#1c1c1c]">
         <SupabaseHeroSection />

@@ -8,7 +8,11 @@ const RECEIPTS = [
   { name: "glasscn", detail: "Glass component library for shadcn/ui", href: "https://glasscn-components.vercel.app/" },
   { name: "LeeHireMe", detail: "One-page CV builder, free and open source", href: "https://www.leehireme.xyz/" },
   { name: "Mellow Lines", detail: "Code animation studio, all in the browser", href: "https://mellowlines.dev" },
-  { name: "alex-posts", detail: "Deep dives on Postgres, React, and tooling", href: "https://alex-posts.netlify.app/" },
+  {
+    name: "alex-posts",
+    detail: "Postgres internals, React, and tooling deep dives",
+    href: "https://alex-posts.netlify.app/",
+  },
 ];
 
 const REASON_GROUPS = [
@@ -18,7 +22,7 @@ const REASON_GROUPS = [
       {
         title: "0→1, then earned versions",
         description:
-          "Everything above went from a blank editor to something strangers use. Each one changed after real usage, not after a spec, and the commits are public if you want to read them.",
+          "Everything above went from a blank editor to something strangers use, decided and shipped on my own time. Each one changed after real usage rather than a spec, and the commits are public if you want to read them.",
       },
       {
         title: "CI as the thing that lets you sprint",
@@ -36,14 +40,14 @@ const REASON_GROUPS = [
           "SSR, streaming, server components, and edge rendering are decisions I make deliberately. This portfolio runs on Next.js 16 with cache components, and I write articles about the trade-offs.",
       },
       {
-        title: "Past the UI",
+        title: "Postgres is the fun part",
         description:
-          "TypeScript, Node.js, PostgreSQL, and AWS. I own the API contract a screen depends on, and I write about database internals for fun, so Postgres is home rather than a dependency.",
+          "I read about Postgres internals for pleasure and write articles about what I find. Query plans, indexes, and locking are things I reach for on purpose, not things I look up when something breaks.",
       },
       {
-        title: "Async and self-directed",
+        title: "Past the UI",
         description:
-          "I lead a team, set technical direction, and work from written specs and reviews. Nobody assigns me tickets today, and I would not want them to start.",
+          "TypeScript, Node.js, and AWS alongside it. I own the API contract a screen depends on, and I have planned and run large Postgres migrations in production, designed backwards from the rollback with data reshaped underneath a live product.",
       },
     ],
   },
@@ -61,9 +65,9 @@ const REASON_GROUPS = [
           "Tooling used by millions of developers, where a small interaction fix is felt immediately, is the highest-leverage frontend I can think of.",
       },
       {
-        title: "Postgres, honestly",
+        title: "A company built on Postgres",
         description:
-          "I already spend spare evenings reading about how databases work. Supabase is the rare place where that curiosity is directly useful.",
+          "I already spend my evenings inside Postgres and writing about it. Supabase is the one place where that is not a hobby I keep to myself, it is the product I would be working on.",
       },
     ],
   },
@@ -83,11 +87,11 @@ export function SupabaseFitSection() {
         background="#fbfbfb"
         pushRadius={170}
         pushForce={5000}
-        className="opacity-40"
+        className="opacity-75"
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(251,251,251,0.3)_0%,rgba(251,251,251,0.76)_72%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(251,251,251,0.2)_0%,rgba(251,251,251,0.62)_72%)]" />
 
-      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto px-5 py-20 pb-4 sm:px-8">
+      <div className="absolute inset-0 overflow-x-hidden overflow-y-auto px-5 py-12 pb-4 sm:px-8">
         <div className="relative z-10 mx-auto max-w-6xl">
           <h2 id="supabase-fit-title" className="mb-10 text-center">
             <GlassBadge
@@ -100,13 +104,11 @@ export function SupabaseFitSection() {
 
           <div className="mb-8 rounded-2xl border border-[#171717]/10 bg-white/75 p-5 shadow-[0_16px_50px_rgba(23,23,23,0.06)] sm:p-6">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <p className="text-[10px] tracking-[0.22em] text-black/45 uppercase">
-                You asked for something to point at
-              </p>
+              <p className="text-[10px] tracking-[0.22em] text-black/45 uppercase">My Open Source projects</p>
               <p className="text-[10px] tracking-[0.22em] text-black/45 uppercase">Shipped and public</p>
             </div>
 
-            <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+            <ul className="mt-0 grid gap-2 sm:grid-cols-2">
               {RECEIPTS.map(({ name, detail, href }) => (
                 <li key={name}>
                   <a
