@@ -13,7 +13,7 @@ export function SpotifyClosingSection({ portfolioHref = "/" }: { portfolioHref?:
       <div className="relative z-10 flex w-full max-w-[58rem] flex-col items-center text-center">
         <SpotifyMark className="mb-8 size-14 text-[#121212] sm:mb-10 sm:size-20" />
         <p className="w-full max-w-[38rem] text-balance text-[clamp(2rem,4.75vw,4.25rem)] leading-[0.98] font-medium tracking-[-0.055em]">
-          Let&apos;s build something people want to come back to.
+          Let&apos;s make rights feel as simple as pressing play.
         </p>
         <GlassBadge
           glassVariant="liquid"

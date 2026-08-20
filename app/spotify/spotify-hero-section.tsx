@@ -16,16 +16,18 @@ export function SpotifyHeroSection() {
 
       <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20">
         <div>
-          <p className="mb-6 flex items-center gap-2 text-[10px] font-medium tracking-[0.2em] uppercase sm:text-xs">
-            <SpotifyMark className="size-4 text-[#1ed760]" /> Application session / Alex Kostyniuk
+          <p className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] font-medium tracking-[0.2em] uppercase sm:text-xs">
+            <SpotifyMark className="size-4 text-[#1ed760]" /> Music · Rights Systems
+            <span className="h-3 w-px bg-black/25" />
+            Application / Alex Kostyniuk
           </p>
           <SpotifyGreeting />
           <p className="mt-7 max-w-xl text-balance text-lg leading-relaxed tracking-[-0.025em] text-black/65 sm:text-xl">
-            I build features across the stack. I care a lot about the UI, but I&apos;m just as comfortable following the
-            work into backend services or the data behind them when that&apos;s what the feature needs.
+            I build the dense interfaces that professionals work in all day: multi-step flows, permission models, and
+            tables that stay fast when the dataset stops being small.
           </p>
           <p className="mt-6 text-[10px] font-semibold tracking-[0.18em] text-black/45 uppercase sm:text-xs">
-            Full-stack engineer · Frontend / Backend · Stockholm
+            Frontend Engineer · TypeScript &amp; React · Stockholm
           </p>
         </div>
 
@@ -49,8 +51,8 @@ export function SpotifyHeroSection() {
             <div className="flex items-end justify-between gap-5 px-1 pt-5">
               <div>
                 <p className="text-[10px] tracking-[0.18em] text-white/42 uppercase">Now building</p>
-                <p className="mt-1 text-xl font-semibold tracking-[-0.045em]">End-to-end features</p>
-                <p className="mt-1 text-xs text-white/48">React · Backend · APIs · Data</p>
+                <p className="mt-1 text-xl font-semibold tracking-[-0.045em]">B2B rights workflows</p>
+                <p className="mt-1 text-xs text-white/48">React · TypeScript · APIs · Permissions</p>
               </div>
               <div className="spotify-equalizer flex h-9 items-end gap-1" aria-hidden="true">
                 {BARS.map((height, index) => (

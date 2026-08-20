@@ -10,7 +10,7 @@ import { SpotifySessionRail } from "./spotify-session-rail";
 
 export const metadata: Metadata = {
   title: "Spotify Application",
-  description: "Alex Kostyniuk's application for a Full-stack Engineer role at Spotify.",
+  description: "Alex Kostyniuk's application for Frontend Engineer, Music (Rights Systems) at Spotify.",
   robots: {
     index: false,
     follow: false,

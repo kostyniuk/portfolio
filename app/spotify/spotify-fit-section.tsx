@@ -8,49 +8,49 @@ const REASON_GROUPS = [
     title: "Why Spotify should hire me",
     reasons: [
       {
-        title: "I can ship",
+        title: "I have built this shape of product",
         description:
-          "I build features end to end—from the React interface and design system to backend services and the data behind them.",
+          "Kanban, Gantt, Scrum, and scheduling interfaces: multi-step workflows, dependent state, and permissions over data that is never small. That is the shape of the Rights Center.",
       },
       {
-        title: "I care about the details",
+        title: "Complex state, kept legible",
         description:
-          "I care deeply about UI and UX. I want the interaction to feel obvious, fast, and polished, not merely work.",
+          "Large datasets, pagination, streaming updates, loading and error states. I treat those as the design problem rather than an afterthought once the happy path works.",
       },
       {
-        title: "I think beyond the ticket",
+        title: "TypeScript and React daily",
         description:
-          "I start with the customer and business problem, then work with Design and engineering to find the right feature to build.",
+          "This is my stack, including Next.js, and I care about component and state boundaries that still hold up when three squads are working in the same codebase.",
       },
       {
-        title: "I use AI well",
+        title: "I help shape the API",
         description:
-          "I introduced agentic workflows at my current company and use them to move faster while keeping judgment, testing, and review in the loop.",
+          "I integrate REST and GraphQL services and would rather design the contract with the backend engineers than build around whatever arrives.",
       },
       {
-        title: "I can go deep",
+        title: "Performance under real data",
         description:
-          "I am as happy discussing a small interaction detail as I am tracing a slow query or changing the architecture behind a workflow.",
+          "I turned a ten-minute core workflow into a twenty-second one by challenging the architecture, not merely tuning it. Rights-scale tables reward exactly that instinct.",
       },
       {
-        title: "I care about the team",
+        title: "Accessible and tested",
         description:
-          "I lead engineers today. I still build, but I get just as much satisfaction from helping the people around me do their best work.",
+          "Types, unit and integration tests, and end-to-end coverage are how I move quickly without breaking a tool people depend on to protect their catalogue.",
       },
     ],
   },
   {
-    title: "Why I want to join Spotify",
+    title: "Why I want to join Rights Systems",
     reasons: [
       {
-        title: "A product people choose every day",
+        title: "The problem is genuinely hard",
         description:
-          "Spotify is the kind of product I want to build: something people open because they want to, and where a small improvement can matter at enormous scale.",
+          "Content scanning, enforcement, disputes, and territory-level rights are a real domain with real consequences. Going from inception to a live platform in a year is the kind of team I want to be on.",
       },
       {
-        title: "The whole stack matters",
+        title: "B2B deserves consumer polish",
         description:
-          "The simple experience hides difficult work across product, UI, data, experimentation, and distributed systems. That range is exactly what I enjoy.",
+          "Labels and publishers spend their working day in this tool. Giving them the clarity Spotify gives listeners is the most satisfying kind of frontend work I know.",
       },
     ],
   },
@@ -75,7 +75,7 @@ export function SpotifyFitSection() {
             className="h-auto px-5 py-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
             surfaceClassName="bg-[#1ed760]/20"
           >
-            Why we&apos;re a good fit
+            Why we&apos;re a perfect fit
           </GlassBadge>
         </h2>
 
