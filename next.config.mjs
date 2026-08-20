@@ -84,6 +84,16 @@ const nextConfig = {
           ],
           destination: "/grasp",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?supabase\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/supabase",
+        },
       ],
     };
   },
