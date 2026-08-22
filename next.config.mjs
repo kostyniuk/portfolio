@@ -94,6 +94,16 @@ const nextConfig = {
           ],
           destination: "/supabase",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?tandem\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/tandem",
+        },
       ],
     };
   },

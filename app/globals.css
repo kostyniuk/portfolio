@@ -1507,3 +1507,86 @@
     transform: none;
   }
 }
+
+/* Tandem Health: their lime and black, an ambient waveform, and note lines that fill in. */
+.tandem-bloom {
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 42% 38%, rgb(255 255 255 / 0.5), transparent 62%);
+  filter: blur(10px);
+}
+
+.tandem-bloom-dark {
+  background: radial-gradient(circle at 42% 38%, rgb(190 246 111 / 0.16), transparent 64%);
+}
+
+.tandem-rule {
+  pointer-events: none;
+  background-image: linear-gradient(to bottom, rgb(13 13 13 / 0.07) 1px, transparent 1px);
+  background-size: 100% 8vh;
+  mask-image: radial-gradient(circle at 50% 45%, black, transparent 84%);
+}
+
+@keyframes tandem-wave-pulse {
+  0%,
+  100% {
+    scale: 1 0.42;
+    opacity: 0.5;
+  }
+  50% {
+    scale: 1 1;
+    opacity: 1;
+  }
+}
+
+.tandem-wave span {
+  transform-origin: center bottom;
+  animation: tandem-wave-pulse 900ms ease-in-out infinite;
+}
+
+@keyframes tandem-note-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tandem-note-line {
+  animation: tandem-note-in 460ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+@keyframes tandem-visit-fill {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+.tandem-visit-scroll {
+  scroll-timeline-name: --tandem-visit;
+  scroll-timeline-axis: block;
+}
+
+.tandem-visit-progress {
+  animation: tandem-visit-fill linear both;
+  animation-timeline: --tandem-visit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tandem-wave span,
+  .tandem-note-line,
+  .tandem-visit-progress {
+    animation: none !important;
+  }
+
+  .tandem-note-line {
+    opacity: 1;
+    transform: none;
+  }
+}
