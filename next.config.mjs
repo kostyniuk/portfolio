@@ -104,6 +104,26 @@ const nextConfig = {
           ],
           destination: "/tandem",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?resend\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/resend",
+        },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?neko\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/neko",
+        },
       ],
     };
   },
