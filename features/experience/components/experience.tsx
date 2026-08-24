@@ -19,7 +19,7 @@ type ExperienceProps = {
 const EXPERIENCES: ExperienceProps[] = [
   {
     period: "May 2025 — Present",
-    title: "Team Lead",
+    title: "Tech/Team Lead",
     company: "AMFG",
     Icon: AMFGIcon,
     description:

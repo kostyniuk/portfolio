@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
-export const alt = "Alex Kostyniuk — Software Engineer & Team Lead at AMFG";
+export const alt = "Alex Kostyniuk — Software Engineer & Tech/Team Lead at AMFG";
 export const size = {
   width: 1200,
   height: 630,
@@ -73,7 +73,7 @@ export default async function Image() {
               letterSpacing: "-0.01em",
             }}
           >
-            Software Engineer & Team Lead at AMFG
+            Software Engineer & Tech/Team Lead at AMFG
           </div>
           <div
             style={{

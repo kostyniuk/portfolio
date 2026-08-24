@@ -13,17 +13,17 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-title" });
 
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.a13x.space"),
   title: {
-    default: "Alex Kostyniuk — Software Engineer & Team Lead at AMFG",
+    default: "Alex Kostyniuk — Software Engineer & Tech/Team Lead at AMFG",
     template: "%s | Alex Kostyniuk",
   },
   description:
     "Open Source contributor. Creator of GlassCN (glass components for shadcn/ui), Mellow Lines (code animation studio), LeeHireMe (best CV builder).",
   keywords: [
     "Alex Kostyniuk",
+    "Tech Lead",
     "Team Lead",
     "Fullstack Engineer",
     "Software Engineer",
@@ -43,13 +43,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Alex Kostyniuk",
-    title: "Alex Kostyniuk — Software Engineer & Team Lead at AMFG",
+    title: "Alex Kostyniuk — Software Engineer & Tech/Team Lead at AMFG",
     description:
       "Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located in Stockholm.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Kostyniuk — Software Engineer & Team Lead at AMFG",
+    title: "Alex Kostyniuk — Software Engineer & Tech/Team Lead at AMFG",
     description:
       "Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located in Stockholm.",
     creator: "@kostyniuk00",

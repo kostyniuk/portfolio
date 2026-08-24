@@ -62,14 +62,7 @@ const ContributionsGraph = ({ contributions, total, range }: ContributionsGraphP
         <ContributionGraphLegend blockClassName={legendLevelClassNames}>
           {({ level }) => (
             <svg height={12} width={12}>
-              <rect
-                className={legendLevelClassNames}
-                data-level={level}
-                height={12}
-                rx={999}
-                ry={999}
-                width={12}
-              />
+              <rect className={legendLevelClassNames} data-level={level} height={12} rx={999} ry={999} width={12} />
             </svg>
           )}
         </ContributionGraphLegend>

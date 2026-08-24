@@ -24,7 +24,7 @@ const EXPERIENCES: {
 }[] = [
   {
     period: "May 2025 — Present",
-    title: "Team Lead",
+    title: "Tech/Team Lead",
     company: "AMFG",
     Icon: VercelIcon,
     description:
