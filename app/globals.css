@@ -1751,3 +1751,75 @@
     transform: none;
   }
 }
+
+/* Halcy: a pine-and-cream horizon, a map grid, and itinerary rows that land in order. */
+.halcy-horizon {
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 44% 40%, rgb(171 200 202 / 0.28), transparent 66%);
+  filter: blur(14px);
+}
+
+.halcy-map,
+.halcy-map-light {
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--halcy-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--halcy-line) 1px, transparent 1px);
+  background-size: 5.5rem 5.5rem;
+  mask-image: radial-gradient(circle at 50% 45%, black, transparent 82%);
+}
+
+.halcy-map {
+  --halcy-line: rgb(171 200 202 / 0.07);
+}
+
+.halcy-map-light {
+  --halcy-line: rgb(15 36 38 / 0.06);
+}
+
+@keyframes halcy-itinerary-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.halcy-itinerary-row {
+  animation: halcy-itinerary-in 440ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+@keyframes halcy-trip-fill {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+.halcy-trip-scroll {
+  scroll-timeline-name: --halcy-trip;
+  scroll-timeline-axis: block;
+}
+
+.halcy-trip-progress {
+  animation: halcy-trip-fill linear both;
+  animation-timeline: --halcy-trip;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .halcy-itinerary-row,
+  .halcy-trip-progress {
+    animation: none !important;
+  }
+
+  .halcy-itinerary-row {
+    opacity: 1;
+    transform: none;
+  }
+}

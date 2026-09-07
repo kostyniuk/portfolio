@@ -124,6 +124,16 @@ const nextConfig = {
           ],
           destination: "/neko",
         },
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "(?:www\\.)?halcy\\.a13x\\.space(?::\\d+)?",
+            },
+          ],
+          destination: "/halcy",
+        },
       ],
     };
   },
