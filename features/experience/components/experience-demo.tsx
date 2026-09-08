@@ -28,7 +28,7 @@ const EXPERIENCES: {
     company: "AMFG",
     Icon: VercelIcon,
     description:
-      "Spending a lot of time on enhancing both DX and product, introducing a lot of new technologies and moving the product forward. Managing the team of 2-3 people. More detailed:",
+      "Spending a lot of time on enhancing both DX and product, introducing a lot of new technologies and moving the product forward. Managing the team of 4 people. More detailed:",
     stack: ["Node.js", "React", "Node.js", "TypeScript", "Javascript", "Postgres"],
   },
   {

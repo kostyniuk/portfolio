@@ -23,7 +23,7 @@ const EXPERIENCES: ExperienceProps[] = [
     company: "AMFG",
     Icon: AMFGIcon,
     description:
-      "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives while managing a team of 2-3 engineers.",
+      "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives while managing a team of 3 engineers.",
     stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Embeddings", "MCP"],
     additionalContent: [
       {
