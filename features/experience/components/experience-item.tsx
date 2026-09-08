@@ -48,7 +48,7 @@ function ExperienceItem({
                 </CollapsibleTrigger>
               </ItemTitle>
               <ItemDescription className="font-medium text-foreground">{company}</ItemDescription>
-              {description ? <ItemDescription className="">{description}</ItemDescription> : null}
+              {description ? <ItemDescription className="line-clamp-none">{description}</ItemDescription> : null}
               {hasAdditionalContent && additionalContent ? (
                 <CollapsibleContent>
                   <ExperienceSections sections={additionalContent} className="pt-4" />
