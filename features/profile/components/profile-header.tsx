@@ -24,11 +24,11 @@ function ProfileHeader() {
         borderRadius={100}
       >
         <Image
-          src="/profile.jpg"
+          src="/application-profile.jpeg"
           width={200}
           height={200}
-          alt="Picture of the author"
-          className="rounded-full object-cover"
+          alt="Alex Kostyniuk"
+          className="size-50 rounded-full object-cover"
           onMouseOver={() => play()}
           onMouseOut={() => stop()}
         />
