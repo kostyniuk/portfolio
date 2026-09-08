@@ -24,13 +24,14 @@ const EXPERIENCES: ExperienceProps[] = [
     Icon: AMFGIcon,
     description:
       "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives while managing a team of 2-3 engineers.",
-    stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Embeddings"],
+    stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Embeddings", "MCP"],
     additionalContent: [
       {
         title: "Frontend Architecture & Developer Experience",
         content: [
           "Led migration from Kendo to shadcn/ui and Tailwind CSS, drove investigation, presented ROI analysis, and persuaded stakeholders to invest in a full rewrite that improved iteration speed, developer experience, and UI consistency.",
           "Proposed and implemented oxlint and oxfmt, achieving 34x faster pre-commit hooks and significantly reducing CI pipeline times.",
+          "Cut CI test time 5x, from 20 minutes down to 4, by reworking how the test suite talks to the database instead of throwing more runners at it.",
           "Proactively migrated the team across major tooling upgrades: npm to pnpm, styled-components to Tailwind, ESLint to oxlint, and Prettier to oxfmt.",
         ],
       },
@@ -39,6 +40,7 @@ const EXPERIENCES: ExperienceProps[] = [
         content: [
           "Built a 3D model similarity engine using cosine similarity and vector embeddings, leveraging pgvector for vector operations in PostgreSQL - mostly finding top N similar vectors and comparing two vectors.",
           "Pioneered the team's first TypeScript backend service, proving developer experience benefits while delivering a low-defect production system.",
+          "Implemented an MCP server and public API so customers and their agents can drive AMFG actions from outside the application.",
         ],
       },
       {
