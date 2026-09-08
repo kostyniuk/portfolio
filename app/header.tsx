@@ -56,11 +56,11 @@ async function Header({ logoHref = "/", surfaceClassName }: { logoHref?: string;
                   }
                 />
                 <DropdownMenuContent align="end" sideOffset={8} className="w-auto">
-                  <DropdownMenuItem className="whitespace-nowrap" render={<a href="/cv.pdf" download="CV_Alex_Kostyniuk.pdf" />}>
+                  <DropdownMenuItem className="whitespace-nowrap" render={<a href="/CV_Alex_Kostyniuk_Software_Engineer.pdf" download="CV_Alex_Kostyniuk_Software_Engineer.pdf" />}>
                     <FileText />
                     pdf - it&apos;s cooler :)
                   </DropdownMenuItem>
-                  <DropdownMenuItem render={<a href="/CV_Alex_Kostyniuk.docx" download="CV_Alex_Kostyniuk.docx" />}>
+                  <DropdownMenuItem render={<a href="/CV_Alex_Kostyniuk_Software_Engineer.docx" download="CV_Alex_Kostyniuk_Software_Engineer.docx" />}>
                     <FileText />
                     docx
                   </DropdownMenuItem>
