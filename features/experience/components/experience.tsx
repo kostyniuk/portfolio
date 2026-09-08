@@ -23,24 +23,24 @@ const EXPERIENCES: ExperienceProps[] = [
     company: "AMFG",
     Icon: AMFGIcon,
     description:
-      "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives while managing a team of 3 engineers.",
+      "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives for a product built by 15+ engineers, while directly managing a team of 4.",
     stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Embeddings", "MCP"],
     additionalContent: [
       {
         title: "Frontend Architecture & Developer Experience",
         content: [
-          "Led migration from Kendo to shadcn/ui and Tailwind CSS, drove investigation, presented ROI analysis, and persuaded stakeholders to invest in a full rewrite that improved iteration speed, developer experience, and UI consistency.",
-          "Proposed and implemented oxlint and oxfmt, achieving 34x faster pre-commit hooks and significantly reducing CI pipeline times.",
-          "Cut CI test time 5x, from 20 minutes down to 4, by reworking how the test suite talks to the database instead of throwing more runners at it.",
+          "Led migration from Kendo to shadcn/ui and Tailwind CSS, drove investigation, presented ROI analysis, and persuaded stakeholders to invest in a full rewrite that improved iteration speed, developer experience, and UI consistency. Migrated component by component so releases never froze, trading a rigid third-party library for primitives we own and iterate on freely.",
+          "Proposed and implemented oxlint and oxfmt, achieving 34x faster pre-commit hooks and cutting format and lint time in CI by 30x.",
+          "Cut CI test time 5x, from 20 minutes down to 4, by reworking how tests provision and isolate database state. The bottleneck was per-test setup, not the tests themselves.",
           "Proactively migrated the team across major tooling upgrades: npm to pnpm, styled-components to Tailwind, ESLint to oxlint, and Prettier to oxfmt.",
         ],
       },
       {
         title: "Backend Systems & AI",
         content: [
-          "Built a 3D model similarity engine using cosine similarity and vector embeddings, leveraging pgvector for vector operations in PostgreSQL - mostly finding top N similar vectors and comparing two vectors.",
+          "Designed and built a 3D model similarity engine after estimators flagged manual geometry analysis as a top time sink, cutting an estimate from 15-20 minutes down to about a minute. It surfaces previously quoted models with similar geometry using cosine similarity and vector embeddings, with embeddings indexed in pgvector and tuned for the tradeoff between recall and latency.",
           "Pioneered the team's first TypeScript backend service, proving developer experience benefits while delivering a low-defect production system.",
-          "Implemented an MCP server and public API so customers and their agents can drive AMFG actions from outside the application.",
+          "Shipped an MCP server and public API so customers and their agents can drive AMFG workflows programmatically, replacing in-app data export. Scoped the first endpoints directly with customers, then expanded the API release by release as their integrations grew.",
         ],
       },
       {
@@ -84,7 +84,7 @@ const EXPERIENCES: ExperienceProps[] = [
       {
         title: "Backend Systems & Customer Automation",
         content: [
-          "Architected a sandboxed scripting environment allowing customers to write Python and JavaScript against our API, delivering powerful automation capabilities that significantly reduced manual customer workflows.",
+          "Architected a sandboxed scripting environment allowing customers to write Python and JavaScript against our API, solving isolation and resource limits for untrusted multi-tenant code. It unlocked chained sequences of 10+ actions that the fixed trigger system could not express, delivering powerful automation capabilities that significantly reduced manual customer workflows.",
         ],
       },
       {
@@ -111,13 +111,13 @@ const EXPERIENCES: ExperienceProps[] = [
       {
         title: "Frontend Product Features",
         content: [
-          "Built a custom Gantt timeline with drag-and-drop task management, dynamic zoom levels, real-time synchronization, and conflict detection with automated error notifications.",
+          "Built a custom Gantt timeline that replaced manual scheduling and now schedules 10,000+ builds a month as most customers' primary production tool, with drag-and-drop task management, dynamic zoom levels, real-time synchronization, and conflict detection with automated error notifications. The hard part was reconciling concurrent edits from multiple planners without losing work.",
         ],
       },
       {
         title: "Workflow Automation",
         summary:
-          "Involved in building a large workflow automation system that let customers automate custom actions based on triggers, such as an order status change.",
+          "Involved in building a large workflow automation system that generalized recurring customer requests into rules they could configure themselves, letting customers automate custom actions based on triggers, such as an order status change.",
         content: [
           "Supported event-driven triggers such as order status changes, new customer registered, etc.",
           "Enabled 10+ follow-up actions including emails to different recipients, different email templates, push messages in different variants, status changes elsewhere in the system and lot more.",
