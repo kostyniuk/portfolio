@@ -10,6 +10,7 @@ import { ChevronsDownUp, ChevronsUpDown, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ExperienceSections } from "./experience-section";
 import { PulseIcon } from "@/components/pulse";
+import { CompanyHighlight } from "@/components/custom/company-highlight";
 
 function ExperienceItem({
   Icon,
@@ -17,6 +18,7 @@ function ExperienceItem({
   stack,
   description,
   company,
+  companyProfile,
   period,
   additionalContent,
   isExpanded,
@@ -47,7 +49,9 @@ function ExperienceItem({
                   <span className="sr-only">Toggle details</span>
                 </CollapsibleTrigger>
               </ItemTitle>
-              <ItemDescription className="font-medium text-foreground">{company}</ItemDescription>
+              <ItemDescription className="font-medium text-foreground">
+                {companyProfile ? <CompanyHighlight company={companyProfile}>{company}</CompanyHighlight> : company}
+              </ItemDescription>
               {description ? <ItemDescription className="line-clamp-none">{description}</ItemDescription> : null}
               {hasAdditionalContent && additionalContent ? (
                 <CollapsibleContent>

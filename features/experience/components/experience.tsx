@@ -3,6 +3,7 @@
 import { AMFGIcon, type CompanyIconProps } from "@/components/icons/company-icons";
 import { motion, useScroll } from "motion/react";
 import { useRef, type ComponentType } from "react";
+import type { CompanyKey } from "@/components/custom/company-highlight";
 import type { ExperienceSectionData } from "./experience-section";
 import { ExperienceItem } from "./experience-item";
 
@@ -10,6 +11,7 @@ type ExperienceProps = {
   period: string;
   title: string;
   company: string;
+  companyProfile?: CompanyKey;
   description: string;
   stack: string[];
   additionalContent?: ExperienceSectionData[];
@@ -21,6 +23,7 @@ const EXPERIENCES: ExperienceProps[] = [
     period: "May 2025 — Present",
     title: "Tech/Team Lead",
     company: "AMFG",
+    companyProfile: "amfg",
     Icon: AMFGIcon,
     description:
       "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives for a product built by 15+ engineers, while directly managing a team of 4.",
@@ -62,6 +65,7 @@ const EXPERIENCES: ExperienceProps[] = [
     period: "May 2023 — April 2025",
     title: "Senior Fullstack Software Engineer",
     company: "AMFG",
+    companyProfile: "amfg",
     Icon: AMFGIcon,
     description:
       "Led team-wide adoption of AI-assisted engineering workflows, frontend modernization and internal platform initiatives at AMFG, spanning legacy Angular-to-React migration, advanced state management, customer automation tooling",
@@ -97,6 +101,7 @@ const EXPERIENCES: ExperienceProps[] = [
     period: "December 2021 — May 2023",
     title: "Middle Fullstack Software Engineer",
     company: "AMFG",
+    companyProfile: "amfg",
     Icon: AMFGIcon,
     description:
       "Delivered core platform features across customer onboarding, authentication, planning UX, and workflow automation, with a focus on reducing friction for both customers and internal teams.",
@@ -131,6 +136,7 @@ const EXPERIENCES: ExperienceProps[] = [
     period: "October 2020 — November 2021",
     title: "Junior Fullstack Software Engineer",
     company: "AMFG",
+    companyProfile: "amfg",
     Icon: AMFGIcon,
     description:
       "Started my full-time engineering career at AMFG, building foundational fullstack experience while contributing to backend performance improvements and customer-facing admin features.",
