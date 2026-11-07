@@ -11,7 +11,7 @@ const BIO_ROWS = [
     // highlighted company name in one node to avoid a gap after the "@".
     title: (
       <span>
-        Tech/Team Lead @<CompanyHighlight company="amfg" className="underline-offset-[3px]" />
+        Software Engineer @<CompanyHighlight company="quartr" className="underline-offset-[3px]" />
       </span>
     ),
   },

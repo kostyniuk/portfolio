@@ -21,6 +21,18 @@ function AMFGIcon({ className }: CompanyIconProps) {
   );
 }
 
+function QuartrIcon({ className }: CompanyIconProps) {
+  return (
+    <svg viewBox="0 0 100 100" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M0 0H100V75.5556H75.5556V100H62.2222V75.5556H50C35.886 75.5556 24.4444 64.1139 24.4444 50C24.4444 35.8861 35.886 24.4444 50 24.4444C64.114 24.4444 75.5556 35.8861 75.5556 50V62.2222H86.6667V13.3333H13.3333V86.6667H48.8889V100H0V0ZM62.2222 50C62.2222 43.2499 56.7502 37.7778 50 37.7778C43.2499 37.7778 37.7778 43.2499 37.7778 50C37.7778 56.7502 43.2499 62.2222 50 62.2222H62.2222V50Z"
+      />
+    </svg>
+  );
+}
+
 function OpenAIIcon({ className }: CompanyIconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} xmlns="http://www.w3.org/2000/svg">
@@ -125,6 +137,7 @@ export {
   GoogleIcon,
   MicrosoftIcon,
   OpenAIIcon,
+  QuartrIcon,
   VercelIcon,
   XCorpIcon,
   YouTubeIcon,

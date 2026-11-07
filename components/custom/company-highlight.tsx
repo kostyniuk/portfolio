@@ -2,7 +2,7 @@
 
 import type { ComponentProps, ComponentType, ReactNode } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { AMFGIcon, type CompanyIconProps } from "@/components/icons/company-icons";
+import { AMFGIcon, QuartrIcon, type CompanyIconProps } from "@/components/icons/company-icons";
 import { HighlightPhraseContent, HighlightPhraseTrigger } from "@/components/ui/glasscn/highlight-phrase";
 import { Popover } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
@@ -25,10 +25,23 @@ const COMPANIES = {
     facts: [
       { label: "Industry", value: "Additive manufacturing software" },
       { label: "HQ", value: "London, UK" },
-      { label: "My time there", value: "Six years, junior to team lead" },
+      { label: "My time there", value: "Six years, junior to team lead (2020 - 2026)" },
     ],
     href: "https://amfg.ai",
     Icon: AMFGIcon,
+  },
+  quartr: {
+    name: "Quartr",
+    tagline: "AI infrastructure for company research",
+    description:
+      "The intelligence layer financial AI runs on. Structured, real-time IR data trusted by the world's leading financial institutions and technology companies.",
+    facts: [
+      { label: "Industry", value: "Software for finance" },
+      { label: "HQ", value: "Stockholm, Sweden" },
+      { label: "My time there", value: "Since October 2026" },
+    ],
+    href: "https://quartr.com",
+    Icon: QuartrIcon,
   },
 } satisfies Record<string, CompanyProfile>;
 
