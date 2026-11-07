@@ -58,13 +58,15 @@ function ExperienceItem({
                   <ExperienceSections sections={additionalContent} className="pt-4" />
                 </CollapsibleContent>
               ) : null}
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {stack.map((tech, index) => (
-                  <Badge key={`${index}-${tech}`} variant="outline">
-                    {tech}
-                  </Badge>
-                ))}
-              </div>
+              {stack.length ? (
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {stack.map((tech, index) => (
+                    <Badge key={`${index}-${tech}`} variant="outline">
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+              ) : null}
             </Collapsible>
           </ItemContent>
         </Item>

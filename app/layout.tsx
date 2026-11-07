@@ -16,7 +16,7 @@ const arvo = Arvo({ subsets: ["latin"], weight: "700", variable: "--font-blog-ti
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.a13x.space"),
   title: {
-    default: "Alex Kostyniuk — Software Engineer & Tech/Team Lead at AMFG",
+    default: "Alex Kostyniuk — Software Engineer at Quartr",
     template: "%s | Alex Kostyniuk",
   },
   description:
@@ -35,6 +35,7 @@ export const metadata: Metadata = {
     "GlassCN",
     "Mellow Lines",
     "Stockholm",
+    "Quartr",
     "AMFG",
   ],
   authors: [{ name: "Alex Kostyniuk", url: "https://www.a13x.space" }],
@@ -43,13 +44,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Alex Kostyniuk",
-    title: "Alex Kostyniuk — Software Engineer & Tech/Team Lead at AMFG",
+    title: "Alex Kostyniuk — Software Engineer at Quartr",
     description:
       "Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located in Stockholm.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Kostyniuk — Software Engineer & Tech/Team Lead at AMFG",
+    title: "Alex Kostyniuk — Software Engineer at Quartr",
     description:
       "Open source contributor. Creator of GlassCN, Mellow Lines & LeeHireMe. TypeScript, React & Node.js. Located in Stockholm.",
     creator: "@kostyniuk00",

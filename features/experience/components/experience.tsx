@@ -1,6 +1,6 @@
 "use client";
 
-import { AMFGIcon, type CompanyIconProps } from "@/components/icons/company-icons";
+import { AMFGIcon, QuartrIcon, type CompanyIconProps } from "@/components/icons/company-icons";
 import { motion, useScroll } from "motion/react";
 import { useRef, type ComponentType } from "react";
 import type { CompanyKey } from "@/components/custom/company-highlight";
@@ -20,13 +20,22 @@ type ExperienceProps = {
 
 const EXPERIENCES: ExperienceProps[] = [
   {
-    period: "May 2025 — Present",
+    period: "October 2026 — Present",
+    title: "Software Engineer",
+    company: "Quartr",
+    companyProfile: "quartr",
+    Icon: QuartrIcon,
+    description: "Building AI infrastructure for company research at Quartr.",
+    stack: [],
+  },
+  {
+    period: "May 2025 — October 2026",
     title: "Tech/Team Lead",
     company: "AMFG",
     companyProfile: "amfg",
     Icon: AMFGIcon,
     description:
-      "Leading architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives for a product built by 15+ engineers, while directly managing a team of 4.",
+      "Led architecture and delivery at AMFG across frontend modernization, backend platform work, performance improvements, and team-wide developer experience initiatives for a product built by 15+ engineers, while directly managing a team of 4.",
     stack: ["TypeScript", "React", "Node.js", "PostgreSQL", "Tailwind CSS", "Embeddings", "MCP"],
     additionalContent: [
       {
